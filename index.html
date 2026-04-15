@@ -23,15 +23,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background-color: #000;
-            font-family: 'Noto Sans KR', sans-serif;
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100dvh;
-            margin: 0;
-            overflow: hidden;
+            background-color: #000; font-family: 'Noto Sans KR', sans-serif;
+            color: var(--text-main); display: flex; justify-content: center; align-items: center;
+            height: 100dvh; margin: 0; overflow: hidden;
         }
 
         ::-webkit-scrollbar { width: 4px; }
@@ -39,15 +33,9 @@
         ::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.3); border-radius: 10px; }
 
         .app-container {
-            width: 100%;
-            max-width: 480px;
-            height: 100dvh;
-            background-color: var(--bg-base);
-            position: relative;
-            box-shadow: 0 0 30px rgba(0,0,0,0.9);
-            display: flex;
-            flex-direction: column; 
-            overflow: hidden;
+            width: 100%; max-width: 480px; height: 100dvh; background-color: var(--bg-base);
+            position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.9);
+            display: flex; flex-direction: column; overflow: hidden;
         }
 
         /* 우주 별 배경 */
@@ -70,14 +58,9 @@
 
         /* 헤더 */
         .header {
-            flex: 0 0 auto;
-            padding: 30px 20px 15px;
-            text-align: center;
+            flex: 0 0 auto; padding: 30px 20px 15px; text-align: center;
             background: linear-gradient(to bottom, rgba(0,0,0,0.95) 40%, transparent);
-            position: relative;
-            z-index: 10;
-            cursor: pointer;
-            transition: transform 0.2s;
+            position: relative; z-index: 10; cursor: pointer; transition: transform 0.2s;
         }
         .header:active { transform: scale(0.98); }
         .header h1 {
@@ -90,12 +73,7 @@
 
         /* 메인 콘텐츠 */
         .content-wrapper {
-            flex: 1 1 auto;
-            height: 0;
-            overflow-y: auto;
-            padding: 10px 20px 20px;
-            position: relative;
-            z-index: 5;
+            flex: 1 1 auto; height: 0; overflow-y: auto; padding: 10px 20px 20px; position: relative; z-index: 5;
         }
 
         .content-section { display: none; animation: fadeIn 0.3s ease-out forwards; }
@@ -121,7 +99,7 @@
         .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); }
         .accordion-body.open { max-height: 250px; padding-bottom: 15px; }
 
-        /* 인물 탭 필터 */
+        /* 필터 탭 */
         .inner-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
         .inner-tab-btn {
             background: rgba(0,0,0,0.6); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.15);
@@ -129,7 +107,7 @@
         }
         .inner-tab-btn.active { border-color: var(--neon-primary); color: var(--text-main); background: rgba(0, 242, 254, 0.15); box-shadow: 0 0 10px rgba(0, 242, 254, 0.5); font-weight: bold; }
 
-        /* 미니 프로필 */
+        /* 인물 리스트 아이템 */
         .char-item {
             display: flex; align-items: center; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.03);
             margin-bottom: 10px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: 0.2s;
@@ -145,10 +123,7 @@
 
         /* 하단 네비게이션 */
         .bottom-nav {
-            flex: 0 0 75px; 
-            width: 100%;
-            background: var(--nav-bg);
-            border-top: 1px solid rgba(0, 242, 254, 0.2);
+            flex: 0 0 75px; width: 100%; background: var(--nav-bg); border-top: 1px solid rgba(0, 242, 254, 0.2);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             display: flex; justify-content: space-around; align-items: center; z-index: 100;
         }
@@ -171,12 +146,11 @@
         .menu-btn {
             width: 70%; padding: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0, 242, 254, 0.3);
             border-radius: 12px; color: #fff; font-size: 1.2rem; font-weight: bold; letter-spacing: 2px;
-            display: flex; align-items: center; justify-content: center; gap: 15px; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center; gap: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
         .menu-btn:hover { background: rgba(0, 242, 254, 0.1); border-color: var(--neon-primary); box-shadow: 0 0 20px rgba(0,242,254,0.4); transform: scale(1.05); }
 
-        /* 상세 프로필 모달 (HUD 디자인) */
+        /* HUD 모달 공통 스타일 */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -189,37 +163,38 @@
             box-shadow: inset 0 0 30px rgba(0,242,254,0.1), 0 0 40px rgba(0,0,0,0.8); text-align: center;
         }
         .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: #fff; cursor: pointer; z-index: 10; }
-        
+        .modal-desc { font-size: 0.9rem; color: #ddd; line-height: 1.7; text-align: left; padding: 15px; background: rgba(0,0,0,0.5); border-radius: 10px; border-left: 3px solid var(--neon-primary); }
+
+        /* 캐릭터 모달 요소 */
         .modal-img-wrapper { position: relative; display: inline-block; margin-bottom: 15px; }
         .modal-img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; border: 2px solid; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .modal-name { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin-bottom: 5px; font-weight: 900; letter-spacing: 2px; }
         .modal-level { font-size: 0.85rem; color: #aaa; margin-bottom: 20px; }
-
-        /* HUD 스타일 데이터 그리드 */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .stat-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 8px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; }
         .stat-label { font-size: 0.65rem; color: var(--neon-primary); font-family: 'Orbitron', sans-serif; margin-bottom: 4px; letter-spacing: 1px; }
         .stat-val { font-size: 0.85rem; font-weight: bold; color: #fff; }
-
-        .modal-desc {
-            font-size: 0.9rem; color: #ddd; line-height: 1.7; text-align: left; padding: 15px;
-            background: rgba(0,0,0,0.5); border-radius: 10px; border-left: 3px solid var(--neon-primary);
-        }
-
-        /* 루나 안대 버튼 */
-        .eyepatch-btn {
-            background: transparent; color: var(--neon-witch); border: 1px solid var(--neon-witch);
-            padding: 8px 20px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; margin-top: 10px;
-            font-weight: bold; box-shadow: inset 0 0 10px rgba(188,0,221,0.2), 0 0 10px rgba(188,0,221,0.2); transition: 0.3s;
-        }
-        .eyepatch-btn:active { transform: scale(0.95); }
-        .eyepatch-btn:hover { background: rgba(188,0,221,0.1); }
         
-        @keyframes magicFlash {
-            0% { filter: brightness(1) blur(0); opacity: 1; }
-            50% { filter: brightness(3) blur(10px); opacity: 0; transform: scale(1.05); }
-            100% { filter: brightness(1) blur(0); opacity: 1; transform: scale(1); }
+        .eyepatch-btn { background: transparent; color: var(--neon-witch); border: 1px solid var(--neon-witch); padding: 8px 20px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; box-shadow: inset 0 0 10px rgba(188,0,221,0.2), 0 0 10px rgba(188,0,221,0.2); transition: 0.3s; }
+        .eyepatch-btn:active { transform: scale(0.95); }
+        @keyframes magicFlash { 0% { filter: brightness(1) blur(0); opacity: 1; } 50% { filter: brightness(3) blur(10px); opacity: 0; transform: scale(1.05); } 100% { filter: brightness(1) blur(0); opacity: 1; transform: scale(1); } }
+
+        /* 지도 탭 전용 노드(Node) 스타일 */
+        .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .map-node {
+            background: rgba(255,65,108,0.05); border: 1px solid rgba(255,65,108,0.3); border-radius: 12px;
+            padding: 15px 10px; text-align: center; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 110px;
         }
+        .map-node:hover { background: rgba(255,65,108,0.15); border-color: var(--neon-human); box-shadow: 0 0 15px rgba(255,65,108,0.4); transform: translateY(-3px); }
+        .map-node.neutral { background: rgba(0,255,135,0.05); border-color: rgba(0,255,135,0.3); }
+        .map-node.neutral:hover { background: rgba(0,255,135,0.15); border-color: var(--neon-neutral); box-shadow: 0 0 15px rgba(0,255,135,0.4); }
+        .map-icon { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
+        .map-node-title { font-size: 0.9rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; }
+        .map-node-type { font-size: 0.65rem; color: var(--text-muted); background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; }
+
+        /* 지도 모달 전용 */
+        .map-modal-icon { font-size: 3.5rem; margin: 10px 0 20px; text-shadow: 0 0 20px currentColor; }
+        .map-modal-title { font-family: 'Orbitron', 'Noto Sans KR', sans-serif; font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -277,17 +252,14 @@
         </main>
         
         <main id="tab-map" class="content-section">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <button onclick="alert('차원 변환 기능은 이전 디자인 참조')" style="background:rgba(255,255,255,0.05); color:#fff; border:1px solid var(--neon-primary); padding:12px 25px; border-radius:30px; font-weight:bold; cursor:pointer;">
-                    <i class="fas fa-exchange-alt"></i> CHANGE DIMENSION
-                </button>
-            </div>
-            <div class="card">
-                <h2 style="text-align: center;"><i class="fas fa-map-marked-alt"></i> WORLD MAP</h2>
-                <div style="height: 220px; display: flex; flex-direction:column; align-items:center; justify-content:center; background: rgba(0,242,254,0.05); border:1px dashed rgba(0,242,254,0.3); border-radius:12px;">
-                    <i class="fas fa-satellite" style="font-size: 3rem; color:var(--text-muted); margin-bottom:15px; opacity:0.5;"></i>
-                    <p style="color: var(--text-muted); font-family:'Orbitron', sans-serif;">MAP DATA LOADED</p>
-                </div>
+            <div class="card" style="border-color: var(--neon-human); box-shadow: inset 0 0 15px rgba(255,65,108,0.1);">
+                <h2 style="justify-content: center; color: var(--neon-human);">
+                    <i class="fas fa-map-marked-alt"></i> 인간 왕국 전도 (HUD)
+                </h2>
+                <p style="text-align: center; font-size: 0.8rem; color: #aaa; margin-bottom: 10px;">
+                    해당 지역의 노드를 터치하여 상세 정보를 확인하세요.
+                </p>
+                <div id="map-grid-container" class="map-grid"></div>
             </div>
         </main>
     </div>
@@ -308,9 +280,9 @@
         <button class="menu-btn" onclick="selectFromMenu('tab-map')"><i class="fas fa-map-location-dot"></i> 세계 지도</button>
     </div>
 
-    <div id="char-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div id="char-modal" class="modal-overlay" onclick="closeModal(event, 'char-modal')">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <i class="fas fa-times modal-close" onclick="closeModal(event, true)"></i>
+            <i class="fas fa-times modal-close" onclick="closeModal(event, 'char-modal', true)"></i>
             <div class="modal-img-wrapper">
                 <img id="modal-img" src="" class="modal-img" alt="캐릭터 이미지">
                 <div id="luna-action" style="display: none;">
@@ -333,10 +305,29 @@
             <div id="modal-desc" class="modal-desc"></div>
         </div>
     </div>
+
+    <div id="map-modal" class="modal-overlay" onclick="closeModal(event, 'map-modal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <i class="fas fa-times modal-close" onclick="closeModal(event, 'map-modal', true)"></i>
+            <div style="text-align: center;">
+                <i id="map-modal-icon" class="fas map-modal-icon"></i>
+            </div>
+            <h2 id="map-modal-title" class="map-modal-title"></h2>
+            <div class="stat-grid" style="grid-template-columns: 1fr; margin-bottom: 15px;">
+                <div class="stat-item">
+                    <span class="stat-label">LOCATION TYPE</span>
+                    <span id="map-modal-type" class="stat-val"></span>
+                </div>
+            </div>
+            <div id="map-modal-desc" class="modal-desc"></div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // 캐릭터 데이터
+    // ----------------------------------------------------
+    // 1. 캐릭터 데이터 및 로직
+    // ----------------------------------------------------
     const charData = [
         { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '불명', height: '174cm', alignment: '질서 악', desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
         { id: 'd', name: '세라', faction: 'witch', level: '8써클 대마법사', ability: '차원문 능력', mbti: 'INTP', enneagram: '5w4', age: '20대 중반', height: '162cm', alignment: '참 중립', desc: '인간계에 작은 도서관을 운영 중. 도서관은 겉으론 평범하지만 그녀의 능력으로 차원을 오갈 수 있는 비밀 통로다. 책 읽는 걸 좋아하며 극심한 귀차니즘.' },
@@ -356,21 +347,12 @@
         { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '묘지기', mbti: 'ISFJ', enneagram: '2w1', age: '50대 초반', height: '185cm', alignment: '질서 선', desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
     ];
 
-    // ==========================================
-    // 이미지 백그라운드 사전 로딩 (Preloading) 기능
-    // ==========================================
     function preloadImages() {
         const imageUrls = charData.map(char => `https://igx.kr/u/LY/${char.id}/1`);
-        imageUrls.push(`https://igx.kr/u/LY/l/1`); // 루나 안대 벗은 이미지 추가
-        
-        imageUrls.forEach(url => {
-            const img = new Image();
-            img.src = url;
-        });
+        imageUrls.push(`https://igx.kr/u/LY/l/1`);
+        imageUrls.forEach(url => { const img = new Image(); img.src = url; });
     }
-    // 스크립트 실행 시 즉시 로딩 시작
     preloadImages();
-    // ==========================================
 
     function renderCharacters(filter = 'all') {
         const container = document.getElementById('character-list-container');
@@ -385,7 +367,7 @@
             const imgSrc = `https://igx.kr/u/LY/${char.id}/1`;
             const el = document.createElement('div');
             el.className = 'char-item';
-            el.onclick = () => openModal(char);
+            el.onclick = () => openCharModal(char);
             el.innerHTML = `
                 <img src="${imgSrc}" class="char-thumb ${thumbColor}" alt="${char.name}" onerror="this.src='https://via.placeholder.com/50/222/fff?text=?'">
                 <div class="char-info">
@@ -397,9 +379,42 @@
             container.appendChild(el);
         });
     }
-
     renderCharacters();
 
+    // ----------------------------------------------------
+    // 2. 지도 지역 데이터 및 로직
+    // ----------------------------------------------------
+    const mapNodes = [
+        { id: 'm1', name: '성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', desc: '인간 진영의 심장부이자 여왕 카트린이 통치하는 거대한 수도. 겹겹의 거룩한 빛의 결계가 도시를 보호하고 있으며, 마녀 척결을 위한 모든 군사 및 종교적 명령이 이곳에서 하달된다.' },
+        { id: 'm2', name: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', desc: '기사단장 브룬힐데가 이끄는 은백색 기사단의 메인 요새. 끝없는 무력 단련과 전술 훈련이 이루어지는 곳으로, 기사들은 매일같이 가상의 마녀들과 피 흘리며 싸우는 훈련을 받는다.' },
+        { id: 'm3', name: '이단 심문소 연옥', type: '고문 수용소', faction: 'human', icon: 'fa-fire-burner', desc: '포획되거나 의심받는 마녀들이 수용되는 끔찍한 장소. 지하 깊숙이 위치해 비명소리조차 새어나오지 않는다. 한 번 들어가면 살아서 나올 수 없는 잔혹한 처형장이다.' },
+        { id: 'm4', name: '잿빛 공동묘지', type: '중립 구역', faction: 'neutral', icon: 'fa-cross', desc: '과거 대전쟁이 일어났던 격전지의 흔적. 그랜드마스터 칼리안이 은퇴 후 머물고 있는 거대한 무덤 지대다. 진영을 막론하고 죽은 자들의 영혼이 떠도는 을씨년스러운 곳이다.' },
+        { id: 'm5', name: '지하 도시 오즈', type: '불법 암시장', faction: 'neutral', icon: 'fa-dungeon', desc: '교단의 감시가 닿지 않는 거대한 지하 슬럼가. 레이븐 같은 정보상이나 용병들이 암약하며, 운이 좋다면 마녀들이 만들어낸 마도구나 포션도 뒷거래로 구할 수 있다.' },
+        { id: 'm6', name: '비밀 도서관 (세라)', type: '차원 연결점', faction: 'neutral', icon: 'fa-book-journal-whills', desc: '왕국 변두리에 위치한 낡고 조용한 도서관. 평범해 보이지만 사실 대마법사 세라가 운영하는 곳으로, 조건이 맞으면 마녀들의 은신처 차원으로 넘어갈 수 있는 게이트가 열린다.' }
+    ];
+
+    function renderMapNodes() {
+        const container = document.getElementById('map-grid-container');
+        container.innerHTML = '';
+
+        mapNodes.forEach(node => {
+            const el = document.createElement('div');
+            el.className = `map-node ${node.faction === 'neutral' ? 'neutral' : ''}`;
+            el.onclick = () => openMapModal(node);
+            
+            el.innerHTML = `
+                <i class="fas ${node.icon} map-icon"></i>
+                <div class="map-node-title">${node.name}</div>
+                <div class="map-node-type">${node.type}</div>
+            `;
+            container.appendChild(el);
+        });
+    }
+    renderMapNodes();
+
+    // ----------------------------------------------------
+    // 3. UI 제어 및 모달 시스템
+    // ----------------------------------------------------
     function switchTab(tabId, element) {
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -438,15 +453,24 @@
         }
     }
 
-    let isLunaEyepatchOn = true;
+    function closeModal(e, modalId, force = false) {
+        if (force || e.target.id === modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+    }
 
-    function openModal(char) {
+    // 캐릭터 모달 열기
+    let isLunaEyepatchOn = true;
+    function openCharModal(char) {
         const modal = document.getElementById('char-modal');
         const img = document.getElementById('modal-img');
         const name = document.getElementById('modal-name');
         const level = document.getElementById('modal-level');
         const desc = document.getElementById('modal-desc');
         const lunaAction = document.getElementById('luna-action');
+
+        // 버그 수정: 모달을 열 때마다 이전 애니메이션 속성 강제 초기화
+        img.style.animation = 'none';
 
         let borderColor = `var(--neon-${char.faction})`;
         img.style.borderColor = borderColor;
@@ -470,7 +494,6 @@
         if(char.id === 'k') {
             img.src = `https://igx.kr/u/LY/${isLunaEyepatchOn ? 'k' : 'l'}/1`;
             lunaAction.style.display = 'block';
-            
             document.getElementById('luna-btn-text').innerText = isLunaEyepatchOn ? "안대 벗기기" : "안대 씌우기";
             document.getElementById('luna-btn-icon').className = isLunaEyepatchOn ? "fas fa-eye-slash" : "fas fa-eye";
         } else {
@@ -479,12 +502,6 @@
         }
 
         modal.classList.add('show');
-    }
-
-    function closeModal(e, force = false) {
-        if (force || e.target.id === 'char-modal') {
-            document.getElementById('char-modal').classList.remove('show');
-        }
     }
 
     function toggleEyepatch() {
@@ -502,6 +519,32 @@
             btnText.innerText = isLunaEyepatchOn ? "안대 벗기기" : "안대 씌우기";
             btnIcon.className = isLunaEyepatchOn ? "fas fa-eye-slash" : "fas fa-eye";
         }, 300);
+    }
+
+    // 지도 모달 열기
+    function openMapModal(node) {
+        const modal = document.getElementById('map-modal');
+        const icon = document.getElementById('map-modal-icon');
+        const title = document.getElementById('map-modal-title');
+        const type = document.getElementById('map-modal-type');
+        const desc = document.getElementById('map-modal-desc');
+
+        let themeColor = node.faction === 'human' ? 'var(--neon-human)' : 'var(--neon-neutral)';
+
+        icon.className = `fas ${node.icon} map-modal-icon`;
+        icon.style.color = themeColor;
+        
+        title.innerText = node.name;
+        title.style.color = themeColor;
+        title.style.textShadow = `0 0 10px ${themeColor}`;
+        
+        type.innerText = node.type;
+        type.style.color = themeColor;
+
+        desc.innerText = node.desc;
+        desc.style.borderLeftColor = themeColor;
+
+        modal.classList.add('show');
     }
 </script>
 
