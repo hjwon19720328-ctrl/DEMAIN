@@ -38,7 +38,7 @@
             display: flex; flex-direction: column; overflow: hidden;
         }
 
-        /* 우주 별 배경 */
+        /* 우주 배경 */
         .stars-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
             background-image: 
@@ -58,20 +58,20 @@
 
         /* 헤더 */
         .header {
-            flex: 0 0 auto; padding: 30px 20px 15px; text-align: center;
+            flex: 0 0 auto; padding: 25px 20px 15px; text-align: center;
             background: linear-gradient(to bottom, rgba(0,0,0,0.95) 40%, transparent);
             position: relative; z-index: 10; cursor: pointer; transition: transform 0.2s;
         }
         .header:active { transform: scale(0.98); }
         .header h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; letter-spacing: 5px;
+            font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 5px;
             text-shadow: 0 0 10px var(--neon-primary), 0 0 20px var(--neon-primary);
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .header h1 i { font-size: 1.2rem; opacity: 0.7; }
+        .header h1 i { font-size: 1.1rem; opacity: 0.7; }
         .header p { font-size: 0.7rem; color: var(--neon-primary); margin-top: 5px; letter-spacing: 4px; font-weight: bold; }
 
-        /* 메인 콘텐츠 */
+        /* 콘텐츠 영역 */
         .content-wrapper {
             flex: 1 1 auto; height: 0; overflow-y: auto; padding: 10px 20px 20px; position: relative; z-index: 5;
         }
@@ -87,7 +87,6 @@
             box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 8px 15px rgba(0,0,0,0.3);
             border-radius: 14px; padding: 20px; margin-bottom: 20px; transition: 0.3s;
         }
-        .card:hover { border-color: rgba(0, 242, 254, 0.4); box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.1), 0 8px 15px rgba(0,0,0,0.5); }
         .card h2 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-bottom: 15px; color: var(--neon-primary); border-bottom: 1px solid rgba(0,242,254,0.2); padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
 
         /* 아코디언 */
@@ -107,7 +106,7 @@
         }
         .inner-tab-btn.active { border-color: var(--neon-primary); color: var(--text-main); background: rgba(0, 242, 254, 0.15); box-shadow: 0 0 10px rgba(0, 242, 254, 0.5); font-weight: bold; }
 
-        /* 인물 리스트 아이템 */
+        /* 인물 리스트 */
         .char-item {
             display: flex; align-items: center; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.03);
             margin-bottom: 10px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: 0.2s;
@@ -133,7 +132,7 @@
         .nav-item.active { color: #fff; }
         .nav-item.active i { color: var(--neon-primary); text-shadow: 0 0 12px var(--neon-primary); transform: translateY(-3px); }
 
-        /* 대형 풀스크린 메뉴 */
+        /* 풀스크린 메뉴 */
         .fullscreen-menu {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -150,7 +149,7 @@
         }
         .menu-btn:hover { background: rgba(0, 242, 254, 0.1); border-color: var(--neon-primary); box-shadow: 0 0 20px rgba(0,242,254,0.4); transform: scale(1.05); }
 
-        /* HUD 모달 공통 스타일 */
+        /* 모달 공통 */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -165,7 +164,7 @@
         .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: #fff; cursor: pointer; z-index: 10; }
         .modal-desc { font-size: 0.9rem; color: #ddd; line-height: 1.7; text-align: left; padding: 15px; background: rgba(0,0,0,0.5); border-radius: 10px; border-left: 3px solid var(--neon-primary); }
 
-        /* 캐릭터 모달 요소 */
+        /* 캐릭터 모달 */
         .modal-img-wrapper { position: relative; display: inline-block; margin-bottom: 15px; }
         .modal-img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; border: 2px solid; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .modal-name { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin-bottom: 5px; font-weight: 900; letter-spacing: 2px; }
@@ -179,22 +178,53 @@
         .eyepatch-btn:active { transform: scale(0.95); }
         @keyframes magicFlash { 0% { filter: brightness(1) blur(0); opacity: 1; } 50% { filter: brightness(3) blur(10px); opacity: 0; transform: scale(1.05); } 100% { filter: brightness(1) blur(0); opacity: 1; transform: scale(1); } }
 
-        /* 지도 탭 전용 노드(Node) 스타일 */
-        .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-        .map-node {
-            background: rgba(255,65,108,0.05); border: 1px solid rgba(255,65,108,0.3); border-radius: 12px;
-            padding: 15px 10px; text-align: center; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 110px;
+        /* 차원 변환 버튼 */
+        .dim-toggle {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--neon-human); color: #fff;
+            padding: 12px 25px; border-radius: 30px; font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem; font-weight: bold;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(255,65,108,0.2); margin-bottom: 15px; display: inline-block;
         }
-        .map-node:hover { background: rgba(255,65,108,0.15); border-color: var(--neon-human); box-shadow: 0 0 15px rgba(255,65,108,0.4); transform: translateY(-3px); }
-        .map-node.neutral { background: rgba(0,255,135,0.05); border-color: rgba(0,255,135,0.3); }
-        .map-node.neutral:hover { background: rgba(0,255,135,0.15); border-color: var(--neon-neutral); box-shadow: 0 0 15px rgba(0,255,135,0.4); }
-        .map-icon { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
-        .map-node-title { font-size: 0.9rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; }
-        .map-node-type { font-size: 0.65rem; color: var(--text-muted); background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; }
+        .dim-toggle:hover { background: rgba(255,65,108,0.15); box-shadow: 0 0 20px var(--neon-human); }
+        .dim-toggle.witch-mode { border-color: var(--neon-witch); box-shadow: 0 0 15px rgba(188,0,221,0.3); }
+        .dim-toggle.witch-mode:hover { background: rgba(188,0,221,0.15); box-shadow: 0 0 20px var(--neon-witch); }
 
-        /* 지도 모달 전용 */
-        .map-modal-icon { font-size: 3.5rem; margin: 10px 0 20px; text-shadow: 0 0 20px currentColor; }
-        .map-modal-title { font-family: 'Orbitron', 'Noto Sans KR', sans-serif; font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
+        /* HUD 비주얼 지도 (그리드) */
+        .visual-map-board {
+            display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(4, 55px); gap: 4px;
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px; margin-bottom: 15px;
+        }
+        .map-cell {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 6px; position: relative; border: 1px dashed rgba(255,255,255,0.05); transition: 0.3s;
+        }
+        .map-cell.active { background: rgba(255,255,255,0.03); cursor: pointer; border-style: solid; }
+        .map-cell.active:hover { transform: scale(1.1); z-index: 2; }
+        .map-cell-icon { font-size: 1.2rem; margin-bottom: 4px; text-shadow: 0 0 8px currentColor; }
+        .map-cell-name { font-size: 0.55rem; font-family: 'Noto Sans KR', sans-serif; text-align: center; color: #ddd; line-height: 1.2; word-break: keep-all; }
+        
+        .human-theme .map-cell.active { border-color: rgba(255,65,108,0.4); }
+        .human-theme .map-cell.active:hover { background: rgba(255,65,108,0.2); box-shadow: 0 0 12px var(--neon-human); }
+        .human-theme .map-cell-icon { color: var(--neon-human); }
+
+        .witch-theme .map-cell.active { border-color: rgba(188,0,221,0.4); }
+        .witch-theme .map-cell.active:hover { background: rgba(188,0,221,0.2); box-shadow: 0 0 12px var(--neon-witch); }
+        .witch-theme .map-cell-icon { color: var(--neon-witch); }
+
+        /* 지도 텍스트 리스트 */
+        .map-list-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .map-node {
+            background: rgba(255,65,108,0.05); border: 1px solid rgba(255,65,108,0.3); border-radius: 10px;
+            padding: 12px 8px; text-align: center; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .map-node:hover { background: rgba(255,65,108,0.15); border-color: var(--neon-human); box-shadow: 0 0 12px rgba(255,65,108,0.4); transform: translateY(-2px); }
+        .map-node.witch-node { background: rgba(188,0,221,0.05); border-color: rgba(188,0,221,0.3); }
+        .map-node.witch-node:hover { background: rgba(188,0,221,0.15); border-color: var(--neon-witch); box-shadow: 0 0 12px rgba(188,0,221,0.4); }
+        .map-icon { font-size: 1.5rem; margin-bottom: 6px; color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
+        .map-node-title { font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; line-height: 1.2; }
+        .map-node-type { font-size: 0.6rem; color: #bbb; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; }
+
+        .map-modal-icon { font-size: 3rem; margin: 10px 0 15px; text-shadow: 0 0 20px currentColor; }
+        .map-modal-title { font-family: 'Orbitron', 'Noto Sans KR', sans-serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -252,14 +282,24 @@
         </main>
         
         <main id="tab-map" class="content-section">
-            <div class="card" style="border-color: var(--neon-human); box-shadow: inset 0 0 15px rgba(255,65,108,0.1);">
-                <h2 style="justify-content: center; color: var(--neon-human);">
-                    <i class="fas fa-map-marked-alt"></i> 인간 왕국 전도 (HUD)
+            <div style="text-align: center;">
+                <button id="dim-toggle-btn" class="dim-toggle" onclick="toggleMapDimension()">
+                    <span id="dim-btn-text">차원 변환: 인간계 </span> <i class="fas fa-exchange-alt"></i>
+                </button>
+            </div>
+            
+            <div id="map-main-card" class="card" style="border-color: var(--neon-human); box-shadow: inset 0 0 15px rgba(255,65,108,0.05);">
+                <h2 style="justify-content: center;">
+                    <i id="map-main-icon" class="fas fa-map-marked-alt" style="color: var(--neon-human);"></i> 
+                    <span id="map-main-title-text" style="color: var(--neon-human);"> 인간 왕국 전도 (HUD)</span>
                 </h2>
-                <p style="text-align: center; font-size: 0.8rem; color: #aaa; margin-bottom: 10px;">
+                
+                <div id="visual-map-board" class="visual-map-board human-theme"></div>
+
+                <p style="text-align: center; font-size: 0.75rem; color: #aaa; margin: 15px 0 10px;">
                     해당 지역의 노드를 터치하여 상세 정보를 확인하세요.
                 </p>
-                <div id="map-grid-container" class="map-grid"></div>
+                <div id="map-grid-container" class="map-list-container"></div>
             </div>
         </main>
     </div>
@@ -293,7 +333,6 @@
             </div>
             <h2 id="modal-name" class="modal-name"></h2>
             <div id="modal-level" class="modal-level"></div>
-            
             <div class="stat-grid">
                 <div class="stat-item"><span class="stat-label">MBTI</span><span id="modal-mbti" class="stat-val"></span></div>
                 <div class="stat-item"><span class="stat-label">ENNEAGRAM</span><span id="modal-eg" class="stat-val"></span></div>
@@ -301,7 +340,6 @@
                 <div class="stat-item"><span class="stat-label">HEIGHT</span><span id="modal-height" class="stat-val"></span></div>
                 <div class="stat-item" style="grid-column: span 2;"><span class="stat-label">ALIGNMENT</span><span id="modal-align" class="stat-val"></span></div>
             </div>
-
             <div id="modal-desc" class="modal-desc"></div>
         </div>
     </div>
@@ -309,15 +347,10 @@
     <div id="map-modal" class="modal-overlay" onclick="closeModal(event, 'map-modal')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <i class="fas fa-times modal-close" onclick="closeModal(event, 'map-modal', true)"></i>
-            <div style="text-align: center;">
-                <i id="map-modal-icon" class="fas map-modal-icon"></i>
-            </div>
+            <div style="text-align: center;"><i id="map-modal-icon" class="fas map-modal-icon"></i></div>
             <h2 id="map-modal-title" class="map-modal-title"></h2>
             <div class="stat-grid" style="grid-template-columns: 1fr; margin-bottom: 15px;">
-                <div class="stat-item">
-                    <span class="stat-label">LOCATION TYPE</span>
-                    <span id="map-modal-type" class="stat-val"></span>
-                </div>
+                <div class="stat-item"><span class="stat-label">LOCATION TYPE</span><span id="map-modal-type" class="stat-val"></span></div>
             </div>
             <div id="map-modal-desc" class="modal-desc"></div>
         </div>
@@ -326,25 +359,25 @@
 
 <script>
     // ----------------------------------------------------
-    // 1. 캐릭터 데이터 및 로직
+    // 1. 캐릭터 데이터 (최소 20세, 세라 400세 9써클 적용 완료)
     // ----------------------------------------------------
     const charData = [
-        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '불명', height: '174cm', alignment: '질서 악', desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
-        { id: 'd', name: '세라', faction: 'witch', level: '8써클 대마법사', ability: '차원문 능력', mbti: 'INTP', enneagram: '5w4', age: '20대 중반', height: '162cm', alignment: '참 중립', desc: '인간계에 작은 도서관을 운영 중. 도서관은 겉으론 평범하지만 그녀의 능력으로 차원을 오갈 수 있는 비밀 통로다. 책 읽는 걸 좋아하며 극심한 귀차니즘.' },
-        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종', mbti: 'ISFP', enneagram: '9w1', age: '10대 후반', height: '155cm', alignment: '중립 선', desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 사는 중이다.' },
-        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성/조종', mbti: 'ENTJ', enneagram: '8w7', age: '20대 후반', height: '168cm', alignment: '혼돈 악', desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 하는 과격파. 에델가르드가 폭주를 저지하고 있다.' },
-        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', mbti: 'ESTP', enneagram: '7w8', age: '20대 초반', height: '170cm', alignment: '혼돈 선', desc: '엄청난 운동광. 바다 근처에 살며 매일 런닝과 근력 운동을 거르지 않는다. 질량을 부여해 주먹 한 방으로 바위를 부순다.' },
-        { id: 'k', name: '루나', faction: 'witch', level: '8써클 아크메이저', ability: '미래 예지', mbti: 'INFJ', enneagram: '4w5', age: '20대 중반', height: '160cm', alignment: '참 중립', desc: '미래를 보고 마나의 흐름을 읽는 패시브를 지녔다. 눈의 피로를 덜기 위해 안대를 쓴다. 말이 없지만 동료들을 가장 많이 챙긴다.' },
-        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', mbti: 'ISTP', enneagram: '5w6', age: '10대 후반', height: '158cm', alignment: '혼돈 중립', desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
-        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', mbti: 'INFP', enneagram: '4w3', age: '10대 중반', height: '150cm', alignment: '혼돈 악', desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
-        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터 하', ability: '여왕', mbti: 'ESTJ', enneagram: '3w4', age: '30대 중반', height: '175cm', alignment: '질서 중립', desc: '종교 국가의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
-        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터 상', ability: '기사단장', mbti: 'ISTJ', enneagram: '1w2', age: '20대 후반', height: '172cm', alignment: '질서 선', desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
-        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트 상', ability: '정예 기사', mbti: 'ISFJ', enneagram: '6w5', age: '20대 초반', height: '165cm', alignment: '중립 선', desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
-        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트 하', ability: '암살자', mbti: 'ISTP', enneagram: '5w6', age: '20대 중반', height: '178cm', alignment: '절대 중립', desc: '여왕의 그림자. 비밀 호위 임무와 동시에 은신처 외곽의 마녀들을 암살하는 더러운 일을 병행한다.' },
-        { id: 'v', name: '소피아', faction: 'human', level: '트레이니 하', ability: '수녀', mbti: 'INTP', enneagram: '5w4', age: '10대 후반', height: '156cm', alignment: '질서 선', desc: '무력은 약하지만 학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
-        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저 하', ability: '용병', mbti: 'ENTP', enneagram: '7w8', age: '20대 초반', height: '152cm', alignment: '혼돈 중립', desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 성향의 정보상 겸 용병.' },
-        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '혼혈', mbti: 'ISFP', enneagram: '9w8', age: '10대 후반', height: '154cm', alignment: '참 중립', desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 깊은 산속에 홀로 숨어 산다.' },
-        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '묘지기', mbti: 'ISFJ', enneagram: '2w1', age: '50대 초반', height: '185cm', alignment: '질서 선', desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
+        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '800세 (외형 30대)', height: '174cm', alignment: '질서 악', desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
+        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '차원문 능력', mbti: 'INTP', enneagram: '5w4', age: '400세', height: '162cm', alignment: '참 중립', desc: '인간계에 작은 도서관을 운영 중. 도서관은 겉으론 평범하지만 그녀의 엄청난 능력으로 차원을 오갈 수 있는 비밀 통로다. 책 읽는 걸 좋아하며 극심한 귀차니즘.' },
+        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종', mbti: 'ISFP', enneagram: '9w1', age: '20세', height: '155cm', alignment: '중립 선', desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 사는 중이다.' },
+        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성/조종', mbti: 'ENTJ', enneagram: '8w7', age: '28세', height: '168cm', alignment: '혼돈 악', desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 하는 과격파. 에델가르드가 폭주를 저지하고 있다.' },
+        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', mbti: 'ESTP', enneagram: '7w8', age: '22세', height: '170cm', alignment: '혼돈 선', desc: '엄청난 운동광. 바다 근처에 살며 매일 런닝과 근력 운동을 거르지 않는다. 질량을 부여해 주먹 한 방으로 바위를 부순다.' },
+        { id: 'k', name: '루나', faction: 'witch', level: '8써클 아크메이저', ability: '미래 예지', mbti: 'INFJ', enneagram: '4w5', age: '25세', height: '160cm', alignment: '참 중립', desc: '미래를 보고 마나의 흐름을 읽는 패시브를 지녔다. 눈의 피로를 덜기 위해 안대를 쓴다. 말이 없지만 동료들을 가장 많이 챙긴다.' },
+        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', mbti: 'ISTP', enneagram: '5w6', age: '20세', height: '158cm', alignment: '혼돈 중립', desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
+        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', mbti: 'INFP', enneagram: '4w3', age: '20세', height: '150cm', alignment: '혼돈 악', desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
+        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터 하', ability: '여왕', mbti: 'ESTJ', enneagram: '3w4', age: '35세', height: '175cm', alignment: '질서 중립', desc: '종교 국가의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
+        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터 상', ability: '기사단장', mbti: 'ISTJ', enneagram: '1w2', age: '29세', height: '172cm', alignment: '질서 선', desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
+        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트 상', ability: '정예 기사', mbti: 'ISFJ', enneagram: '6w5', age: '23세', height: '165cm', alignment: '중립 선', desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
+        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트 하', ability: '암살자', mbti: 'ISTP', enneagram: '5w6', age: '26세', height: '178cm', alignment: '절대 중립', desc: '여왕의 그림자. 비밀 호위 임무와 동시에 은신처 외곽의 마녀들을 암살하는 더러운 일을 병행한다.' },
+        { id: 'v', name: '소피아', faction: 'human', level: '트레이니 하', ability: '수녀', mbti: 'INTP', enneagram: '5w4', age: '20세', height: '156cm', alignment: '질서 선', desc: '무력은 약하지만 학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
+        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저 하', ability: '용병', mbti: 'ENTP', enneagram: '7w8', age: '21세', height: '152cm', alignment: '혼돈 중립', desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 성향의 정보상 겸 용병.' },
+        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '혼혈', mbti: 'ISFP', enneagram: '9w8', age: '20세', height: '154cm', alignment: '참 중립', desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 깊은 산속에 홀로 숨어 산다.' },
+        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '묘지기', mbti: 'ISFJ', enneagram: '2w1', age: '54세', height: '185cm', alignment: '질서 선', desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
     ];
 
     function preloadImages() {
@@ -358,18 +391,15 @@
         const container = document.getElementById('character-list-container');
         container.innerHTML = '';
         const filtered = charData.filter(c => filter === 'all' || c.faction === filter);
-        
         filtered.forEach(char => {
             const thumbColor = char.faction === 'witch' ? 'thumb-witch' : (char.faction === 'human' ? 'thumb-human' : 'thumb-neutral');
             const factionText = char.faction === 'witch' ? '마녀' : (char.faction === 'human' ? '인간' : '중립');
             const factionTag = `<span style="color:var(--neon-${char.faction}); font-size:0.8rem; margin-right:5px;">[${factionText}]</span>`;
-            
-            const imgSrc = `https://igx.kr/u/LY/${char.id}/1`;
             const el = document.createElement('div');
             el.className = 'char-item';
             el.onclick = () => openCharModal(char);
             el.innerHTML = `
-                <img src="${imgSrc}" class="char-thumb ${thumbColor}" alt="${char.name}" onerror="this.src='https://via.placeholder.com/50/222/fff?text=?'">
+                <img src="https://igx.kr/u/LY/${char.id}/1" class="char-thumb ${thumbColor}" alt="${char.name}" onerror="this.src='https://via.placeholder.com/50/222/fff?text=?'">
                 <div class="char-info">
                     <div class="char-name">${factionTag}${char.name}</div>
                     <div class="char-sub">${char.level} / ${char.ability}</div>
@@ -382,38 +412,99 @@
     renderCharacters();
 
     // ----------------------------------------------------
-    // 2. 지도 지역 데이터 및 로직
+    // 2. 지도 지역 데이터 (인간계 & 마녀계 분리 + 좌표 추가)
     // ----------------------------------------------------
-    const mapNodes = [
-        { id: 'm1', name: '성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', desc: '인간 진영의 심장부이자 여왕 카트린이 통치하는 거대한 수도. 겹겹의 거룩한 빛의 결계가 도시를 보호하고 있으며, 마녀 척결을 위한 모든 군사 및 종교적 명령이 이곳에서 하달된다.' },
-        { id: 'm2', name: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', desc: '기사단장 브룬힐데가 이끄는 은백색 기사단의 메인 요새. 끝없는 무력 단련과 전술 훈련이 이루어지는 곳으로, 기사들은 매일같이 가상의 마녀들과 피 흘리며 싸우는 훈련을 받는다.' },
-        { id: 'm3', name: '이단 심문소 연옥', type: '고문 수용소', faction: 'human', icon: 'fa-fire-burner', desc: '포획되거나 의심받는 마녀들이 수용되는 끔찍한 장소. 지하 깊숙이 위치해 비명소리조차 새어나오지 않는다. 한 번 들어가면 살아서 나올 수 없는 잔혹한 처형장이다.' },
-        { id: 'm4', name: '잿빛 공동묘지', type: '중립 구역', faction: 'neutral', icon: 'fa-cross', desc: '과거 대전쟁이 일어났던 격전지의 흔적. 그랜드마스터 칼리안이 은퇴 후 머물고 있는 거대한 무덤 지대다. 진영을 막론하고 죽은 자들의 영혼이 떠도는 을씨년스러운 곳이다.' },
-        { id: 'm5', name: '지하 도시 오즈', type: '불법 암시장', faction: 'neutral', icon: 'fa-dungeon', desc: '교단의 감시가 닿지 않는 거대한 지하 슬럼가. 레이븐 같은 정보상이나 용병들이 암약하며, 운이 좋다면 마녀들이 만들어낸 마도구나 포션도 뒷거래로 구할 수 있다.' },
-        { id: 'm6', name: '비밀 도서관 (세라)', type: '차원 연결점', faction: 'neutral', icon: 'fa-book-journal-whills', desc: '왕국 변두리에 위치한 낡고 조용한 도서관. 평범해 보이지만 사실 대마법사 세라가 운영하는 곳으로, 조건이 맞으면 마녀들의 은신처 차원으로 넘어갈 수 있는 게이트가 열린다.' }
+    const humanMapNodes = [
+        { id: 'h1', name: '뤼미에르', fullName: '성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', desc: '인간 진영의 심장부이자 여왕 카트린이 통치하는 거대한 수도. 겹겹의 거룩한 빛의 결계가 도시를 보호하고 있으며, 마녀 척결을 위한 모든 군사 명령이 하달된다.', x: 3, y: 3 },
+        { id: 'h2', name: '아이기스', fullName: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', desc: '기사단장 브룬힐데가 이끄는 은백색 기사단의 메인 요새. 끝없는 무력 단련과 전술 훈련이 이루어지는 철벽의 성채.', x: 2, y: 4 },
+        { id: 'h3', name: '이단심문소', fullName: '이단 심문소 연옥', type: '고문 수용소', faction: 'human', icon: 'fa-fire-burner', desc: '포획되거나 의심받는 마녀들이 수용되는 끔찍한 장소. 지하 깊숙이 위치해 비명소리조차 새어나오지 않는 잔혹한 처형장이다.', x: 4, y: 3 },
+        { id: 'h4', name: '지하 오즈', fullName: '지하 도시 오즈', type: '불법 암시장', faction: 'neutral', icon: 'fa-dungeon', desc: '교단의 감시가 닿지 않는 거대한 지하 슬럼가. 정보상이나 용병들이 암약하며, 마녀들이 만든 마도구나 포션도 뒷거래로 구할 수 있다.', x: 4, y: 1 },
+        { id: 'h5', name: '비밀 도서관', fullName: '비밀 도서관 (세라)', type: '차원 연결점', faction: 'neutral', icon: 'fa-book-journal-whills', desc: '왕국 변두리에 위치한 낡은 도서관. 대마법사 세라가 운영하며, 조건이 맞으면 마녀들의 은신처 차원으로 넘어갈 수 있는 게이트가 열린다.', x: 1, y: 2 },
+        { id: 'h6', name: '바르간', fullName: '상업도시 바르간', type: '경제 중심지', faction: 'human', icon: 'fa-coins', desc: '인간계 최대 상업 도시. 겉으로는 평화롭고 번영했지만 뒤에서는 마녀 사냥에 쓰이는 무기와 자금이 은밀하게 거래된다.', x: 2, y: 2 },
+        { id: 'h7', name: '공동묘지', fullName: '잿빛 공동묘지', type: '중립 구역', faction: 'neutral', icon: 'fa-cross', desc: '과거 대전쟁이 일어났던 격전지. 그랜드마스터 칼리안이 머물며 죽은 자들의 영혼을 달래는 으스스한 장소다.', x: 5, y: 4 }
     ];
 
-    function renderMapNodes() {
-        const container = document.getElementById('map-grid-container');
-        container.innerHTML = '';
+    const witchMapNodes = [
+        { id: 'w1', name: '여왕의 옥좌', fullName: '에델가르드의 옥좌', type: '통치 구역', faction: 'witch', icon: 'fa-crown', desc: '일그러진 차원의 중심부. 마녀의 여왕 에델가르드가 머물며 거대한 중력을 제어해 은신처 차원의 붕괴를 직접 막아내고 있다.', x: 3, y: 2 },
+        { id: 'w2', name: '관측소', fullName: '별무리 관측소', type: '예지 구역', faction: 'witch', icon: 'fa-meteor', desc: '마나의 흐름이 모이는 거대한 마탑. 아크메이저 루나가 이곳에서 미래를 관측하며 인간계의 동향을 파악한다.', x: 4, y: 1 },
+        { id: 'w3', name: '핏빛 호수', fullName: '핏빛 호수', type: '위험 방어선', faction: 'witch', icon: 'fa-water', desc: '베로니카의 마력이 깃든 섬뜩한 붉은 호수. 무단으로 다가가는 자의 혈액을 끓어오르게 만드는 공포의 천연 요새 역할을 한다.', x: 5, y: 3 },
+        { id: 'w4', name: '생명 온실', fullName: '생명의 온실', type: '휴식 구역', faction: 'witch', icon: 'fa-leaf', desc: '척박한 차원 내에서 유일하게 생명의 기운이 감도는 식물원. 이브가 능력을 사용해 상처 입은 마녀들에게 안식을 제공하고 있다.', x: 1, y: 2 },
+        { id: 'w5', name: '인형의 집', fullName: '버려진 인형의 집', type: '거주 구역', faction: 'witch', icon: 'fa-ghost', desc: '니나가 거주하는 저택. 수백 개의 움직이는 인형들이 불침번을 서며 으스스하고 기괴한 분위기를 자아낸다.', x: 2, y: 4 },
+        { id: 'w6', name: '연금 공방', fullName: '시엘의 연금 공방', type: '연구 구역', faction: 'witch', icon: 'fa-flask', desc: '시엘이 은둔하며 온갖 포션과 마도구를 제작하는 장소. 가끔씩 정체를 알 수 없는 거대한 폭발음이 들려온다.', x: 2, y: 1 },
+        { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', desc: '인간계(세라의 도서관)와 이어지는 유일한 통로. 에델가르드의 강력한 봉인과 마법진으로 삼엄하게 보호받고 있다.', x: 3, y: 4 }
+    ];
 
-        mapNodes.forEach(node => {
+    let currentMapDim = 'human';
+
+    function renderMap() {
+        const visualBoard = document.getElementById('visual-map-board');
+        const listContainer = document.getElementById('map-grid-container');
+        const titleIcon = document.getElementById('map-main-icon');
+        const titleText = document.getElementById('map-main-title-text');
+        const mainCard = document.getElementById('map-main-card');
+        const dimToggle = document.getElementById('dim-toggle-btn');
+        const dimToggleText = document.getElementById('dim-btn-text');
+
+        const nodes = currentMapDim === 'human' ? humanMapNodes : witchMapNodes;
+        const themeClass = currentMapDim === 'human' ? 'human-theme' : 'witch-theme';
+        const borderColor = currentMapDim === 'human' ? 'var(--neon-human)' : 'var(--neon-witch)';
+        const cardBg = currentMapDim === 'human' ? 'rgba(255,65,108,0.05)' : 'rgba(188,0,221,0.05)';
+
+        // 1. 컨테이너 테마 업데이트
+        visualBoard.className = `visual-map-board ${themeClass}`;
+        mainCard.style.borderColor = borderColor;
+        mainCard.style.boxShadow = `inset 0 0 15px ${cardBg}`;
+        titleIcon.className = currentMapDim === 'human' ? 'fas fa-map-marked-alt' : 'fas fa-moon';
+        titleIcon.style.color = borderColor;
+        titleText.innerText = currentMapDim === 'human' ? ' 인간 왕국 전도 (HUD)' : ' 마녀 은신처 지도 (HUD)';
+        titleText.style.color = borderColor;
+
+        if (currentMapDim === 'human') {
+            dimToggle.className = 'dim-toggle';
+            dimToggleText.innerText = '차원 변환: 인간계 ';
+        } else {
+            dimToggle.className = 'dim-toggle witch-mode';
+            dimToggleText.innerText = '차원 변환: 은신처 ';
+        }
+
+        // 2. 비주얼 그리드 맵 렌더링 (5x4)
+        visualBoard.innerHTML = '';
+        for (let y = 1; y <= 4; y++) {
+            for (let x = 1; x <= 5; x++) {
+                const node = nodes.find(n => n.x === x && n.y === y);
+                const cell = document.createElement('div');
+                if (node) {
+                    cell.className = 'map-cell active';
+                    cell.onclick = () => openMapModal(node);
+                    cell.innerHTML = `<i class="fas ${node.icon} map-cell-icon"></i><div class="map-cell-name">${node.name}</div>`;
+                } else {
+                    cell.className = 'map-cell empty';
+                }
+                visualBoard.appendChild(cell);
+            }
+        }
+
+        // 3. 텍스트 리스트 렌더링
+        listContainer.innerHTML = '';
+        nodes.forEach(node => {
             const el = document.createElement('div');
-            el.className = `map-node ${node.faction === 'neutral' ? 'neutral' : ''}`;
+            el.className = `map-node ${currentMapDim === 'witch' ? 'witch-node' : ''}`;
             el.onclick = () => openMapModal(node);
-            
-            el.innerHTML = `
-                <i class="fas ${node.icon} map-icon"></i>
-                <div class="map-node-title">${node.name}</div>
-                <div class="map-node-type">${node.type}</div>
-            `;
-            container.appendChild(el);
+            el.innerHTML = `<i class="fas ${node.icon} map-icon"></i><div class="map-node-title">${node.fullName}</div><div class="map-node-type">${node.type}</div>`;
+            listContainer.appendChild(el);
         });
     }
-    renderMapNodes();
+
+    function toggleMapDimension() {
+        currentMapDim = currentMapDim === 'human' ? 'witch' : 'human';
+        renderMap(); // 맵 다시 그리기
+    }
+
+    // 초기 맵 렌더링
+    renderMap();
 
     // ----------------------------------------------------
-    // 3. UI 제어 및 모달 시스템
+    // 3. 탭 및 모달 제어
     // ----------------------------------------------------
     function switchTab(tabId, element) {
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
@@ -429,8 +520,7 @@
 
     function selectFromMenu(tabId) {
         toggleMenu(false); 
-        const targetNav = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
-        switchTab(tabId, targetNav);
+        switchTab(tabId, document.querySelector(`.nav-item[data-tab="${tabId}"]`));
     }
 
     function filterChars(type, btn) {
@@ -459,27 +549,23 @@
         }
     }
 
-    // 캐릭터 모달 열기
+    // 캐릭터 모달 & 애니메이션 격리
     let isLunaEyepatchOn = true;
     function openCharModal(char) {
         const modal = document.getElementById('char-modal');
         const img = document.getElementById('modal-img');
-        const name = document.getElementById('modal-name');
-        const level = document.getElementById('modal-level');
-        const desc = document.getElementById('modal-desc');
         const lunaAction = document.getElementById('luna-action');
 
-        // 버그 수정: 모달을 열 때마다 이전 애니메이션 속성 강제 초기화
-        img.style.animation = 'none';
+        img.style.animation = 'none'; // 애니메이션 초기화 (버그 방지)
 
         let borderColor = `var(--neon-${char.faction})`;
         img.style.borderColor = borderColor;
         img.style.boxShadow = `0 5px 20px ${borderColor}`;
         
-        name.innerText = char.name;
-        name.style.color = borderColor;
-        name.style.textShadow = `0 0 10px ${borderColor}`;
-        level.innerText = `${char.level} | ${char.ability}`;
+        document.getElementById('modal-name').innerText = char.name;
+        document.getElementById('modal-name').style.color = borderColor;
+        document.getElementById('modal-name').style.textShadow = `0 0 10px ${borderColor}`;
+        document.getElementById('modal-level').innerText = `${char.level} | ${char.ability}`;
 
         document.getElementById('modal-mbti').innerText = char.mbti;
         document.getElementById('modal-eg').innerText = char.enneagram;
@@ -488,8 +574,8 @@
         document.getElementById('modal-align').innerText = char.alignment;
         document.getElementById('modal-align').style.color = borderColor;
 
-        desc.innerText = char.desc;
-        desc.style.borderLeftColor = borderColor;
+        document.getElementById('modal-desc').innerText = char.desc;
+        document.getElementById('modal-desc').style.borderLeftColor = borderColor;
 
         if(char.id === 'k') {
             img.src = `https://igx.kr/u/LY/${isLunaEyepatchOn ? 'k' : 'l'}/1`;
@@ -500,49 +586,42 @@
             img.src = `https://igx.kr/u/LY/${char.id}/1`;
             lunaAction.style.display = 'none';
         }
-
         modal.classList.add('show');
     }
 
     function toggleEyepatch() {
         const img = document.getElementById('modal-img');
-        const btnText = document.getElementById('luna-btn-text');
-        const btnIcon = document.getElementById('luna-btn-icon');
-        
         img.style.animation = 'none';
         void img.offsetWidth;
         img.style.animation = 'magicFlash 0.6s ease-in-out';
-        
         setTimeout(() => {
             isLunaEyepatchOn = !isLunaEyepatchOn; 
             img.src = `https://igx.kr/u/LY/${isLunaEyepatchOn ? 'k' : 'l'}/1`;
-            btnText.innerText = isLunaEyepatchOn ? "안대 벗기기" : "안대 씌우기";
-            btnIcon.className = isLunaEyepatchOn ? "fas fa-eye-slash" : "fas fa-eye";
+            document.getElementById('luna-btn-text').innerText = isLunaEyepatchOn ? "안대 벗기기" : "안대 씌우기";
+            document.getElementById('luna-btn-icon').className = isLunaEyepatchOn ? "fas fa-eye-slash" : "fas fa-eye";
         }, 300);
     }
 
-    // 지도 모달 열기
+    // 맵 상세 모달 열기
     function openMapModal(node) {
         const modal = document.getElementById('map-modal');
-        const icon = document.getElementById('map-modal-icon');
-        const title = document.getElementById('map-modal-title');
-        const type = document.getElementById('map-modal-type');
-        const desc = document.getElementById('map-modal-desc');
-
-        let themeColor = node.faction === 'human' ? 'var(--neon-human)' : 'var(--neon-neutral)';
-
-        icon.className = `fas ${node.icon} map-modal-icon`;
-        icon.style.color = themeColor;
+        let themeColor = currentMapDim === 'human' ? 'var(--neon-human)' : 'var(--neon-witch)';
         
-        title.innerText = node.name;
-        title.style.color = themeColor;
-        title.style.textShadow = `0 0 10px ${themeColor}`;
-        
-        type.innerText = node.type;
-        type.style.color = themeColor;
+        // 중립 지역 예외처리
+        if (currentMapDim === 'human' && node.faction === 'neutral') themeColor = 'var(--neon-neutral)';
 
-        desc.innerText = node.desc;
-        desc.style.borderLeftColor = themeColor;
+        document.getElementById('map-modal-icon').className = `fas ${node.icon} map-modal-icon`;
+        document.getElementById('map-modal-icon').style.color = themeColor;
+        
+        document.getElementById('map-modal-title').innerText = node.fullName;
+        document.getElementById('map-modal-title').style.color = themeColor;
+        document.getElementById('map-modal-title').style.textShadow = `0 0 10px ${themeColor}`;
+        
+        document.getElementById('map-modal-type').innerText = node.type;
+        document.getElementById('map-modal-type').style.color = themeColor;
+
+        document.getElementById('map-modal-desc').innerText = node.desc;
+        document.getElementById('map-modal-desc').style.borderLeftColor = themeColor;
 
         modal.classList.add('show');
     }
