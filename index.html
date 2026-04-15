@@ -38,7 +38,7 @@
             display: flex; flex-direction: column; overflow: hidden;
         }
 
-        /* 우주 배경 */
+        /* 우주 별 배경 */
         .stars-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
             background-image: 
@@ -164,7 +164,7 @@
         .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: #fff; cursor: pointer; z-index: 10; }
         .modal-desc { font-size: 0.9rem; color: #ddd; line-height: 1.7; text-align: left; padding: 15px; background: rgba(0,0,0,0.5); border-radius: 10px; border-left: 3px solid var(--neon-primary); }
 
-        /* 캐릭터 모달 */
+        /* 캐릭터 모달 요소 */
         .modal-img-wrapper { position: relative; display: inline-block; margin-bottom: 15px; }
         .modal-img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; border: 2px solid; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .modal-name { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin-bottom: 5px; font-weight: 900; letter-spacing: 2px; }
@@ -178,7 +178,9 @@
         .eyepatch-btn:active { transform: scale(0.95); }
         @keyframes magicFlash { 0% { filter: brightness(1) blur(0); opacity: 1; } 50% { filter: brightness(3) blur(10px); opacity: 0; transform: scale(1.05); } 100% { filter: brightness(1) blur(0); opacity: 1; transform: scale(1); } }
 
-        /* 차원 변환 버튼 */
+        /* ==================================================== */
+        /* 신규 지도: HUD 스타일 실제 맵 (절대좌표 위치) */
+        /* ==================================================== */
         .dim-toggle {
             background: rgba(255,255,255,0.05); border: 1px solid var(--neon-human); color: #fff;
             padding: 12px 25px; border-radius: 30px; font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem; font-weight: bold;
@@ -188,29 +190,69 @@
         .dim-toggle.witch-mode { border-color: var(--neon-witch); box-shadow: 0 0 15px rgba(188,0,221,0.3); }
         .dim-toggle.witch-mode:hover { background: rgba(188,0,221,0.15); box-shadow: 0 0 20px var(--neon-witch); }
 
-        /* HUD 비주얼 지도 (그리드) */
-        .visual-map-board {
-            display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(4, 55px); gap: 4px;
-            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px; margin-bottom: 15px;
+        /* HUD 맵 보드 (레이더 컨테이너) */
+        .hud-map-board {
+            position: relative; height: 300px; width: 100%; border-radius: 12px;
+            background: linear-gradient(135deg, rgba(10,10,15,0.9), rgba(0,0,0,0.9));
+            overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1);
         }
-        .map-cell {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border-radius: 6px; position: relative; border: 1px dashed rgba(255,255,255,0.05); transition: 0.3s;
-        }
-        .map-cell.active { background: rgba(255,255,255,0.03); cursor: pointer; border-style: solid; }
-        .map-cell.active:hover { transform: scale(1.1); z-index: 2; }
-        .map-cell-icon { font-size: 1.2rem; margin-bottom: 4px; text-shadow: 0 0 8px currentColor; }
-        .map-cell-name { font-size: 0.55rem; font-family: 'Noto Sans KR', sans-serif; text-align: center; color: #ddd; line-height: 1.2; word-break: keep-all; }
         
-        .human-theme .map-cell.active { border-color: rgba(255,65,108,0.4); }
-        .human-theme .map-cell.active:hover { background: rgba(255,65,108,0.2); box-shadow: 0 0 12px var(--neon-human); }
-        .human-theme .map-cell-icon { color: var(--neon-human); }
+        /* 레이더 파동 배경 */
+        .hud-map-board::before {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 250%; height: 250%;
+            background-image: repeating-radial-gradient(circle, transparent, transparent 20px, rgba(255,255,255,0.05) 21px, transparent 22px);
+            pointer-events: none;
+        }
+        /* 중앙 십자선 */
+        .hud-map-board::after {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 1px; height: 100%; background: rgba(255,255,255,0.1);
+            box-shadow: -120px 0 0 rgba(255,255,255,0.05), 120px 0 0 rgba(255,255,255,0.05);
+            pointer-events: none;
+        }
+        .hud-map-board .horizontal-line {
+            position: absolute; top: 50%; left: 0; width: 100%; height: 1px;
+            background: rgba(255,255,255,0.1); pointer-events: none;
+            box-shadow: 0 -80px 0 rgba(255,255,255,0.05), 0 80px 0 rgba(255,255,255,0.05);
+        }
 
-        .witch-theme .map-cell.active { border-color: rgba(188,0,221,0.4); }
-        .witch-theme .map-cell.active:hover { background: rgba(188,0,221,0.2); box-shadow: 0 0 12px var(--neon-witch); }
-        .witch-theme .map-cell-icon { color: var(--neon-witch); }
+        /* 맵 핀 (거점) */
+        .map-pin {
+            position: absolute; transform: translate(-50%, -50%);
+            display: flex; flex-direction: column; align-items: center; z-index: 10;
+            cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .map-pin:hover { transform: translate(-50%, -50%) scale(1.2); z-index: 20; }
+        
+        .pin-marker {
+            width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: #fff; position: relative; background: rgba(0,0,0,0.6);
+            border: 2px solid currentColor; box-shadow: inset 0 0 10px currentColor, 0 0 10px currentColor;
+        }
+        .pin-marker::before {
+            content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            border: 2px solid currentColor; animation: radarPulse 2s infinite ease-out; opacity: 0.8;
+        }
+        @keyframes radarPulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2); opacity: 0; } }
+        
+        .pin-label {
+            margin-top: 6px; font-size: 0.65rem; font-family: 'Noto Sans KR', sans-serif;
+            background: rgba(0,0,0,0.8); border: 1px solid currentColor; padding: 2px 8px;
+            border-radius: 4px; white-space: nowrap; font-weight: bold; color: #fff;
+        }
 
-        /* 지도 텍스트 리스트 */
+        /* 테마별 색상 제어 */
+        .human-theme .pin-marker { color: var(--neon-human); }
+        .human-theme .pin-label { border-color: var(--neon-human); box-shadow: 0 0 5px var(--neon-human); }
+        
+        .witch-theme .pin-marker { color: var(--neon-witch); }
+        .witch-theme .pin-label { border-color: var(--neon-witch); box-shadow: 0 0 5px var(--neon-witch); }
+        
+        .neutral-pin .pin-marker { color: var(--neon-neutral) !important; }
+        .neutral-pin .pin-label { border-color: var(--neon-neutral) !important; box-shadow: 0 0 5px var(--neon-neutral) !important; }
+
+        /* 하단 텍스트 리스트 디자인 */
         .map-list-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .map-node {
             background: rgba(255,65,108,0.05); border: 1px solid rgba(255,65,108,0.3); border-radius: 10px;
@@ -288,17 +330,16 @@
                 </button>
             </div>
             
-            <div id="map-main-card" class="card" style="border-color: var(--neon-human); box-shadow: inset 0 0 15px rgba(255,65,108,0.05);">
-                <h2 style="justify-content: center;">
+            <div id="map-main-card" class="card" style="border-color: var(--neon-human); box-shadow: inset 0 0 15px rgba(255,65,108,0.05); padding: 15px;">
+                <h2 style="justify-content: center; margin-bottom: 10px;">
                     <i id="map-main-icon" class="fas fa-map-marked-alt" style="color: var(--neon-human);"></i> 
-                    <span id="map-main-title-text" style="color: var(--neon-human);"> 인간 왕국 전도 (HUD)</span>
+                    <span id="map-main-title-text" style="color: var(--neon-human);"> 인간 왕국 전도</span>
                 </h2>
                 
-                <div id="visual-map-board" class="visual-map-board human-theme"></div>
+                <div id="hud-map-board" class="hud-map-board human-theme">
+                    <div class="horizontal-line"></div>
+                    </div>
 
-                <p style="text-align: center; font-size: 0.75rem; color: #aaa; margin: 15px 0 10px;">
-                    해당 지역의 노드를 터치하여 상세 정보를 확인하세요.
-                </p>
                 <div id="map-grid-container" class="map-list-container"></div>
             </div>
         </main>
@@ -359,15 +400,15 @@
 
 <script>
     // ----------------------------------------------------
-    // 1. 캐릭터 데이터 (최소 20세, 세라 400세 9써클 적용 완료)
+    // 1. 캐릭터 데이터 (6써클 이상 나이 업데이트 & 최소 20세)
     // ----------------------------------------------------
     const charData = [
-        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '800세 (외형 30대)', height: '174cm', alignment: '질서 악', desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
+        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '800+α세 (외형 30대)', height: '174cm', alignment: '질서 악', desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
         { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '차원문 능력', mbti: 'INTP', enneagram: '5w4', age: '400세', height: '162cm', alignment: '참 중립', desc: '인간계에 작은 도서관을 운영 중. 도서관은 겉으론 평범하지만 그녀의 엄청난 능력으로 차원을 오갈 수 있는 비밀 통로다. 책 읽는 걸 좋아하며 극심한 귀차니즘.' },
-        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종', mbti: 'ISFP', enneagram: '9w1', age: '20세', height: '155cm', alignment: '중립 선', desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 사는 중이다.' },
-        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성/조종', mbti: 'ENTJ', enneagram: '8w7', age: '28세', height: '168cm', alignment: '혼돈 악', desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 하는 과격파. 에델가르드가 폭주를 저지하고 있다.' },
+        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종', mbti: 'ISFP', enneagram: '9w1', age: '100+α세 (외형 10대 후반)', height: '155cm', alignment: '중립 선', desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 사는 중이다.' },
+        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성/조종', mbti: 'ENTJ', enneagram: '8w7', age: '100+α세 (외형 20대 후반)', height: '168cm', alignment: '혼돈 악', desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 하는 과격파. 에델가르드가 폭주를 저지하고 있다.' },
         { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', mbti: 'ESTP', enneagram: '7w8', age: '22세', height: '170cm', alignment: '혼돈 선', desc: '엄청난 운동광. 바다 근처에 살며 매일 런닝과 근력 운동을 거르지 않는다. 질량을 부여해 주먹 한 방으로 바위를 부순다.' },
-        { id: 'k', name: '루나', faction: 'witch', level: '8써클 아크메이저', ability: '미래 예지', mbti: 'INFJ', enneagram: '4w5', age: '25세', height: '160cm', alignment: '참 중립', desc: '미래를 보고 마나의 흐름을 읽는 패시브를 지녔다. 눈의 피로를 덜기 위해 안대를 쓴다. 말이 없지만 동료들을 가장 많이 챙긴다.' },
+        { id: 'k', name: '루나', faction: 'witch', level: '8써클 아크메이저', ability: '미래 예지', mbti: 'INFJ', enneagram: '4w5', age: '100+α세 (외형 20대 중반)', height: '160cm', alignment: '참 중립', desc: '미래를 보고 마나의 흐름을 읽는 패시브를 지녔다. 눈의 피로를 덜기 위해 안대를 쓴다. 말이 없지만 동료들을 가장 많이 챙긴다.' },
         { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', mbti: 'ISTP', enneagram: '5w6', age: '20세', height: '158cm', alignment: '혼돈 중립', desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
         { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', mbti: 'INFP', enneagram: '4w3', age: '20세', height: '150cm', alignment: '혼돈 악', desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
         { id: 'p', name: '카트린', faction: 'human', level: '소드마스터 하', ability: '여왕', mbti: 'ESTJ', enneagram: '3w4', age: '35세', height: '175cm', alignment: '질서 중립', desc: '종교 국가의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
@@ -412,32 +453,33 @@
     renderCharacters();
 
     // ----------------------------------------------------
-    // 2. 지도 지역 데이터 (인간계 & 마녀계 분리 + 좌표 추가)
+    // 2. 지도 지역 데이터 (절대 좌표 기반 HUD)
     // ----------------------------------------------------
+    // x, y 는 0~100% 비율 (컨테이너 내 위치)
     const humanMapNodes = [
-        { id: 'h1', name: '뤼미에르', fullName: '성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', desc: '인간 진영의 심장부이자 여왕 카트린이 통치하는 거대한 수도. 겹겹의 거룩한 빛의 결계가 도시를 보호하고 있으며, 마녀 척결을 위한 모든 군사 명령이 하달된다.', x: 3, y: 3 },
-        { id: 'h2', name: '아이기스', fullName: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', desc: '기사단장 브룬힐데가 이끄는 은백색 기사단의 메인 요새. 끝없는 무력 단련과 전술 훈련이 이루어지는 철벽의 성채.', x: 2, y: 4 },
-        { id: 'h3', name: '이단심문소', fullName: '이단 심문소 연옥', type: '고문 수용소', faction: 'human', icon: 'fa-fire-burner', desc: '포획되거나 의심받는 마녀들이 수용되는 끔찍한 장소. 지하 깊숙이 위치해 비명소리조차 새어나오지 않는 잔혹한 처형장이다.', x: 4, y: 3 },
-        { id: 'h4', name: '지하 오즈', fullName: '지하 도시 오즈', type: '불법 암시장', faction: 'neutral', icon: 'fa-dungeon', desc: '교단의 감시가 닿지 않는 거대한 지하 슬럼가. 정보상이나 용병들이 암약하며, 마녀들이 만든 마도구나 포션도 뒷거래로 구할 수 있다.', x: 4, y: 1 },
-        { id: 'h5', name: '비밀 도서관', fullName: '비밀 도서관 (세라)', type: '차원 연결점', faction: 'neutral', icon: 'fa-book-journal-whills', desc: '왕국 변두리에 위치한 낡은 도서관. 대마법사 세라가 운영하며, 조건이 맞으면 마녀들의 은신처 차원으로 넘어갈 수 있는 게이트가 열린다.', x: 1, y: 2 },
-        { id: 'h6', name: '바르간', fullName: '상업도시 바르간', type: '경제 중심지', faction: 'human', icon: 'fa-coins', desc: '인간계 최대 상업 도시. 겉으로는 평화롭고 번영했지만 뒤에서는 마녀 사냥에 쓰이는 무기와 자금이 은밀하게 거래된다.', x: 2, y: 2 },
-        { id: 'h7', name: '공동묘지', fullName: '잿빛 공동묘지', type: '중립 구역', faction: 'neutral', icon: 'fa-cross', desc: '과거 대전쟁이 일어났던 격전지. 그랜드마스터 칼리안이 머물며 죽은 자들의 영혼을 달래는 으스스한 장소다.', x: 5, y: 4 }
+        { id: 'h1', name: '뤼미에르', fullName: '성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', x: 50, y: 50, desc: '인간 진영의 심장부이자 여왕 카트린이 통치하는 거대한 수도. 겹겹의 거룩한 빛의 결계가 도시를 보호하고 있으며, 마녀 척결을 위한 모든 군사 명령이 하달된다.' },
+        { id: 'h2', name: '아이기스', fullName: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', x: 25, y: 35, desc: '기사단장 브룬힐데가 이끄는 은백색 기사단의 메인 요새. 끝없는 무력 단련과 전술 훈련이 이루어지는 철벽의 성채.' },
+        { id: 'h3', name: '이단심문소', fullName: '이단 심문소 연옥', type: '고문 수용소', faction: 'human', icon: 'fa-fire-burner', x: 75, y: 40, desc: '포획되거나 의심받는 마녀들이 수용되는 끔찍한 장소. 지하 깊숙이 위치해 비명소리조차 새어나오지 않는 잔혹한 처형장이다.' },
+        { id: 'h4', name: '지하 오즈', fullName: '지하 도시 오즈', type: '불법 암시장', faction: 'neutral', icon: 'fa-dungeon', x: 80, y: 75, desc: '교단의 감시가 닿지 않는 거대한 지하 슬럼가. 정보상이나 용병들이 암약하며, 마녀들이 만든 마도구나 포션도 뒷거래로 구할 수 있다.' },
+        { id: 'h5', name: '도서관', fullName: '비밀 도서관 (세라)', type: '차원 연결점', faction: 'neutral', icon: 'fa-book-journal-whills', x: 15, y: 70, desc: '왕국 변두리에 위치한 낡은 도서관. 대마법사 세라가 운영하며, 조건이 맞으면 마녀들의 은신처 차원으로 넘어갈 수 있는 게이트가 열린다.' },
+        { id: 'h6', name: '바르간', fullName: '상업도시 바르간', type: '경제 중심지', faction: 'human', icon: 'fa-coins', x: 45, y: 20, desc: '인간계 최대 상업 도시. 겉으로는 평화롭고 번영했지만 뒤에서는 마녀 사냥에 쓰이는 무기와 자금이 은밀하게 거래된다.' },
+        { id: 'h7', name: '공동묘지', fullName: '잿빛 공동묘지', type: '중립 구역', faction: 'neutral', icon: 'fa-cross', x: 50, y: 85, desc: '과거 대전쟁이 일어났던 격전지. 그랜드마스터 칼리안이 머물며 죽은 자들의 영혼을 달래는 으스스한 장소다.' }
     ];
 
     const witchMapNodes = [
-        { id: 'w1', name: '여왕의 옥좌', fullName: '에델가르드의 옥좌', type: '통치 구역', faction: 'witch', icon: 'fa-crown', desc: '일그러진 차원의 중심부. 마녀의 여왕 에델가르드가 머물며 거대한 중력을 제어해 은신처 차원의 붕괴를 직접 막아내고 있다.', x: 3, y: 2 },
-        { id: 'w2', name: '관측소', fullName: '별무리 관측소', type: '예지 구역', faction: 'witch', icon: 'fa-meteor', desc: '마나의 흐름이 모이는 거대한 마탑. 아크메이저 루나가 이곳에서 미래를 관측하며 인간계의 동향을 파악한다.', x: 4, y: 1 },
-        { id: 'w3', name: '핏빛 호수', fullName: '핏빛 호수', type: '위험 방어선', faction: 'witch', icon: 'fa-water', desc: '베로니카의 마력이 깃든 섬뜩한 붉은 호수. 무단으로 다가가는 자의 혈액을 끓어오르게 만드는 공포의 천연 요새 역할을 한다.', x: 5, y: 3 },
-        { id: 'w4', name: '생명 온실', fullName: '생명의 온실', type: '휴식 구역', faction: 'witch', icon: 'fa-leaf', desc: '척박한 차원 내에서 유일하게 생명의 기운이 감도는 식물원. 이브가 능력을 사용해 상처 입은 마녀들에게 안식을 제공하고 있다.', x: 1, y: 2 },
-        { id: 'w5', name: '인형의 집', fullName: '버려진 인형의 집', type: '거주 구역', faction: 'witch', icon: 'fa-ghost', desc: '니나가 거주하는 저택. 수백 개의 움직이는 인형들이 불침번을 서며 으스스하고 기괴한 분위기를 자아낸다.', x: 2, y: 4 },
-        { id: 'w6', name: '연금 공방', fullName: '시엘의 연금 공방', type: '연구 구역', faction: 'witch', icon: 'fa-flask', desc: '시엘이 은둔하며 온갖 포션과 마도구를 제작하는 장소. 가끔씩 정체를 알 수 없는 거대한 폭발음이 들려온다.', x: 2, y: 1 },
-        { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', desc: '인간계(세라의 도서관)와 이어지는 유일한 통로. 에델가르드의 강력한 봉인과 마법진으로 삼엄하게 보호받고 있다.', x: 3, y: 4 }
+        { id: 'w1', name: '여왕의 옥좌', fullName: '에델가르드의 옥좌', type: '통치 구역', faction: 'witch', icon: 'fa-crown', x: 50, y: 50, desc: '일그러진 차원의 중심부. 마녀의 여왕 에델가르드가 머물며 거대한 중력을 제어해 은신처 차원의 붕괴를 직접 막아내고 있다.' },
+        { id: 'w2', name: '관측소', fullName: '별무리 관측소', type: '예지 구역', faction: 'witch', icon: 'fa-meteor', x: 75, y: 25, desc: '마나의 흐름이 모이는 거대한 마탑. 아크메이저 루나가 이곳에서 미래를 관측하며 인간계의 동향을 파악한다.' },
+        { id: 'w3', name: '핏빛 호수', fullName: '핏빛 호수', type: '위험 방어선', faction: 'witch', icon: 'fa-water', x: 85, y: 65, desc: '베로니카의 마력이 깃든 섬뜩한 붉은 호수. 무단으로 다가가는 자의 혈액을 끓어오르게 만드는 공포의 천연 요새 역할을 한다.' },
+        { id: 'w4', name: '생명 온실', fullName: '생명의 온실', type: '휴식 구역', faction: 'witch', icon: 'fa-leaf', x: 20, y: 40, desc: '척박한 차원 내에서 유일하게 생명의 기운이 감도는 식물원. 이브가 능력을 사용해 상처 입은 마녀들에게 안식을 제공하고 있다.' },
+        { id: 'w5', name: '인형의 집', fullName: '버려진 인형의 집', type: '거주 구역', faction: 'witch', icon: 'fa-ghost', x: 30, y: 80, desc: '니나가 거주하는 저택. 수백 개의 움직이는 인형들이 불침번을 서며 으스스하고 기괴한 분위기를 자아낸다.' },
+        { id: 'w6', name: '연금 공방', fullName: '시엘의 연금 공방', type: '연구 구역', faction: 'witch', icon: 'fa-flask', x: 25, y: 15, desc: '시엘이 은둔하며 온갖 포션과 마도구를 제작하는 장소. 가끔씩 정체를 알 수 없는 거대한 폭발음이 들려온다.' },
+        { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', x: 50, y: 85, desc: '인간계(세라의 도서관)와 이어지는 유일한 통로. 에델가르드의 강력한 봉인과 마법진으로 삼엄하게 보호받고 있다.' }
     ];
 
     let currentMapDim = 'human';
 
     function renderMap() {
-        const visualBoard = document.getElementById('visual-map-board');
+        const hudBoard = document.getElementById('hud-map-board');
         const listContainer = document.getElementById('map-grid-container');
         const titleIcon = document.getElementById('map-main-icon');
         const titleText = document.getElementById('map-main-title-text');
@@ -450,13 +492,13 @@
         const borderColor = currentMapDim === 'human' ? 'var(--neon-human)' : 'var(--neon-witch)';
         const cardBg = currentMapDim === 'human' ? 'rgba(255,65,108,0.05)' : 'rgba(188,0,221,0.05)';
 
-        // 1. 컨테이너 테마 업데이트
-        visualBoard.className = `visual-map-board ${themeClass}`;
+        // 테마 세팅
+        hudBoard.className = `hud-map-board ${themeClass}`;
         mainCard.style.borderColor = borderColor;
         mainCard.style.boxShadow = `inset 0 0 15px ${cardBg}`;
         titleIcon.className = currentMapDim === 'human' ? 'fas fa-map-marked-alt' : 'fas fa-moon';
         titleIcon.style.color = borderColor;
-        titleText.innerText = currentMapDim === 'human' ? ' 인간 왕국 전도 (HUD)' : ' 마녀 은신처 지도 (HUD)';
+        titleText.innerText = currentMapDim === 'human' ? ' 인간 왕국 전도 (HUD)' : ' 마녀 은신처 차원 (HUD)';
         titleText.style.color = borderColor;
 
         if (currentMapDim === 'human') {
@@ -464,27 +506,27 @@
             dimToggleText.innerText = '차원 변환: 인간계 ';
         } else {
             dimToggle.className = 'dim-toggle witch-mode';
-            dimToggleText.innerText = '차원 변환: 은신처 ';
+            dimToggleText.innerText = '차원 변환: 마녀 차원 ';
         }
 
-        // 2. 비주얼 그리드 맵 렌더링 (5x4)
-        visualBoard.innerHTML = '';
-        for (let y = 1; y <= 4; y++) {
-            for (let x = 1; x <= 5; x++) {
-                const node = nodes.find(n => n.x === x && n.y === y);
-                const cell = document.createElement('div');
-                if (node) {
-                    cell.className = 'map-cell active';
-                    cell.onclick = () => openMapModal(node);
-                    cell.innerHTML = `<i class="fas ${node.icon} map-cell-icon"></i><div class="map-cell-name">${node.name}</div>`;
-                } else {
-                    cell.className = 'map-cell empty';
-                }
-                visualBoard.appendChild(cell);
-            }
-        }
+        // HUD 비주얼 맵 핀 생성 (기존 십자선 유지)
+        hudBoard.innerHTML = '<div class="horizontal-line"></div>';
+        nodes.forEach(node => {
+            const pin = document.createElement('div');
+            // 중립 구역 클래스 추가
+            pin.className = `map-pin ${node.faction === 'neutral' ? 'neutral-pin' : ''}`;
+            pin.style.left = `${node.x}%`;
+            pin.style.top = `${node.y}%`;
+            pin.onclick = () => openMapModal(node);
+            
+            pin.innerHTML = `
+                <div class="pin-marker"><i class="fas ${node.icon}"></i></div>
+                <div class="pin-label">${node.name}</div>
+            `;
+            hudBoard.appendChild(pin);
+        });
 
-        // 3. 텍스트 리스트 렌더링
+        // 하단 텍스트 리스트 생성
         listContainer.innerHTML = '';
         nodes.forEach(node => {
             const el = document.createElement('div');
@@ -497,14 +539,14 @@
 
     function toggleMapDimension() {
         currentMapDim = currentMapDim === 'human' ? 'witch' : 'human';
-        renderMap(); // 맵 다시 그리기
+        renderMap();
     }
 
-    // 초기 맵 렌더링
+    // 초기 렌더링
     renderMap();
 
     // ----------------------------------------------------
-    // 3. 탭 및 모달 제어
+    // 3. UI 및 모달 제어
     // ----------------------------------------------------
     function switchTab(tabId, element) {
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
@@ -549,14 +591,13 @@
         }
     }
 
-    // 캐릭터 모달 & 애니메이션 격리
     let isLunaEyepatchOn = true;
     function openCharModal(char) {
         const modal = document.getElementById('char-modal');
         const img = document.getElementById('modal-img');
         const lunaAction = document.getElementById('luna-action');
 
-        img.style.animation = 'none'; // 애니메이션 초기화 (버그 방지)
+        img.style.animation = 'none';
 
         let borderColor = `var(--neon-${char.faction})`;
         img.style.borderColor = borderColor;
@@ -602,13 +643,10 @@
         }, 300);
     }
 
-    // 맵 상세 모달 열기
     function openMapModal(node) {
         const modal = document.getElementById('map-modal');
         let themeColor = currentMapDim === 'human' ? 'var(--neon-human)' : 'var(--neon-witch)';
-        
-        // 중립 지역 예외처리
-        if (currentMapDim === 'human' && node.faction === 'neutral') themeColor = 'var(--neon-neutral)';
+        if (node.faction === 'neutral') themeColor = 'var(--neon-neutral)';
 
         document.getElementById('map-modal-icon').className = `fas ${node.icon} map-modal-icon`;
         document.getElementById('map-modal-icon').style.color = themeColor;
