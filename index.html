@@ -32,10 +32,39 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.3); border-radius: 10px; }
 
+        /* 진입 스크린 (오버레이) */
+        .entrance-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; cursor: pointer;
+            transition: opacity 0.8s ease-out;
+        }
+        .entrance-title {
+            font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 8px;
+            color: var(--neon-primary); text-shadow: 0 0 20px var(--neon-primary); margin-bottom: 20px;
+        }
+        .entrance-hint {
+            font-size: 0.8rem; font-weight: bold; color: #fff; letter-spacing: 3px;
+            animation: pulseText 1.5s infinite; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.3); border-radius: 30px;
+        }
+        @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* 메인 앱 컨테이너 */
         .app-container {
             width: 100%; max-width: 480px; height: 100dvh; background-color: var(--bg-base);
             position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.9);
-            display: flex; flex-direction: column; overflow: hidden;
+            display: none; /* 진입 스크린에서 켜줌 */
+            flex-direction: column; overflow: hidden;
+            opacity: 0; transform: scale(1.05);
+        }
+        /* 앱 진입 애니메이션 */
+        .app-container.start {
+            display: flex;
+            animation: bootSystem 1s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes bootSystem {
+            0% { opacity: 0; transform: scale(1.1); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
         /* 우주 별 배경 */
@@ -56,19 +85,16 @@
 
         @keyframes twinkle { 0% { opacity: 0.4; } 100% { opacity: 1; transform: scale(1.02); } }
 
-        /* 헤더 */
+        /* 헤더 (메뉴 호출 기능 삭제) */
         .header {
             flex: 0 0 auto; padding: 25px 20px 15px; text-align: center;
             background: linear-gradient(to bottom, rgba(0,0,0,0.95) 40%, transparent);
-            position: relative; z-index: 10; cursor: pointer; transition: transform 0.2s;
+            position: relative; z-index: 10;
         }
-        .header:active { transform: scale(0.98); }
         .header h1 {
             font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 5px;
             text-shadow: 0 0 10px var(--neon-primary), 0 0 20px var(--neon-primary);
-            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .header h1 i { font-size: 1.1rem; opacity: 0.7; }
         .header p { font-size: 0.7rem; color: var(--neon-primary); margin-top: 5px; letter-spacing: 4px; font-weight: bold; }
 
         /* 콘텐츠 영역 */
@@ -132,23 +158,6 @@
         .nav-item.active { color: #fff; }
         .nav-item.active i { color: var(--neon-primary); text-shadow: 0 0 12px var(--neon-primary); transform: translateY(-3px); }
 
-        /* 풀스크린 메뉴 */
-        .fullscreen-menu {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            z-index: 300; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 20px;
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .fullscreen-menu.show { display: flex; opacity: 1; }
-        .menu-close { position: absolute; top: 30px; right: 30px; font-size: 2rem; color: #fff; cursor: pointer; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-        .menu-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--neon-primary); margin-bottom: 20px; letter-spacing: 5px; }
-        .menu-btn {
-            width: 70%; padding: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0, 242, 254, 0.3);
-            border-radius: 12px; color: #fff; font-size: 1.2rem; font-weight: bold; letter-spacing: 2px;
-            display: flex; align-items: center; justify-content: center; gap: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        }
-        .menu-btn:hover { background: rgba(0, 242, 254, 0.1); border-color: var(--neon-primary); box-shadow: 0 0 20px rgba(0,242,254,0.4); transform: scale(1.05); }
-
         /* 모달 공통 */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -178,89 +187,43 @@
         .eyepatch-btn:active { transform: scale(0.95); }
         @keyframes magicFlash { 0% { filter: brightness(1) blur(0); opacity: 1; } 50% { filter: brightness(3) blur(10px); opacity: 0; transform: scale(1.05); } 100% { filter: brightness(1) blur(0); opacity: 1; transform: scale(1); } }
 
-        /* ==================================================== */
-        /* 신규 지도: HUD 스타일 실제 맵 (절대좌표 위치) */
-        /* ==================================================== */
+        /* HUD 맵 레이아웃 */
         .dim-toggle {
             background: rgba(255,255,255,0.05); border: 1px solid var(--neon-human); color: #fff;
             padding: 12px 25px; border-radius: 30px; font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem; font-weight: bold;
             cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(255,65,108,0.2); margin-bottom: 15px; display: inline-block;
         }
-        .dim-toggle:hover { background: rgba(255,65,108,0.15); box-shadow: 0 0 20px var(--neon-human); }
         .dim-toggle.witch-mode { border-color: var(--neon-witch); box-shadow: 0 0 15px rgba(188,0,221,0.3); }
-        .dim-toggle.witch-mode:hover { background: rgba(188,0,221,0.15); box-shadow: 0 0 20px var(--neon-witch); }
 
-        /* HUD 맵 보드 (레이더 컨테이너) */
         .hud-map-board {
             position: relative; height: 300px; width: 100%; border-radius: 12px;
             background: linear-gradient(135deg, rgba(10,10,15,0.9), rgba(0,0,0,0.9));
             overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1);
         }
-        
-        /* 레이더 파동 배경 */
         .hud-map-board::before {
-            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 250%; height: 250%;
-            background-image: repeating-radial-gradient(circle, transparent, transparent 20px, rgba(255,255,255,0.05) 21px, transparent 22px);
-            pointer-events: none;
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250%; height: 250%;
+            background-image: repeating-radial-gradient(circle, transparent, transparent 20px, rgba(255,255,255,0.05) 21px, transparent 22px); pointer-events: none;
         }
-        /* 중앙 십자선 */
-        .hud-map-board::after {
-            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 1px; height: 100%; background: rgba(255,255,255,0.1);
-            box-shadow: -120px 0 0 rgba(255,255,255,0.05), 120px 0 0 rgba(255,255,255,0.05);
-            pointer-events: none;
-        }
-        .hud-map-board .horizontal-line {
-            position: absolute; top: 50%; left: 0; width: 100%; height: 1px;
-            background: rgba(255,255,255,0.1); pointer-events: none;
-            box-shadow: 0 -80px 0 rgba(255,255,255,0.05), 0 80px 0 rgba(255,255,255,0.05);
-        }
+        .hud-map-board::after { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 100%; background: rgba(255,255,255,0.1); box-shadow: -120px 0 0 rgba(255,255,255,0.05), 120px 0 0 rgba(255,255,255,0.05); pointer-events: none; }
+        .hud-map-board .horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(255,255,255,0.1); pointer-events: none; box-shadow: 0 -80px 0 rgba(255,255,255,0.05), 0 80px 0 rgba(255,255,255,0.05); }
 
-        /* 맵 핀 (거점) */
-        .map-pin {
-            position: absolute; transform: translate(-50%, -50%);
-            display: flex; flex-direction: column; align-items: center; z-index: 10;
-            cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 10; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .map-pin:hover { transform: translate(-50%, -50%) scale(1.2); z-index: 20; }
-        
-        .pin-marker {
-            width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; color: #fff; position: relative; background: rgba(0,0,0,0.6);
-            border: 2px solid currentColor; box-shadow: inset 0 0 10px currentColor, 0 0 10px currentColor;
-        }
-        .pin-marker::before {
-            content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid currentColor; animation: radarPulse 2s infinite ease-out; opacity: 0.8;
-        }
+        .pin-marker { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #fff; position: relative; background: rgba(0,0,0,0.6); border: 2px solid currentColor; box-shadow: inset 0 0 10px currentColor, 0 0 10px currentColor; }
+        .pin-marker::before { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 2px solid currentColor; animation: radarPulse 2s infinite ease-out; opacity: 0.8; }
         @keyframes radarPulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2); opacity: 0; } }
-        
-        .pin-label {
-            margin-top: 6px; font-size: 0.65rem; font-family: 'Noto Sans KR', sans-serif;
-            background: rgba(0,0,0,0.8); border: 1px solid currentColor; padding: 2px 8px;
-            border-radius: 4px; white-space: nowrap; font-weight: bold; color: #fff;
-        }
+        .pin-label { margin-top: 6px; font-size: 0.65rem; font-family: 'Noto Sans KR', sans-serif; background: rgba(0,0,0,0.8); border: 1px solid currentColor; padding: 2px 8px; border-radius: 4px; white-space: nowrap; font-weight: bold; color: #fff; }
 
-        /* 테마별 색상 제어 */
         .human-theme .pin-marker { color: var(--neon-human); }
         .human-theme .pin-label { border-color: var(--neon-human); box-shadow: 0 0 5px var(--neon-human); }
-        
         .witch-theme .pin-marker { color: var(--neon-witch); }
         .witch-theme .pin-label { border-color: var(--neon-witch); box-shadow: 0 0 5px var(--neon-witch); }
-        
         .neutral-pin .pin-marker { color: var(--neon-neutral) !important; }
         .neutral-pin .pin-label { border-color: var(--neon-neutral) !important; box-shadow: 0 0 5px var(--neon-neutral) !important; }
 
-        /* 하단 텍스트 리스트 디자인 */
         .map-list-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .map-node {
-            background: rgba(255,65,108,0.05); border: 1px solid rgba(255,65,108,0.3); border-radius: 10px;
-            padding: 12px 8px; text-align: center; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .map-node:hover { background: rgba(255,65,108,0.15); border-color: var(--neon-human); box-shadow: 0 0 12px rgba(255,65,108,0.4); transform: translateY(-2px); }
+        .map-node { background: rgba(255,65,108,0.05); border: 1px solid rgba(255,65,108,0.3); border-radius: 10px; padding: 12px 8px; text-align: center; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .map-node.witch-node { background: rgba(188,0,221,0.05); border-color: rgba(188,0,221,0.3); }
-        .map-node.witch-node:hover { background: rgba(188,0,221,0.15); border-color: var(--neon-witch); box-shadow: 0 0 12px rgba(188,0,221,0.4); }
         .map-icon { font-size: 1.5rem; margin-bottom: 6px; color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.5); }
         .map-node-title { font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; line-height: 1.2; }
         .map-node-type { font-size: 0.6rem; color: #bbb; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; }
@@ -271,12 +234,19 @@
 </head>
 <body>
 
-<div class="app-container">
+<audio id="bgm" src="8bit.mp3" loop preload="auto"></audio>
+
+<div id="entrance-screen" class="entrance-screen">
+    <div class="entrance-title">WITCH HUNT</div>
+    <div class="entrance-hint">TAP TO BOOT SYSTEM</div>
+</div>
+
+<div id="app-main" class="app-container">
     <div class="stars-bg"></div>
 
-    <header class="header" onclick="toggleMenu(true)">
-        <h1>WITCH HUNT <i class="fas fa-caret-down"></i></h1>
-        <p>TAP TO OPEN MENU</p>
+    <header class="header">
+        <h1>WITCH HUNT</h1>
+        <p>SYSTEM ONLINE</p>
     </header>
 
     <div class="content-wrapper">
@@ -338,7 +308,7 @@
                 
                 <div id="hud-map-board" class="hud-map-board human-theme">
                     <div class="horizontal-line"></div>
-                    </div>
+                </div>
 
                 <div id="map-grid-container" class="map-list-container"></div>
             </div>
@@ -351,15 +321,6 @@
         <div class="nav-item" data-tab="tab-characters" onclick="switchTab('tab-characters', this)"><i class="fas fa-user-circle"></i><span>인물</span></div>
         <div class="nav-item" data-tab="tab-map" onclick="switchTab('tab-map', this)"><i class="fas fa-compass"></i><span>지도</span></div>
     </nav>
-
-    <div id="fullscreen-menu" class="fullscreen-menu">
-        <i class="fas fa-times menu-close" onclick="toggleMenu(false)"></i>
-        <div class="menu-title">NAVIGATION</div>
-        <button class="menu-btn" onclick="selectFromMenu('tab-world')"><i class="fas fa-globe"></i> 세계관</button>
-        <button class="menu-btn" onclick="selectFromMenu('tab-levels')"><i class="fas fa-signal"></i> 경지 정보</button>
-        <button class="menu-btn" onclick="selectFromMenu('tab-characters')"><i class="fas fa-users"></i> 인물 도감</button>
-        <button class="menu-btn" onclick="selectFromMenu('tab-map')"><i class="fas fa-map-location-dot"></i> 세계 지도</button>
-    </div>
 
     <div id="char-modal" class="modal-overlay" onclick="closeModal(event, 'char-modal')">
         <div class="modal-content" onclick="event.stopPropagation()">
@@ -399,8 +360,26 @@
 </div>
 
 <script>
+    // ==========================================
+    // 앱 진입 화면 로직 (터치 시 BGM 재생 및 앱 시작)
+    // ==========================================
+    document.getElementById('entrance-screen').addEventListener('click', function() {
+        const bgm = document.getElementById('bgm');
+        // 오디오 재생
+        bgm.play().catch(e => console.log("BGM 재생 실패 (파일을 확인하세요):", e));
+        
+        // 페이드 아웃
+        this.style.opacity = '0';
+        
+        setTimeout(() => {
+            this.style.display = 'none';
+            // 메인 앱 컨테이너 켜기 및 진입 애니메이션
+            document.getElementById('app-main').classList.add('start');
+        }, 800);
+    });
+
     // ----------------------------------------------------
-    // 1. 캐릭터 데이터 (6써클 이상 나이 업데이트 & 최소 20세)
+    // 1. 캐릭터 데이터
     // ----------------------------------------------------
     const charData = [
         { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '800+α세 (외형 30대)', height: '174cm', alignment: '질서 악', desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
@@ -453,9 +432,8 @@
     renderCharacters();
 
     // ----------------------------------------------------
-    // 2. 지도 지역 데이터 (절대 좌표 기반 HUD)
+    // 2. 지도 지역 데이터
     // ----------------------------------------------------
-    // x, y 는 0~100% 비율 (컨테이너 내 위치)
     const humanMapNodes = [
         { id: 'h1', name: '뤼미에르', fullName: '성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', x: 50, y: 50, desc: '인간 진영의 심장부이자 여왕 카트린이 통치하는 거대한 수도. 겹겹의 거룩한 빛의 결계가 도시를 보호하고 있으며, 마녀 척결을 위한 모든 군사 명령이 하달된다.' },
         { id: 'h2', name: '아이기스', fullName: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', x: 25, y: 35, desc: '기사단장 브룬힐데가 이끄는 은백색 기사단의 메인 요새. 끝없는 무력 단련과 전술 훈련이 이루어지는 철벽의 성채.' },
@@ -492,7 +470,6 @@
         const borderColor = currentMapDim === 'human' ? 'var(--neon-human)' : 'var(--neon-witch)';
         const cardBg = currentMapDim === 'human' ? 'rgba(255,65,108,0.05)' : 'rgba(188,0,221,0.05)';
 
-        // 테마 세팅
         hudBoard.className = `hud-map-board ${themeClass}`;
         mainCard.style.borderColor = borderColor;
         mainCard.style.boxShadow = `inset 0 0 15px ${cardBg}`;
@@ -509,11 +486,9 @@
             dimToggleText.innerText = '차원 변환: 마녀 차원 ';
         }
 
-        // HUD 비주얼 맵 핀 생성 (기존 십자선 유지)
         hudBoard.innerHTML = '<div class="horizontal-line"></div>';
         nodes.forEach(node => {
             const pin = document.createElement('div');
-            // 중립 구역 클래스 추가
             pin.className = `map-pin ${node.faction === 'neutral' ? 'neutral-pin' : ''}`;
             pin.style.left = `${node.x}%`;
             pin.style.top = `${node.y}%`;
@@ -526,7 +501,6 @@
             hudBoard.appendChild(pin);
         });
 
-        // 하단 텍스트 리스트 생성
         listContainer.innerHTML = '';
         nodes.forEach(node => {
             const el = document.createElement('div');
@@ -542,27 +516,16 @@
         renderMap();
     }
 
-    // 초기 렌더링
     renderMap();
 
     // ----------------------------------------------------
-    // 3. UI 및 모달 제어
+    // 3. 탭 및 모달 제어
     // ----------------------------------------------------
     function switchTab(tabId, element) {
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         if(element) element.classList.add('active');
-    }
-
-    function toggleMenu(show) {
-        const menu = document.getElementById('fullscreen-menu');
-        show ? menu.classList.add('show') : menu.classList.remove('show');
-    }
-
-    function selectFromMenu(tabId) {
-        toggleMenu(false); 
-        switchTab(tabId, document.querySelector(`.nav-item[data-tab="${tabId}"]`));
     }
 
     function filterChars(type, btn) {
