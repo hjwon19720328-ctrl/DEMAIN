@@ -2,110 +2,104 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>마녀사냥</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary-color: #d4af37; /* 중세 금박 느낌의 황금색 */
-            --bg-color: #121212; /* 아주 어두운 배경 */
-            --text-color: #e0e0e0; /* 가독성 좋은 밝은 회색 */
-            --panel-bg: #1e1e1e;
-            --border-color: #3a3a3a;
+            /* 나무 색상 */
+            --wood-base: #4a3219;
+            --wood-dark: #2c1a0c;
+            --wood-nav: #382412;
+            
+            /* 양피지(두루마리) 색상 */
+            --paper-main: #f4e8d3;
+            --paper-edge: #d8c39b;
+            --paper-shadow: rgba(139, 69, 19, 0.15);
+            
+            /* 잉크(텍스트) 색상 */
+            --ink-main: #2b1d0e;
+            --ink-light: #523b24;
+            --ink-red: #8b0000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Noto Serif KR', serif; /* 중세 분위기를 위한 명조체 */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
-            text-align: center;
-            padding: 4rem 0 2rem 0;
-            width: 100%;
-            background: linear-gradient(to bottom, #000, transparent);
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            color: var(--primary-color);
-            margin: 0;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-            letter-spacing: 10px;
-        }
-
-        .nav-tabs {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .tab-btn {
-            background-color: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background-color: #1a1a1a; /* PC 배경 */
             font-family: 'Noto Serif KR', serif;
-            border-radius: 2px;
+            display: flex;
+            justify-content: center;
+            line-height: 1.6;
+        }
+
+        /* 모바일 컨테이너 - 나무 배경 */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            background-color: var(--wood-base);
+            /* 세로 나무결 느낌을 주는 그라데이션 */
+            background-image: repeating-linear-gradient(
+                90deg,
+                rgba(0,0,0,0.05) 0px,
+                rgba(0,0,0,0.05) 2px,
+                transparent 2px,
+                transparent 15px
+            ), repeating-linear-gradient(
+                to bottom,
+                var(--wood-base),
+                var(--wood-base) 20px,
+                #422b14 20px,
+                #422b14 40px
+            );
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* 상단 헤더 - 나무 팻말 느낌 */
+        .header {
+            padding: 35px 20px 20px;
+            text-align: center;
+            background-color: var(--wood-dark);
+            border-bottom: 4px solid #1a0f07;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--paper-main);
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            color: var(--paper-edge);
+            margin-top: 5px;
             letter-spacing: 2px;
         }
 
-        .tab-btn:hover, .tab-btn.active {
-            background-color: rgba(212, 175, 55, 0.1);
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-            box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.2);
-        }
-
-        .tab-btn i {
-            margin-right: 8px;
-        }
-
-        .container {
-            width: 85%;
-            max-width: 1000px;
-            margin: 3rem auto;
-            background-color: var(--panel-bg);
-            padding: 3rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            position: relative;
-        }
-
-        /* 각 모서리 장식 요소 */
-        .container::before, .container::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--primary-color);
-        }
-        .container::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
-        .container::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
-
-        .tab-content {
+        /* 콘텐츠 영역 */
+        .content-section {
             display: none;
-            line-height: 1.8;
-            font-size: 1.05rem;
-            animation: fadeIn 0.5s ease-in-out;
+            padding: 25px 20px;
+            animation: fadeIn 0.4s ease forwards;
         }
 
-        .tab-content.active {
+        .content-section.active {
             display: block;
         }
 
@@ -114,152 +108,243 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h2 {
-            color: var(--primary-color);
-            border-bottom: 1px dashed var(--border-color);
-            padding-bottom: 15px;
+        /* 두루마리 카드 디자인 */
+        .card {
+            background: linear-gradient(to right, var(--paper-edge), var(--paper-main) 8%, var(--paper-main) 92%, var(--paper-edge));
+            border-top: 5px solid #a68b5b;
+            border-bottom: 5px solid #a68b5b;
+            padding: 25px 20px;
             margin-bottom: 25px;
-            font-size: 2rem;
-            letter-spacing: 3px;
+            box-shadow: inset 0 0 20px var(--paper-shadow), 0 8px 15px rgba(0,0,0,0.4);
+            color: var(--ink-main);
+            position: relative;
         }
 
-        h3 {
-            color: #fff;
-            margin-top: 0;
+        .card h2 {
             font-size: 1.3rem;
+            color: var(--ink-main);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px dashed var(--paper-edge);
+            padding-bottom: 10px;
         }
 
-        .highlight {
-            color: var(--primary-color);
-            font-weight: bold;
+        .card h2 i {
+            color: #7a5c32;
         }
 
-        .level-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .level-box {
-            background-color: #151515;
-            padding: 25px;
-            border-left: 2px solid var(--primary-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        li {
+        .card p {
+            font-size: 0.95rem;
             margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #2a2a2a;
+            word-break: keep-all;
+            line-height: 1.7;
         }
 
-        li:last-child {
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 경지 리스트 스타일 - 양피지에 적힌 잉크 느낌 */
+        .level-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .level-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .level-list li:last-child {
             border-bottom: none;
         }
 
-        li::before {
-            content: "✦";
-            color: var(--primary-color);
-            margin-right: 12px;
-            font-size: 0.8rem;
+        .tag-group {
+            display: flex;
+            gap: 6px;
         }
-        
-        .placeholder-text {
+
+        /* 하, 중, 상 태그 - 붉은 도장(밀랍) 느낌 */
+        .tag {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 2px;
+            background: rgba(139, 0, 0, 0.1);
+            color: var(--ink-red);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            font-weight: bold;
+        }
+
+        .tag.unique {
+            background: var(--ink-red);
+            color: var(--paper-main);
+            border: none;
+        }
+
+        .placeholder {
             text-align: center;
-            color: #777;
+            color: var(--ink-light);
+            padding: 30px 0;
             font-style: italic;
-            margin-top: 3rem;
+        }
+
+        /* 하단 네비게이션 바 - 단단한 나무판 느낌 */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70px;
+            background: var(--wood-nav);
+            border-top: 3px solid var(--wood-dark);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #9a7d5b; /* 흐릿한 나무색 */
+            text-decoration: none;
+            width: 25%;
+            height: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            transition: transform 0.2s;
+        }
+
+        .nav-item span {
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .nav-item.active {
+            color: var(--paper-main); /* 선택되면 양피지처럼 밝게 */
+            text-shadow: 0 0 10px rgba(244, 232, 211, 0.4);
+        }
+
+        .nav-item.active i {
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>마녀사냥</h1>
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="openTab('world', this)"><i class="fas fa-scroll"></i> 세계관</button>
-        <button class="tab-btn" onclick="openTab('levels', this)"><i class="fas fa-khanda"></i> 경지</button>
-        <button class="tab-btn" onclick="openTab('characters', this)"><i class="fas fa-user-shield"></i> 인물</button>
-        <button class="tab-btn" onclick="openTab('map', this)"><i class="fas fa-compass"></i> 지도</button>
-    </div>
-</header>
-
-<div class="container">
+<div class="app-container">
     
-    <div id="world" class="tab-content active">
-        <h2>세계관</h2>
-        <p>본래 마녀들은 인간들과 어우러져 평화롭게 살아가고 있었습니다. 그러나 나라의 중심이 되는 국교가 자신들의 부흥과 교세 확장을 위해 마녀들을 희생양으로 삼아 이단으로 규정하고 무자비한 척결을 시작했습니다.</p>
-        <p>끝없는 탄압과 학살 끝에, 마녀들은 인간의 눈이 닿지 않는 깊은 차원으로 숨어들었고, 인간들은 지금 이 순간에도 그들을 완전히 뿌리 뽑기 위해 사냥을 이어가고 있습니다.</p>
-        
-        <div class="level-box" style="margin-top: 30px;">
-            <h3>종교 국가 (인간 진영)</h3>
-            <p>마녀 사냥을 주도하는 거대한 권력의 중심. 신의 뜻을 명분으로 마녀들을 이단으로 몰아세우며, 무력을 담당하는 검사들을 앞세워 그들을 추적하고 처단하고 있습니다.</p>
+    <header class="header">
+        <h1>WITCH HUNT</h1>
+        <p>마녀사냥</p>
+    </header>
+
+    <main id="tab-world" class="content-section active">
+        <div class="card">
+            <h2><i class="fas fa-scroll"></i> 척결과 도피</h2>
+            <p>본래 마녀들은 인간들과 어우러져 평화롭게 살아가고 있었다. 그러나 국가의 국교가 자신들의 부흥과 교세 확장을 위해 마녀들을 희생양으로 삼았고, 그들을 이단으로 규정하여 무자비한 척결을 시작했다.</p>
+            <p>끝없는 탄압과 학살 끝에 마녀들은 인간의 눈이 닿지 않는 깊은 차원으로 숨어들었고, 인간들은 지금 이 순간에도 그들의 씨를 말리기 위해 사냥을 이어가고 있다.</p>
         </div>
 
-        <div class="level-box" style="margin-top: 20px;">
-            <h3>은신처 (마녀들의 차원)</h3>
-            <p>척결의 칼날을 피해 마녀들이 도망친 현실 세계 밖의 일그러진 차원. 인간들은 쉽게 범접할 수 없으며, 마녀들은 이곳에 숨어 언젠가 다가올 날을 위해 힘을 기르고 있습니다.</p>
+        <div class="card">
+            <h2><i class="fas fa-chess-rook"></i> 종교 국가 (인간)</h2>
+            <p>마녀 사냥을 주도하는 거대한 권력의 중심. 신의 뜻을 명분으로 검사들을 앞세워 마녀들을 추적하고 처단한다.</p>
         </div>
-    </div>
 
-    <div id="levels" class="tab-content">
-        <h2>경지</h2>
-        <div class="level-grid">
-            <div class="level-box">
-                <h3>인간 (무골)</h3>
-                <p style="font-size: 0.9rem; color: #aaa;">각 단계마다 <span class="highlight">하, 중, 상</span>의 세부 경지가 존재합니다.</p>
-                <ul>
-                    <li>트레이니 (Trainee)</li>
-                    <li>소드 유저 (Sword User)</li>
-                    <li>익스퍼트 (Expert)</li>
-                    <li>극익스퍼트 (High Expert)</li>
-                    <li>소드마스터 (Sword Master)</li>
-                    <li>그랜드마스터 (Grand Master)</li>
-                </ul>
-            </div>
-            
-            <div class="level-box">
-                <h3>마녀 (마법)</h3>
-                <p style="font-size: 0.9rem; color: #aaa;">1~9써클로 나뉘며, <span class="highlight">하, 중, 상의 구분이 없습니다.</span></p>
-                <ul>
-                    <li>1 ~ 7 써클 (Circle)</li>
-                    <li>8 써클 : <span class="highlight">아크메이저</span></li>
-                    <li>9 써클 : <span class="highlight">대마법사</span></li>
-                </ul>
-            </div>
+        <div class="card">
+            <h2><i class="fas fa-moon"></i> 은신처 (마녀)</h2>
+            <p>칼날을 피해 마녀들이 도망친 현실 밖의 일그러진 차원. 마녀들은 이곳에 숨어 언젠가 다가올 날을 위해 힘을 기르고 있다.</p>
         </div>
-    </div>
+    </main>
 
-    <div id="characters" class="tab-content">
-        <h2>인물</h2>
-        <p class="placeholder-text">아직 기록된 인물이 없습니다. 추후 추가될 예정입니다.</p>
-    </div>
+    <main id="tab-levels" class="content-section">
+        <div class="card">
+            <h2><i class="fas fa-khanda"></i> 인간의 경지 (무력)</h2>
+            <p style="font-size: 0.85rem; color: var(--ink-light);">모든 경지는 하, 중, 상으로 나뉜다.</p>
+            <ul class="level-list">
+                <li>트레이니 (Trainee) <div class="tag-group"><span class="tag">하</span><span class="tag">중</span><span class="tag">상</span></div></li>
+                <li>소드 유저 (Sword User) <div class="tag-group"><span class="tag">하</span><span class="tag">중</span><span class="tag">상</span></div></li>
+                <li>익스퍼트 (Expert) <div class="tag-group"><span class="tag">하</span><span class="tag">중</span><span class="tag">상</span></div></li>
+                <li>극익스퍼트 (High Expert) <div class="tag-group"><span class="tag">하</span><span class="tag">중</span><span class="tag">상</span></div></li>
+                <li>소드마스터 (Sword Master) <div class="tag-group"><span class="tag">하</span><span class="tag">중</span><span class="tag">상</span></div></li>
+                <li>그랜드마스터 (Grand Master) <div class="tag-group"><span class="tag">하</span><span class="tag">중</span><span class="tag">상</span></div></li>
+            </ul>
+        </div>
 
-    <div id="map" class="tab-content">
-        <h2>지도</h2>
-        <p class="placeholder-text">아직 밝혀진 지도가 없습니다. 추후 추가될 예정입니다.</p>
-    </div>
+        <div class="card">
+            <h2><i class="fas fa-hat-wizard"></i> 마녀의 경지 (마법)</h2>
+            <p style="font-size: 0.85rem; color: var(--ink-light);">하, 중, 상의 세부 구분이 없다.</p>
+            <ul class="level-list">
+                <li>1 ~ 7 써클 (Circle) </li>
+                <li>8 써클 <span class="tag unique">아크메이저</span></li>
+                <li>9 써클 <span class="tag unique">대마법사</span></li>
+            </ul>
+        </div>
+    </main>
+
+    <main id="tab-characters" class="content-section">
+        <div class="card">
+            <h2><i class="fas fa-users"></i> 등장인물</h2>
+            <p class="placeholder">아직 기록된 양피지가 없습니다.</p>
+        </div>
+    </main>
+
+    <main id="tab-map" class="content-section">
+        <div class="card">
+            <h2><i class="fas fa-map"></i> 세계 지도</h2>
+            <p class="placeholder">아직 그려진 지도가 없습니다.</p>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('tab-world', this)">
+            <i class="fas fa-globe"></i>
+            <span>세계관</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('tab-levels', this)">
+            <i class="fas fa-khanda"></i>
+            <span>경지</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('tab-characters', this)">
+            <i class="fas fa-user-shield"></i>
+            <span>인물</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('tab-map', this)">
+            <i class="fas fa-compass"></i>
+            <span>지도</span>
+        </div>
+    </nav>
 
 </div>
 
 <script>
-    function openTab(tabId, element) {
-        // 모든 탭 내용 숨기기
-        const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(content => content.classList.remove('active'));
+    function switchTab(tabId, element) {
+        const sections = document.querySelectorAll('.content-section');
+        sections.forEach(sec => sec.classList.remove('active'));
 
-        // 모든 탭 버튼 활성화 상태 제거
-        const buttons = document.querySelectorAll('.tab-btn');
-        buttons.forEach(button => button.classList.remove('active'));
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => item.classList.remove('active'));
 
-        // 선택된 탭 내용과 버튼만 활성화
         document.getElementById(tabId).classList.add('active');
         element.classList.add('active');
+        
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
     }
 </script>
 
