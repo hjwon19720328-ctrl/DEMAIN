@@ -12,14 +12,14 @@
             /* 중세 테마 컬러 팔레트 */
             --gold-light: #e6c27a;
             --gold-dark: #b89450;
-            --witch-color: #8a2be2; /* 깊은 보라색 */
-            --human-color: #b22222; /* 핏빛 붉은색 */
-            --neutral-color: #6b8e23; /* 탁한 올리브색 */
+            --witch-color: #8a2be2; 
+            --human-color: #b22222; 
+            --neutral-color: #6b8e23; 
             
-            --bg-base: #140d0b; /* 아주 어두운 고목나무 색 */
-            --bg-card: rgba(30, 20, 15, 0.85); /* 낡은 가죽/나무 패널 느낌 */
+            --bg-base: #140d0b; 
+            --bg-card: rgba(30, 20, 15, 0.85); 
             
-            --text-main: #e8dcc4; /* 오래된 양피지 글씨색 */
+            --text-main: #e8dcc4; 
             --text-muted: #a39681;
             
             --nav-bg: rgba(20, 13, 10, 0.95);
@@ -37,7 +37,7 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
 
-        /* 진입 스크린 (마도서 표지 느낌) */
+        /* 진입 스크린 */
         .entrance-screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column;
@@ -66,7 +66,7 @@
         .app-container.start { display: flex; animation: openGrimoire 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes openGrimoire { 0% { opacity: 0; transform: scale(1.05); filter: brightness(0); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
 
-        /* 중세 나무/텍스처 배경 */
+        /* 나무/텍스처 배경 */
         .wood-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
             background: linear-gradient(rgba(20,13,10,0.85), rgba(20,13,10,0.95)),
@@ -84,27 +84,25 @@
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 카드 UI (양피지/가죽 느낌) */
+        /* 카드 UI */
         .card {
             background-color: var(--bg-card); border: 1px solid var(--gold-dark); 
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0,0,0,0.6);
             border-radius: 4px; padding: 22px; margin-bottom: 20px; transition: 0.3s; position: relative;
         }
-        /* 카드 네 모서리 장식 */
         .card::before, .card::after { content: ''; position: absolute; width: 10px; height: 10px; border: 1px solid var(--gold-light); opacity: 0.5; }
         .card::before { top: 5px; left: 5px; border-right: none; border-bottom: none; }
         .card::after { bottom: 5px; right: 5px; border-left: none; border-top: none; }
-        
         .card h2 { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 15px; color: var(--gold-light); border-bottom: 1px dashed var(--gold-dark); padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
 
-        /* 아코디언 */
+        /* 아코디언 (렉 완화 적용) */
         .accordion-item { border-bottom: 1px solid rgba(184, 148, 80, 0.2); }
         .accordion-item:last-child { border-bottom: none; }
         .accordion-header { padding: 15px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: color 0.3s; }
         .accordion-header:hover { color: var(--gold-light); }
         .accordion-header i { transition: transform 0.3s; color: var(--gold-dark); }
-        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
-        .accordion-body.open { max-height: 250px; padding-bottom: 15px; }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding-bottom 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; padding-bottom: 0; }
+        .accordion-body.open { padding-bottom: 15px; }
 
         /* 필터 탭 */
         .inner-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
@@ -130,9 +128,7 @@
         .nav-item.active { color: var(--gold-light); }
         .nav-item.active i { text-shadow: 0 0 10px rgba(230, 194, 122, 0.5); transform: translateY(-3px); }
 
-        /* ======================================= */
-        /* 상세 모달 (고서적 느낌) */
-        /* ======================================= */
+        /* 모달 공통 */
         .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 400; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content { width: 92%; max-height: 88%; background: #1a120e; border: 2px solid var(--gold-dark); border-radius: 4px; overflow-y: auto; position: relative; padding: 25px 20px; box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.9); text-align: center; }
@@ -150,16 +146,14 @@
         .stat-label { font-size: 0.65rem; color: var(--gold-dark); font-family: 'Cinzel', serif; margin-bottom: 4px; letter-spacing: 1px; }
         .stat-val { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
 
-        /* 잉크가 차오르는 듯한 스탯 바 */
+        /* 스탯 바 시스템 (한글 적용) */
         .power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid rgba(184, 148, 80, 0.2); border-radius: 2px; }
-        .power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Cinzel', serif; font-weight: bold; color: var(--gold-light);}
+        .power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Noto Serif KR', serif; font-weight: bold; color: var(--gold-light);}
         .stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.8); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; }
         .stat-bar-fill { height: 100%; width: 0; transition: width 1s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); }
 
-        /* 타이핑 깃펜(커서) 효과 */
+        /* 텍스트창 (타이핑 제거, 즉시 렌더) */
         .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 2px; border-left: 3px solid var(--gold-dark); min-height: 80px; position: relative; font-family: 'Noto Serif KR', serif; }
-        .modal-desc::after { content: '|'; animation: blink 1s infinite; color: var(--gold-light); font-weight: bold; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .eyepatch-btn { background: rgba(0,0,0,0.8); color: var(--witch-color); border: 1px solid var(--witch-color); padding: 8px 20px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; font-family: 'Noto Serif KR', serif; transition: 0.3s; }
         .eyepatch-btn:active { transform: scale(0.95); }
@@ -194,17 +188,13 @@
         .dim-toggle.witch-mode { border-color: var(--witch-color); }
 
         .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: radial-gradient(circle at center, #3a2818, #140d0b); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px #000; }
-        /* 양피지 질감 오버레이 */
         .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; }
-        /* 오래된 나침반/격자선 느낌 */
         .antique-map-board::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 1px dashed rgba(184, 148, 80, 0.2); border-radius: 50%; pointer-events: none; }
         .antique-map-board .horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(184, 148, 80, 0.1); pointer-events: none; }
         .antique-map-board .vertical-line { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(184, 148, 80, 0.1); pointer-events: none; }
 
         .map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 10; cursor: pointer; transition: 0.3s; }
         .map-pin:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 20; }
-        
-        /* 거점 핀 (밀랍 도장 또는 보석 느낌) */
         .pin-marker { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; background: var(--bg-base); border: 2px solid currentColor; box-shadow: 0 4px 8px rgba(0,0,0,0.8); }
         .pin-label { margin-top: 5px; font-size: 0.65rem; font-family: 'Noto Serif KR', serif; background: rgba(20,13,10,0.9); border: 1px solid var(--gold-dark); padding: 2px 6px; border-radius: 2px; white-space: nowrap; font-weight: bold; color: var(--gold-light); }
 
@@ -326,22 +316,22 @@
             
             <div class="power-stats">
                 <div class="power-stat-row">
-                    <span style="width: 30px; text-align:right;">STR</span>
+                    <span style="width: 35px; text-align:right;">근력</span>
                     <div class="stat-bar-bg"><div id="stat-str" class="stat-bar-fill"></div></div>
                     <span id="stat-val-str" style="width: 25px; text-align:right;">0</span>
                 </div>
                 <div class="power-stat-row">
-                    <span style="width: 30px; text-align:right;">MAG</span>
+                    <span style="width: 35px; text-align:right;">마력</span>
                     <div class="stat-bar-bg"><div id="stat-mag" class="stat-bar-fill"></div></div>
                     <span id="stat-val-mag" style="width: 25px; text-align:right;">0</span>
                 </div>
                 <div class="power-stat-row">
-                    <span style="width: 30px; text-align:right;">AGI</span>
+                    <span style="width: 35px; text-align:right;">민첩</span>
                     <div class="stat-bar-bg"><div id="stat-agi" class="stat-bar-fill"></div></div>
                     <span id="stat-val-agi" style="width: 25px; text-align:right;">0</span>
                 </div>
                 <div class="power-stat-row">
-                    <span style="width: 30px; text-align:right;">INT</span>
+                    <span style="width: 35px; text-align:right;">지능</span>
                     <div class="stat-bar-bg"><div id="stat-int" class="stat-bar-fill"></div></div>
                     <span id="stat-val-int" style="width: 25px; text-align:right;">0</span>
                 </div>
@@ -395,22 +385,6 @@
             document.getElementById('app-main').classList.add('start');
         }, 1000);
     });
-
-    let typeWriterTimeout = null;
-    function typeWriter(text, elementId, speed = 30) {
-        const el = document.getElementById(elementId);
-        el.innerText = '';
-        if(typeWriterTimeout) clearTimeout(typeWriterTimeout);
-        let i = 0;
-        function type() {
-            if (i < text.length) {
-                el.innerText += text.charAt(i);
-                i++;
-                typeWriterTimeout = setTimeout(type, speed);
-            }
-        }
-        type();
-    }
 
     const charData = [
         { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '800+α세', height: '174cm', alignment: '질서 악', stats: {str:40, mag:100, agi:60, int:95}, desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
@@ -539,22 +513,35 @@
         renderCharacters(type);
     }
 
+    // 버그가 수정된 부드러운 아코디언 로직
     function toggleAccordion(element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
+        
         if (body.classList.contains('open')) {
-            body.classList.remove('open'); icon.style.transform = 'rotate(0deg)';
+            body.classList.remove('open');
+            body.style.maxHeight = null;
+            icon.style.transform = 'rotate(0deg)';
         } else {
-            document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
-            document.querySelectorAll('.accordion-header i').forEach(i => i.style.transform = 'rotate(0deg)');
-            body.classList.add('open'); icon.style.transform = 'rotate(180deg)';
+            // 다른 열려있는 아코디언 닫기
+            document.querySelectorAll('.accordion-body').forEach(b => {
+                b.classList.remove('open');
+                b.style.maxHeight = null;
+            });
+            document.querySelectorAll('.accordion-header i').forEach(i => {
+                i.style.transform = 'rotate(0deg)';
+            });
+            
+            // 현재 누른 아코디언 정확한 높이로 열기
+            body.classList.add('open');
+            body.style.maxHeight = body.scrollHeight + 15 + "px";
+            icon.style.transform = 'rotate(180deg)';
         }
     }
 
     function closeModal(e, modalId, force = false) {
         if (force || e.target.id === modalId) {
             document.getElementById(modalId).classList.remove('show');
-            if(typeWriterTimeout) clearTimeout(typeWriterTimeout);
         }
     }
 
@@ -647,7 +634,8 @@
         setStatBar('stat-int', char.stats.int, borderColor);
 
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
-        typeWriter(char.desc, 'modal-desc');
+        // 타이핑 제거, 즉시 렌더링
+        document.getElementById('modal-desc').innerText = char.desc;
 
         let activeCharCode = char.id;
         if(char.id === 'k') {
@@ -717,10 +705,13 @@
         document.getElementById('map-modal-icon').style.color = themeColor;
         document.getElementById('map-modal-title').innerText = node.fullName;
         document.getElementById('map-modal-title').style.color = themeColor;
+        document.getElementById('map-modal-title').style.textShadow = `0 0 10px ${themeColor}`;
         document.getElementById('map-modal-type').innerText = node.type;
         document.getElementById('map-modal-type').style.color = themeColor;
+        
         document.getElementById('map-modal-desc').style.borderLeftColor = themeColor;
-        typeWriter(node.desc, 'map-modal-desc');
+        // 타이핑 제거, 즉시 렌더링
+        document.getElementById('map-modal-desc').innerText = node.desc;
 
         modal.classList.add('show');
     }
