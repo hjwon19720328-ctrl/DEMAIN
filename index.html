@@ -9,6 +9,7 @@
     
     <style>
         :root {
+            /* 중세 테마 컬러 팔레트 */
             --gold-light: #e6c27a;
             --gold-dark: #b89450;
             --witch-color: #8a2be2; 
@@ -105,6 +106,7 @@
         .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding-bottom 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; padding-bottom: 0; }
         .accordion-body.open { padding-bottom: 15px; }
 
+        /* 경지 필요 스탯 라벨 */
         .req-stat-box { margin-top: 10px; padding: 6px 12px; background: rgba(0,0,0,0.6); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; color: var(--gold-light); font-size: 0.75rem; font-family: 'Noto Serif KR', serif; display: inline-block; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
         .req-label { color: var(--text-muted); margin-right: 5px; font-weight: bold; }
 
@@ -178,7 +180,8 @@
         .eyepatch-btn:active { transform: scale(0.95); }
 
         /* 탭 3. ARCHIVE (갤러리) */
-        .extra-images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 10px; }
+        .archive-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-light); text-align: center; margin-bottom: 15px; letter-spacing: 2px; }
+        .extra-images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .extra-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; border: 1px solid rgba(184, 148, 80, 0.3); cursor: pointer; transition: 0.3s; filter: sepia(0.2); }
         .extra-img:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,0.8); position: relative; filter: sepia(0); }
         
@@ -458,6 +461,7 @@
             </div>
 
             <div id="m-archive" class="modal-tab-content">
+                <div id="archive-title" class="archive-title"><i class="fas fa-book-open"></i> ARCHIVE RECORDS</div>
                 <div id="modal-extra-images" class="extra-images-grid"></div>
             </div>
         </div>
@@ -507,7 +511,7 @@
         { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '마도 연금술', abilityDesc: '마나를 물리적, 화학적으로 변성시켜 기적에 가까운 포션과 폭발물, 마도구를 순식간에 합성해 낸다.', mbti: 'ISTP', enneagram: '5w6', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:40, mag:60, agi:50, int:85}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
         { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '마나 인형 조종', abilityDesc: '무생물인 인형에 자신의 마나와 생명력을 불어넣어 강력한 병기로 부린다. 인형들은 시야를 공유하며 자율적으로 전투를 수행한다.', mbti: 'INFP', enneagram: '4w3', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:10, mag:65, agi:80, int:60}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
         { id: 'p', name: '카트린', faction: 'human', level: '소드마스터 하', ability: '왕실 전승 보검 루미나스', abilityDesc: '왕가에 전해 내려오는 성검. 사용자의 오라를 빛의 속성으로 변환시켜, 닿는 모든 사악한 마나를 정화하고 베어버린다.', mbti: 'ESTJ', enneagram: '3w4', age: '35세', height: '175cm', alignment: '질서 중립', stats: {str:85, mag:10, agi:80, int:75}, desc: '종교 국가의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
-        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터 상', ability: '은백색 처형인의 대검', abilityDesc: '성인의 키만 한 거대한 대검. 그녀의 압도적인 근력과 극한의 오라가 결합되어 산을 가르고 강을 끊는 파괴력을 낸다.', mbti: 'ISTJ', enneagram: '1w2', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:70}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
+        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터 상', ability: '은백색 처형인의 대검', abilityDesc: '성인의 키만 한 거대한 대검. 그녀의 압도적인 근력과 극한의 오라가 결합되어 산을 가르고 강을 끊는 파괴력을 일격에 방출한다.', mbti: 'ISTJ', enneagram: '1w2', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:70}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
         { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트 상', ability: '기사단 정식 롱소드', abilityDesc: '표준적인 정식 검술을 구사하지만, 교과서적으로 완벽한 공방일체의 검술과 기민한 민첩성을 자랑한다.', mbti: 'ISFJ', enneagram: '6w5', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:75, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
         { id: 't', name: '아델', faction: 'human', level: '극익스퍼트 하', ability: '그림자 쌍단검', abilityDesc: '소리 없이 적의 사각으로 파고들어 급소를 노리는 암살검. 오라를 숨기고 기척을 지우는 은신술에 특화되어 있다.', mbti: 'ISTP', enneagram: '5w6', age: '26세', height: '178cm', alignment: '절대 중립', stats: {str:80, mag:15, agi:100, int:75}, desc: '여왕의 그림자. 비밀 호위 임무와 동시에 은신처 외곽의 마녀들을 암살하는 더러운 일을 병행한다.' },
         { id: 'v', name: '소피아', faction: 'human', level: '트레이니 하', ability: '교단 제식 메이스', abilityDesc: '전투보다는 호신용으로 지니고 다니는 메이스. 그녀의 진짜 무기는 방대한 지식과 교단의 비밀을 꿰뚫어 보는 지능이다.', mbti: 'INTP', enneagram: '5w4', age: '20세', height: '156cm', alignment: '질서 선', stats: {str:20, mag:30, agi:30, int:85}, desc: '무력은 약하지만 학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
@@ -632,6 +636,7 @@
         document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
     }
 
+    // 아코디언 높이 동적 계산 (버그 완벽 수정)
     function toggleAccordion(element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
@@ -723,6 +728,7 @@
         const abilityText = document.getElementById('modal-ability-text');
         const abilityDesc = document.getElementById('modal-ability-desc');
 
+        // 모달을 열 때마다 무조건 첫 번째(STATUS) 탭부터 보이도록 초기화
         switchModalTab('m-status');
 
         img.style.animation = 'none';
@@ -755,8 +761,9 @@
         document.getElementById('modal-height').innerText = char.height;
         document.getElementById('modal-align').innerText = char.alignment;
         document.getElementById('modal-align').style.color = borderColor;
+        
+        // 중요: archive-title 태그가 복구되었습니다.
         document.getElementById('archive-title').style.color = borderColor;
-
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
         document.getElementById('modal-desc').innerText = char.desc;
 
