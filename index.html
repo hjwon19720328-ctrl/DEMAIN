@@ -133,7 +133,7 @@
         .nav-item.active i { text-shadow: 0 0 10px rgba(230, 194, 122, 0.5); transform: translateY(-3px); }
 
         /* ======================================= */
-        /* 모달 시스템 */
+        /* 상세 모달 (미니 탭 추가) */
         /* ======================================= */
         .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 400; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.show { display: flex; opacity: 1; }
@@ -147,14 +147,14 @@
         .modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; margin-bottom: 5px; font-weight: 900; letter-spacing: 2px; }
         .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
         
-        /* 모달 내부 탭 메뉴 */
+        /* 모달 내부 탭 시스템 */
         .modal-tab-menu { display: flex; border-bottom: 2px solid rgba(184, 148, 80, 0.3); margin-bottom: 20px; }
         .modal-tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-family: 'Cinzel', serif; font-size: 0.85rem; padding: 10px 5px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 1px; border-bottom: 2px solid transparent; margin-bottom: -2px; }
         .modal-tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold-light); text-shadow: 0 0 10px rgba(230,194,122,0.5); }
         .modal-tab-content { display: none; animation: fadeIn 0.3s; text-align: left; }
         .modal-tab-content.active { display: block; }
 
-        /* STATUS 탭 */
+        /* 탭 1. STATUS */
         .power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid rgba(184, 148, 80, 0.2); border-radius: 2px; }
         .power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Noto Serif KR', serif; font-weight: bold; color: var(--gold-light);}
         .stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.8); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; }
@@ -165,7 +165,7 @@
         .stat-label { font-size: 0.65rem; color: var(--gold-dark); font-family: 'Cinzel', serif; margin-bottom: 4px; letter-spacing: 1px; }
         .stat-val { font-size: 0.85rem; font-weight: bold; color: var(--text-main); text-align: center; }
 
-        /* ABILITY 탭 */
+        /* 탭 2. ABILITY & LORE */
         .ability-box { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.3); padding: 15px; border-radius: 2px; margin-bottom: 15px; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); text-align: center; }
         .ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 8px; letter-spacing: 2px; font-weight: bold; }
         .ability-text { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; margin-bottom: 15px; border-bottom: 1px dashed rgba(184,148,80,0.3); padding-bottom: 10px; }
@@ -177,7 +177,7 @@
         .eyepatch-btn { background: rgba(0,0,0,0.8); color: var(--witch-color); border: 1px solid var(--witch-color); padding: 8px 20px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; font-family: 'Noto Serif KR', serif; transition: 0.3s; }
         .eyepatch-btn:active { transform: scale(0.95); }
 
-        /* ARCHIVE 탭 (갤러리) */
+        /* 탭 3. ARCHIVE (갤러리) */
         .extra-images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 10px; }
         .extra-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; border: 1px solid rgba(184, 148, 80, 0.3); cursor: pointer; transition: 0.3s; filter: sepia(0.2); }
         .extra-img:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,0.8); position: relative; filter: sepia(0); }
@@ -538,7 +538,7 @@
                 <img src="https://igx.kr/u/LY/${char.id}/1" class="char-thumb ${thumbColor}" onerror="this.src='https://via.placeholder.com/50/222/fff?text=?'">
                 <div class="char-info">
                     <div class="char-name">${factionTag}${char.name}</div>
-                    <div class="char-sub">${char.level}</div>
+                    <div class="char-sub">${char.level} / ${char.ability}</div>
                 </div>
                 <i class="fas fa-expand-alt" style="color:var(--gold-dark); font-size:0.8rem;"></i>
             `;
@@ -624,7 +624,15 @@
         renderCharacters(type);
     }
 
-    // 버그 수정된 아코디언 높이 계산 로직
+    function switchModalTab(tabId) {
+        document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
+    }
+
+    // 아코디언 높이 동적 계산
     function toggleAccordion(element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
@@ -634,7 +642,6 @@
             body.style.maxHeight = null;
             icon.style.transform = 'rotate(0deg)';
         } else {
-            // 다른 열려있는 아코디언 닫기
             document.querySelectorAll('.accordion-body').forEach(b => {
                 b.classList.remove('open');
                 b.style.maxHeight = null;
@@ -644,19 +651,10 @@
             });
             
             body.classList.add('open');
-            // scrollHeight에 padding 값을 넉넉히 더해줘서 짤림 방지
+            // scrollHeight에 내부 여백을 고려한 여유값(40px) 추가
             body.style.maxHeight = body.scrollHeight + 40 + "px";
             icon.style.transform = 'rotate(180deg)';
         }
-    }
-
-    // 모달 내부 탭 기능
-    function switchModalTab(tabId) {
-        document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
-        document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
-        
-        document.getElementById(tabId).classList.add('active');
-        document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
     }
 
     function closeModal(e, modalId, force = false) {
@@ -727,7 +725,7 @@
         const abilityText = document.getElementById('modal-ability-text');
         const abilityDesc = document.getElementById('modal-ability-desc');
 
-        // 열릴 때 무조건 STATUS 탭으로 초기화
+        // 모달 열 때 STATUS 탭을 기본으로 표시
         switchModalTab('m-status');
 
         img.style.animation = 'none';
@@ -745,6 +743,7 @@
             btn.style.setProperty('--gold-light', borderColor);
         });
 
+        // 라벨 명칭 분기
         let labelStr = '고유 능력 (ABILITY)';
         if (char.faction === 'human' || (char.faction === 'neutral' && !char.level.includes('써클'))) {
             labelStr = '사용 무기 (WEAPON)';
@@ -763,7 +762,7 @@
         document.getElementById('archive-title').style.color = borderColor;
 
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
-        document.getElementById('modal-desc').innerText = char.desc; 
+        document.getElementById('modal-desc').innerText = char.desc;
 
         let activeCharCode = char.id;
         let bonusStats = 0; 
