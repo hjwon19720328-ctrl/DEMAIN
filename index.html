@@ -44,13 +44,10 @@
             transition: opacity 1s ease-out;
         }
         .entrance-title {
-            font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 6px;
+            font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 6px;
             color: var(--gold-light); text-shadow: 0 0 20px rgba(230, 194, 122, 0.5); margin-bottom: 20px;
             animation: candleFlicker 3s infinite alternate;
-            text-align: center; /* 텍스트 가운데 정렬 */
-            width: 100%;
-            padding-left: 6px; /* letter-spacing으로 인한 시각적 쏠림 보정 */
-            box-sizing: border-box;
+            text-align: center; width: 100%; padding-left: 6px; box-sizing: border-box;
         }
         .entrance-hint {
             font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-muted); letter-spacing: 3px;
@@ -108,7 +105,6 @@
         .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding-bottom 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; padding-bottom: 0; }
         .accordion-body.open { padding-bottom: 15px; }
 
-        /* 경지 필요 스탯 라벨 */
         .req-stat-box { margin-top: 10px; padding: 6px 12px; background: rgba(0,0,0,0.6); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; color: var(--gold-light); font-size: 0.75rem; font-family: 'Noto Serif KR', serif; display: inline-block; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
         .req-label { color: var(--text-muted); margin-right: 5px; font-weight: bold; }
 
@@ -542,7 +538,7 @@
                 <img src="https://igx.kr/u/LY/${char.id}/1" class="char-thumb ${thumbColor}" onerror="this.src='https://via.placeholder.com/50/222/fff?text=?'">
                 <div class="char-info">
                     <div class="char-name">${factionTag}${char.name}</div>
-                    <div class="char-sub">${char.level} / ${char.ability}</div>
+                    <div class="char-sub">${char.level}</div>
                 </div>
                 <i class="fas fa-expand-alt" style="color:var(--gold-dark); font-size:0.8rem;"></i>
             `;
@@ -628,6 +624,14 @@
         renderCharacters(type);
     }
 
+    function switchModalTab(tabId) {
+        document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
+    }
+
     function toggleAccordion(element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
@@ -649,14 +653,6 @@
             body.style.maxHeight = body.scrollHeight + 40 + "px";
             icon.style.transform = 'rotate(180deg)';
         }
-    }
-
-    function switchModalTab(tabId) {
-        document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
-        document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
-        
-        document.getElementById(tabId).classList.add('active');
-        document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
     }
 
     function closeModal(e, modalId, force = false) {
