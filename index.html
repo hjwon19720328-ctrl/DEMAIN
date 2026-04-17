@@ -95,7 +95,7 @@
         .card::after { bottom: 5px; right: 5px; border-left: none; border-top: none; }
         .card h2 { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 15px; color: var(--gold-light); border-bottom: 1px dashed var(--gold-dark); padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
 
-        /* 아코디언 (렉 완화 적용) */
+        /* 아코디언 */
         .accordion-item { border-bottom: 1px solid rgba(184, 148, 80, 0.2); }
         .accordion-item:last-child { border-bottom: none; }
         .accordion-header { padding: 15px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: color 0.3s; }
@@ -139,34 +139,35 @@
         .modal-img-wrapper:hover { transform: scale(1.02); }
         .modal-img { width: 150px; height: 150px; border-radius: 4px; object-fit: cover; border: 3px solid; box-shadow: 0 8px 20px rgba(0,0,0,0.8); filter: sepia(0.2); }
         .modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; margin-bottom: 5px; font-weight: 900; letter-spacing: 2px; }
-        .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
+        .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; font-style: italic; }
         
+        /* 고유 능력 / 사용 무기 전용 박스 */
+        .ability-box { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.3); padding: 12px; border-radius: 2px; margin-bottom: 20px; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); }
+        .ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
+        .ability-text { font-size: 1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; }
+
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .stat-item { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.2); padding: 8px; border-radius: 2px; display: flex; flex-direction: column; align-items: center; }
         .stat-label { font-size: 0.65rem; color: var(--gold-dark); font-family: 'Cinzel', serif; margin-bottom: 4px; letter-spacing: 1px; }
         .stat-val { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
 
-        /* 스탯 바 시스템 (한글 적용) */
+        /* 스탯 바 시스템 (한글) */
         .power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid rgba(184, 148, 80, 0.2); border-radius: 2px; }
         .power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Noto Serif KR', serif; font-weight: bold; color: var(--gold-light);}
         .stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.8); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; }
-        .stat-bar-fill { height: 100%; width: 0; transition: width 1s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); }
+        .stat-bar-fill { height: 100%; width: 0; transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); }
 
-        /* 텍스트창 (타이핑 제거, 즉시 렌더) */
+        /* 텍스트창 */
         .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 2px; border-left: 3px solid var(--gold-dark); min-height: 80px; position: relative; font-family: 'Noto Serif KR', serif; }
 
         .eyepatch-btn { background: rgba(0,0,0,0.8); color: var(--witch-color); border: 1px solid var(--witch-color); padding: 8px 20px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; font-family: 'Noto Serif KR', serif; transition: 0.3s; }
         .eyepatch-btn:active { transform: scale(0.95); }
 
-        /* 갤러리 */
+        /* 갤러리 (3x2 배열로 수정) */
         .archive-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-light); text-align: center; margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(184, 148, 80, 0.3); letter-spacing: 2px; margin-bottom: 15px; }
-        .extra-images-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .warning-wrapper { position: relative; width: 100%; aspect-ratio: 1; border-radius: 2px; overflow: hidden; border: 1px solid rgba(184, 148, 80, 0.3); }
+        .extra-images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .extra-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; border: 1px solid rgba(184, 148, 80, 0.3); cursor: pointer; transition: 0.3s; filter: sepia(0.2); }
         .extra-img:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,0.8); position: relative; filter: sepia(0); }
-        .warning-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--human-color); font-size: 0.6rem; font-weight: bold; text-align: center; cursor: pointer; z-index: 10; transition: opacity 0.3s; font-family: 'Noto Serif KR', serif; }
-        .warning-overlay i { font-size: 1.2rem; margin-bottom: 3px; color: var(--human-color); }
-        .warning-overlay.hidden { opacity: 0; pointer-events: none; }
 
         /* 라이트박스 뷰어 */
         .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
@@ -181,12 +182,9 @@
         .lightbox-close:hover { color: var(--gold-light); transform: scale(1.1); }
         .lightbox-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 2px; }
 
-        /* ======================================= */
-        /* 고지도 (Antique Map) 스타일 */
-        /* ======================================= */
+        /* 고지도 스타일 */
         .dim-toggle { background: rgba(0,0,0,0.6); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; }
         .dim-toggle.witch-mode { border-color: var(--witch-color); }
-
         .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: radial-gradient(circle at center, #3a2818, #140d0b); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px #000; }
         .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; }
         .antique-map-board::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 1px dashed rgba(184, 148, 80, 0.2); border-radius: 50%; pointer-events: none; }
@@ -314,6 +312,11 @@
             <h2 id="modal-name" class="modal-name"></h2>
             <div id="modal-level" class="modal-level"></div>
             
+            <div class="ability-box">
+                <div id="modal-ability-label" class="ability-label">고유 능력 (ABILITY)</div>
+                <div id="modal-ability-text" class="ability-text"></div>
+            </div>
+            
             <div class="power-stats">
                 <div class="power-stat-row">
                     <span style="width: 35px; text-align:right;">근력</span>
@@ -371,7 +374,7 @@
             <img id="lightbox-img" class="lightbox-img" src="" alt="확대 이미지">
             <i class="fas fa-chevron-right nav-arrow right-arrow" onclick="navigateLightbox(1)"></i>
         </div>
-        <div id="lightbox-counter" class="lightbox-counter">1 / 9</div>
+        <div id="lightbox-counter" class="lightbox-counter">1 / 7</div>
     </div>
 </div>
 
@@ -388,21 +391,21 @@
 
     const charData = [
         { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', mbti: 'INTJ', enneagram: '8w9', age: '800+α세', height: '174cm', alignment: '질서 악', stats: {str:40, mag:100, agi:60, int:95}, desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
-        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '차원문 능력', mbti: 'INTP', enneagram: '5w4', age: '400세', height: '162cm', alignment: '참 중립', stats: {str:20, mag:95, agi:50, int:100}, desc: '인간계에 작은 도서관을 운영 중. 도서관은 겉으론 평범하지만 그녀의 엄청난 능력으로 차원을 오갈 수 있는 비밀 통로다. 책 읽는 걸 좋아하며 극심한 귀차니즘.' },
-        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종', mbti: 'ISFP', enneagram: '9w1', age: '100+α세', height: '155cm', alignment: '중립 선', stats: {str:30, mag:75, agi:55, int:65}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 사는 중이다.' },
-        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성/조종', mbti: 'ENTJ', enneagram: '8w7', age: '100+α세', height: '168cm', alignment: '혼돈 악', stats: {str:70, mag:90, agi:85, int:80}, desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 하는 과격파. 에델가르드가 폭주를 저지하고 있다.' },
+        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '차원문 개방', mbti: 'INTP', enneagram: '5w4', age: '400세', height: '162cm', alignment: '참 중립', stats: {str:20, mag:95, agi:50, int:100}, desc: '인간계에 작은 도서관을 운영 중. 도서관은 겉으론 평범하지만 그녀의 엄청난 능력으로 차원을 오갈 수 있는 비밀 통로다. 책 읽는 걸 좋아하며 극심한 귀차니즘.' },
+        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종 및 성장', mbti: 'ISFP', enneagram: '9w1', age: '100+α세', height: '155cm', alignment: '중립 선', stats: {str:30, mag:75, agi:55, int:65}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 사는 중이다.' },
+        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성 및 폭주', mbti: 'ENTJ', enneagram: '8w7', age: '100+α세', height: '168cm', alignment: '혼돈 악', stats: {str:70, mag:90, agi:85, int:80}, desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 하는 과격파. 에델가르드가 폭주를 저지하고 있다.' },
         { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', mbti: 'ESTP', enneagram: '7w8', age: '22세', height: '170cm', alignment: '혼돈 선', stats: {str:100, mag:60, agi:80, int:40}, desc: '엄청난 운동광. 바다 근처에 살며 매일 런닝과 근력 운동을 거르지 않는다. 질량을 부여해 주먹 한 방으로 바위를 부순다.' },
-        { id: 'k', name: '루나', faction: 'witch', level: '8써클 아크메이저', ability: '미래 예지', mbti: 'INFJ', enneagram: '4w5', age: '100+α세', height: '160cm', alignment: '참 중립', stats: {str:35, mag:85, agi:70, int:95}, desc: '미래를 보고 마나의 흐름을 읽는 패시브를 지녔다. 눈의 피로를 덜기 위해 안대를 쓴다. 말이 없지만 동료들을 가장 많이 챙긴다.' },
-        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', mbti: 'ISTP', enneagram: '5w6', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:40, mag:60, agi:50, int:85}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
-        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', mbti: 'INFP', enneagram: '4w3', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:10, mag:65, agi:80, int:60}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
-        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터 하', ability: '여왕', mbti: 'ESTJ', enneagram: '3w4', age: '35세', height: '175cm', alignment: '질서 중립', stats: {str:85, mag:10, agi:80, int:75}, desc: '종교 국가의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
-        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터 상', ability: '기사단장', mbti: 'ISTJ', enneagram: '1w2', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:70}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
-        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트 상', ability: '정예 기사', mbti: 'ISFJ', enneagram: '6w5', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:75, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
-        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트 하', ability: '암살자', mbti: 'ISTP', enneagram: '5w6', age: '26세', height: '178cm', alignment: '절대 중립', stats: {str:80, mag:15, agi:100, int:75}, desc: '여왕의 그림자. 비밀 호위 임무와 동시에 은신처 외곽의 마녀들을 암살하는 더러운 일을 병행한다.' },
-        { id: 'v', name: '소피아', faction: 'human', level: '트레이니 하', ability: '수녀', mbti: 'INTP', enneagram: '5w4', age: '20세', height: '156cm', alignment: '질서 선', stats: {str:20, mag:30, agi:30, int:85}, desc: '무력은 약하지만 학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
-        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저 하', ability: '용병', mbti: 'ENTP', enneagram: '7w8', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:10, agi:80, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 성향의 정보상 겸 용병.' },
-        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '혼혈', mbti: 'ISFP', enneagram: '9w8', age: '20세', height: '154cm', alignment: '참 중립', stats: {str:40, mag:40, agi:60, int:50}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 깊은 산속에 홀로 숨어 산다.' },
-        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '묘지기', mbti: 'ISFJ', enneagram: '2w1', age: '54세', height: '185cm', alignment: '질서 선', stats: {str:100, mag:10, agi:70, int:65}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
+        { id: 'k', name: '루나', faction: 'witch', level: '8써클 아크메이저', ability: '공허의 영역 (안대 해제 시)', mbti: 'INFJ', enneagram: '4w5', age: '100+α세', height: '160cm', alignment: '참 중립', stats: {str:35, mag:85, agi:70, int:95}, desc: '평소에는 마나의 흐름을 보지만, 안대를 벗는 순간 시야에 닿는 특정 공간의 존재를 지워버리는 파괴적인 공허의 영역을 전개한다. 힘을 제어하기 위해 평소엔 안대로 봉인 중이다. 말이 없지만 동료들을 가장 많이 챙긴다.' },
+        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '마도 연금술', mbti: 'ISTP', enneagram: '5w6', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:40, mag:60, agi:50, int:85}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
+        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '마나 인형 조종', mbti: 'INFP', enneagram: '4w3', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:10, mag:65, agi:80, int:60}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
+        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터 하', ability: '왕실 전승 보검 루미나스', mbti: 'ESTJ', enneagram: '3w4', age: '35세', height: '175cm', alignment: '질서 중립', stats: {str:85, mag:10, agi:80, int:75}, desc: '종교 국가의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
+        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터 상', ability: '은백색 처형인의 대검', mbti: 'ISTJ', enneagram: '1w2', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:70}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
+        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트 상', ability: '기사단 정식 롱소드', mbti: 'ISFJ', enneagram: '6w5', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:75, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
+        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트 하', ability: '그림자 쌍단검', mbti: 'ISTP', enneagram: '5w6', age: '26세', height: '178cm', alignment: '절대 중립', stats: {str:80, mag:15, agi:100, int:75}, desc: '여왕의 그림자. 비밀 호위 임무와 동시에 은신처 외곽의 마녀들을 암살하는 더러운 일을 병행한다.' },
+        { id: 'v', name: '소피아', faction: 'human', level: '트레이니 하', ability: '교단 제식 메이스', mbti: 'INTP', enneagram: '5w4', age: '20세', height: '156cm', alignment: '질서 선', stats: {str:20, mag:30, agi:30, int:85}, desc: '무력은 약하지만 학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
+        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저 하', ability: '톱니 곡도 (Falchion)', mbti: 'ENTP', enneagram: '7w8', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:10, agi:80, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 성향의 정보상 겸 용병.' },
+        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '하위 원소 마법', mbti: 'ISFP', enneagram: '9w8', age: '20세', height: '154cm', alignment: '참 중립', stats: {str:40, mag:40, agi:60, int:50}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 깊은 산속에 홀로 숨어 산다.' },
+        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', mbti: 'ISFJ', enneagram: '2w1', age: '54세', height: '185cm', alignment: '질서 선', stats: {str:100, mag:10, agi:70, int:65}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
     ];
 
     function preloadImages() {
@@ -513,7 +516,7 @@
         renderCharacters(type);
     }
 
-    // 버그가 수정된 부드러운 아코디언 로직
+    // 버그 수정된 아코디언 동작
     function toggleAccordion(element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
@@ -523,7 +526,6 @@
             body.style.maxHeight = null;
             icon.style.transform = 'rotate(0deg)';
         } else {
-            // 다른 열려있는 아코디언 닫기
             document.querySelectorAll('.accordion-body').forEach(b => {
                 b.classList.remove('open');
                 b.style.maxHeight = null;
@@ -532,7 +534,6 @@
                 i.style.transform = 'rotate(0deg)';
             });
             
-            // 현재 누른 아코디언 정확한 높이로 열기
             body.classList.add('open');
             body.style.maxHeight = body.scrollHeight + 15 + "px";
             icon.style.transform = 'rotate(180deg)';
@@ -545,22 +546,34 @@
         }
     }
 
+    let statIntervals = {};
     function setStatBar(id, val, color) {
         const bar = document.getElementById(id);
         const text = document.getElementById(`stat-val-${id.split('-')[1]}`);
+        
+        if(statIntervals[id]) clearInterval(statIntervals[id]);
+        
         bar.style.width = '0%';
         bar.style.backgroundColor = color;
         text.style.color = color;
         text.innerText = '0';
+        
         setTimeout(() => {
             bar.style.width = `${val}%`;
             bar.style.boxShadow = `0 0 10px ${color}`;
+            
             let currentVal = 0;
-            const interval = setInterval(() => {
-                if(currentVal >= val) { clearInterval(interval); text.innerText = val; } 
-                else { currentVal += Math.ceil(val/15) || 1; if(currentVal > val) currentVal = val; text.innerText = currentVal; }
+            statIntervals[id] = setInterval(() => {
+                if(currentVal >= val) { 
+                    clearInterval(statIntervals[id]); 
+                    text.innerText = val; 
+                } else { 
+                    currentVal += Math.ceil(val/15) || 1; 
+                    if(currentVal > val) currentVal = val; 
+                    text.innerText = currentVal; 
+                }
             }, 30);
-        }, 300);
+        }, 150);
     }
 
     let isLunaEyepatchOn = true;
@@ -572,36 +585,19 @@
         container.innerHTML = '';
         currentGalleryUrls = [`https://igx.kr/u/LY/${charCode}/1`];
 
-        for (let i = 2; i <= 9; i++) {
+        // 8,9번 이미지 제거 (2~7번 이미지만 로드)
+        for (let i = 2; i <= 7; i++) {
             const url = `https://igx.kr/u/LY/${charCode}/${i}`;
             currentGalleryUrls.push(url); 
             const arrIndex = i - 1; 
 
-            if (i === 8 || i === 9) {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'warning-wrapper';
-                const overlay = document.createElement('div');
-                overlay.className = 'warning-overlay';
-                overlay.innerHTML = '<i class="fas fa-triangle-exclamation"></i>불쾌함 주의<br>(터치하여 해제)';
-                overlay.onclick = (e) => { e.stopPropagation(); overlay.classList.add('hidden'); };
-
-                const img = document.createElement('img');
-                img.className = 'extra-img';
-                img.src = url;
-                img.style.borderColor = themeColor;
-                img.onerror = function() { wrapper.style.display = 'none'; currentGalleryUrls[arrIndex] = null; };
-                img.onclick = () => openLightbox(arrIndex);
-
-                wrapper.appendChild(img); wrapper.appendChild(overlay); container.appendChild(wrapper);
-            } else {
-                const img = document.createElement('img');
-                img.className = 'extra-img';
-                img.src = url;
-                img.style.borderColor = themeColor;
-                img.onerror = function() { this.style.display = 'none'; currentGalleryUrls[arrIndex] = null; };
-                img.onclick = () => openLightbox(arrIndex);
-                container.appendChild(img);
-            }
+            const img = document.createElement('img');
+            img.className = 'extra-img';
+            img.src = url;
+            img.style.borderColor = themeColor;
+            img.onerror = function() { this.style.display = 'none'; currentGalleryUrls[arrIndex] = null; };
+            img.onclick = () => openLightbox(arrIndex);
+            container.appendChild(img);
         }
     }
 
@@ -609,6 +605,8 @@
         const modal = document.getElementById('char-modal');
         const img = document.getElementById('modal-img');
         const lunaAction = document.getElementById('luna-action');
+        const abilityLabel = document.getElementById('modal-ability-label');
+        const abilityText = document.getElementById('modal-ability-text');
 
         let borderColor = `var(--${char.faction}-color)`;
         if(char.faction === 'neutral') borderColor = 'var(--neutral-color)';
@@ -618,7 +616,15 @@
         
         document.getElementById('modal-name').innerText = char.name;
         document.getElementById('modal-name').style.color = borderColor;
-        document.getElementById('modal-level').innerText = `${char.level} | ${char.ability}`;
+        document.getElementById('modal-level').innerText = char.level;
+
+        let labelStr = '고유 능력 (ABILITY)';
+        if (char.faction === 'human' || (char.faction === 'neutral' && !char.level.includes('써클'))) {
+            labelStr = '사용 무기 (WEAPON)';
+        }
+        abilityLabel.innerText = labelStr;
+        abilityText.innerText = char.ability;
+        abilityText.style.color = borderColor;
 
         document.getElementById('modal-mbti').innerText = char.mbti;
         document.getElementById('modal-eg').innerText = char.enneagram;
@@ -628,26 +634,38 @@
         document.getElementById('modal-align').style.color = borderColor;
         document.getElementById('archive-title').style.color = borderColor;
 
-        setStatBar('stat-str', char.stats.str, borderColor);
-        setStatBar('stat-mag', char.stats.mag, borderColor);
-        setStatBar('stat-agi', char.stats.agi, borderColor);
-        setStatBar('stat-int', char.stats.int, borderColor);
-
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
-        // 타이핑 제거, 즉시 렌더링
         document.getElementById('modal-desc').innerText = char.desc;
 
         let activeCharCode = char.id;
+        let bonusStats = 0; 
+
         if(char.id === 'k') {
             activeCharCode = isLunaEyepatchOn ? 'k' : 'l';
             img.src = `https://igx.kr/u/LY/${activeCharCode}/1`;
             lunaAction.style.display = 'block';
             document.getElementById('luna-btn-text').innerText = isLunaEyepatchOn ? "안대 벗기기" : "안대 씌우기";
             document.getElementById('luna-btn-icon').className = isLunaEyepatchOn ? "fas fa-eye-slash" : "fas fa-eye";
+            
+            if (!isLunaEyepatchOn) {
+                bonusStats = 10;
+                abilityText.innerText = '★ 공허의 영역 (Void Domain) ★';
+                abilityText.style.textShadow = '0 0 10px var(--witch-color)';
+                abilityText.style.color = '#fff';
+            } else {
+                abilityText.innerText = '마나 감지 (봉인 중)';
+                abilityText.style.textShadow = 'none';
+            }
         } else {
             img.src = `https://igx.kr/u/LY/${char.id}/1`;
             lunaAction.style.display = 'none';
+            abilityText.style.textShadow = 'none';
         }
+
+        setStatBar('stat-str', char.stats.str + bonusStats, borderColor);
+        setStatBar('stat-mag', char.stats.mag + bonusStats, borderColor);
+        setStatBar('stat-agi', char.stats.agi + bonusStats, borderColor);
+        setStatBar('stat-int', char.stats.int + bonusStats, borderColor);
 
         loadExtraImages(activeCharCode, borderColor);
         modal.classList.add('show');
@@ -655,6 +673,8 @@
 
     function toggleEyepatch() {
         const img = document.getElementById('modal-img');
+        const abilityText = document.getElementById('modal-ability-text');
+        
         img.style.animation = 'none'; void img.offsetWidth; img.style.animation = 'magicFlash 0.6s ease-in-out';
         
         setTimeout(() => {
@@ -664,6 +684,24 @@
             document.getElementById('luna-btn-text').innerText = isLunaEyepatchOn ? "안대 벗기기" : "안대 씌우기";
             document.getElementById('luna-btn-icon').className = isLunaEyepatchOn ? "fas fa-eye-slash" : "fas fa-eye";
             loadExtraImages(newCode, 'var(--witch-color)');
+
+            const luna = charData.find(c => c.id === 'k');
+            let bonus = 0;
+            if (isLunaEyepatchOn) {
+                abilityText.innerText = '마나 감지 (봉인 중)';
+                abilityText.style.color = 'var(--witch-color)';
+                abilityText.style.textShadow = 'none';
+            } else {
+                bonus = 10;
+                abilityText.innerText = '★ 공허의 영역 (Void Domain) ★';
+                abilityText.style.color = '#fff';
+                abilityText.style.textShadow = '0 0 10px var(--witch-color)';
+            }
+            
+            setStatBar('stat-str', luna.stats.str + bonus, 'var(--witch-color)');
+            setStatBar('stat-mag', luna.stats.mag + bonus, 'var(--witch-color)');
+            setStatBar('stat-agi', luna.stats.agi + bonus, 'var(--witch-color)');
+            setStatBar('stat-int', luna.stats.int + bonus, 'var(--witch-color)');
         }, 300);
     }
 
@@ -710,7 +748,6 @@
         document.getElementById('map-modal-type').style.color = themeColor;
         
         document.getElementById('map-modal-desc').style.borderLeftColor = themeColor;
-        // 타이핑 제거, 즉시 렌더링
         document.getElementById('map-modal-desc').innerText = node.desc;
 
         modal.classList.add('show');
