@@ -9,7 +9,6 @@
     
     <style>
         :root {
-            /* 중세 테마 컬러 팔레트 */
             --gold-light: #e6c27a;
             --gold-dark: #b89450;
             --witch-color: #8a2be2; 
@@ -39,19 +38,24 @@
 
         /* 진입 스크린 */
         .entrance-screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh;
             background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column;
             justify-content: center; align-items: center; cursor: pointer;
             transition: opacity 1s ease-out;
         }
         .entrance-title {
-            font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 6px;
+            font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 6px;
             color: var(--gold-light); text-shadow: 0 0 20px rgba(230, 194, 122, 0.5); margin-bottom: 20px;
             animation: candleFlicker 3s infinite alternate;
+            text-align: center; /* 텍스트 가운데 정렬 */
+            width: 100%;
+            padding-left: 6px; /* letter-spacing으로 인한 시각적 쏠림 보정 */
+            box-sizing: border-box;
         }
         .entrance-hint {
             font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-muted); letter-spacing: 3px;
             animation: pulseText 2s infinite; padding: 10px 20px; border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px;
+            text-align: center;
         }
         @keyframes candleFlicker { 0% { text-shadow: 0 0 10px rgba(230,194,122,0.3); } 100% { text-shadow: 0 0 25px rgba(230,194,122,0.8); } }
         @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
@@ -624,15 +628,6 @@
         renderCharacters(type);
     }
 
-    function switchModalTab(tabId) {
-        document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
-        document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
-        
-        document.getElementById(tabId).classList.add('active');
-        document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
-    }
-
-    // 아코디언 높이 동적 계산
     function toggleAccordion(element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
@@ -651,10 +646,17 @@
             });
             
             body.classList.add('open');
-            // scrollHeight에 내부 여백을 고려한 여유값(40px) 추가
             body.style.maxHeight = body.scrollHeight + 40 + "px";
             icon.style.transform = 'rotate(180deg)';
         }
+    }
+
+    function switchModalTab(tabId) {
+        document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
     }
 
     function closeModal(e, modalId, force = false) {
@@ -725,7 +727,6 @@
         const abilityText = document.getElementById('modal-ability-text');
         const abilityDesc = document.getElementById('modal-ability-desc');
 
-        // 모달 열 때 STATUS 탭을 기본으로 표시
         switchModalTab('m-status');
 
         img.style.animation = 'none';
@@ -743,7 +744,6 @@
             btn.style.setProperty('--gold-light', borderColor);
         });
 
-        // 라벨 명칭 분기
         let labelStr = '고유 능력 (ABILITY)';
         if (char.faction === 'human' || (char.faction === 'neutral' && !char.level.includes('써클'))) {
             labelStr = '사용 무기 (WEAPON)';
