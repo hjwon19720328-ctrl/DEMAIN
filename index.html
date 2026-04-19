@@ -9,7 +9,6 @@
     
     <style>
         :root {
-            /* 중세 테마 컬러 팔레트 */
             --gold-light: #e6c27a;
             --gold-dark: #b89450;
             --witch-color: #8a2be2; 
@@ -37,7 +36,6 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
 
-        /* 진입 스크린 */
         .entrance-screen {
             position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh;
             background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column;
@@ -58,7 +56,6 @@
         @keyframes candleFlicker { 0% { text-shadow: 0 0 10px rgba(230,194,122,0.3); } 100% { text-shadow: 0 0 25px rgba(230,194,122,0.8); } }
         @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        /* 앱 컨테이너 */
         .app-container {
             width: 100%; max-width: 480px; height: 100dvh; background-color: var(--bg-base);
             position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.9);
@@ -68,7 +65,6 @@
         .app-container.start { display: flex; animation: openGrimoire 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes openGrimoire { 0% { opacity: 0; transform: scale(1.05); filter: brightness(0); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
 
-        /* 배경 */
         .wood-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
             background: linear-gradient(rgba(20,13,10,0.85), rgba(20,13,10,0.95)),
@@ -76,7 +72,6 @@
             pointer-events: none;
         }
 
-        /* 공통 레이아웃 */
         .header { flex: 0 0 auto; padding: 35px 20px 15px; text-align: center; background: linear-gradient(to bottom, rgba(0,0,0,0.9) 30%, transparent); position: relative; z-index: 10; border-bottom: 1px solid rgba(184, 148, 80, 0.2); }
         .header h1 { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 900; letter-spacing: 4px; color: var(--gold-light); text-shadow: 2px 2px 4px #000; }
         .header p { font-size: 0.75rem; color: var(--gold-dark); margin-top: 5px; letter-spacing: 4px; font-weight: bold; font-family: 'Cinzel', serif; }
@@ -86,7 +81,6 @@
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 카드 UI */
         .card {
             background-color: var(--bg-card); border: 1px solid var(--gold-dark); 
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0,0,0,0.6);
@@ -97,7 +91,6 @@
         .card::after { bottom: 5px; right: 5px; border-left: none; border-top: none; }
         .card h2 { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 15px; color: var(--gold-light); border-bottom: 1px dashed var(--gold-dark); padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
 
-        /* 아코디언 */
         .accordion-item { border-bottom: 1px solid rgba(184, 148, 80, 0.2); }
         .accordion-item:last-child { border-bottom: none; }
         .accordion-header { padding: 15px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: color 0.3s; }
@@ -106,16 +99,18 @@
         .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding-bottom 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; padding-bottom: 0; }
         .accordion-body.open { padding-bottom: 15px; }
 
-        /* 경지 필요 스탯 라벨 */
         .req-stat-box { margin-top: 10px; padding: 6px 12px; background: rgba(0,0,0,0.6); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; color: var(--gold-light); font-size: 0.75rem; font-family: 'Noto Serif KR', serif; display: inline-block; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
         .req-label { color: var(--text-muted); margin-right: 5px; font-weight: bold; }
 
-        /* 필터 탭 */
-        .inner-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+        .search-container { position: relative; margin-bottom: 15px; }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gold-dark); }
+        #char-search-input { width: 100%; padding: 12px 12px 12px 40px; background: rgba(0,0,0,0.6); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 4px; color: var(--text-main); font-family: 'Noto Serif KR', serif; font-size: 0.9rem; transition: 0.3s; }
+        #char-search-input:focus { outline: none; border-color: var(--gold-light); box-shadow: 0 0 10px rgba(184, 148, 80, 0.3); }
+
+        .inner-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .inner-tab-btn { background: rgba(0,0,0,0.6); color: var(--text-muted); border: 1px solid rgba(184, 148, 80, 0.3); padding: 8px 16px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; font-family: 'Noto Serif KR', serif; }
         .inner-tab-btn.active { border-color: var(--gold-light); color: var(--bg-base); background: var(--gold-dark); font-weight: bold; box-shadow: 0 0 10px rgba(184, 148, 80, 0.4); }
 
-        /* 캐릭터 리스트 */
         .char-item { display: flex; align-items: center; padding: 12px; border-radius: 4px; background: rgba(0,0,0,0.4); margin-bottom: 10px; cursor: pointer; border: 1px solid rgba(184, 148, 80, 0.1); transition: 0.2s; }
         .char-item:hover { background: rgba(184, 148, 80, 0.1); transform: translateY(-2px); border-color: var(--gold-dark); }
         .char-thumb { width: 52px; height: 52px; border-radius: 4px; object-fit: cover; border: 2px solid; margin-right: 15px; filter: sepia(0.3); }
@@ -126,7 +121,6 @@
         .char-name { font-weight: bold; font-size: 1rem; margin-bottom: 4px; color: var(--gold-light); }
         .char-sub { font-size: 0.8rem; color: var(--text-muted); }
 
-        /* 하단 네비게이션 */
         .bottom-nav { flex: 0 0 75px; width: 100%; background: var(--nav-bg); border-top: 2px solid var(--gold-dark); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -5px 20px rgba(0,0,0,0.8); }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #887a63; width: 25%; height: 100%; cursor: pointer; transition: 0.3s; }
         .nav-item i { font-size: 1.3rem; margin-bottom: 5px; transition: 0.2s; }
@@ -134,9 +128,6 @@
         .nav-item.active { color: var(--gold-light); }
         .nav-item.active i { text-shadow: 0 0 10px rgba(230, 194, 122, 0.5); transform: translateY(-3px); }
 
-        /* ======================================= */
-        /* 상세 모달 (미니 탭 추가) */
-        /* ======================================= */
         .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 400; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content { width: 92%; max-height: 88%; background: #1a120e; border: 2px solid var(--gold-dark); border-radius: 4px; overflow-y: auto; position: relative; padding: 25px 20px; box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.9); text-align: center; }
@@ -149,25 +140,22 @@
         .modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; margin-bottom: 5px; font-weight: 900; letter-spacing: 2px; }
         .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
         
-        /* 모달 내부 탭 시스템 */
         .modal-tab-menu { display: flex; border-bottom: 2px solid rgba(184, 148, 80, 0.3); margin-bottom: 20px; }
         .modal-tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-family: 'Cinzel', serif; font-size: 0.85rem; padding: 10px 5px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 1px; border-bottom: 2px solid transparent; margin-bottom: -2px; }
         .modal-tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold-light); text-shadow: 0 0 10px rgba(230,194,122,0.5); }
         .modal-tab-content { display: none; animation: fadeIn 0.3s; text-align: left; }
         .modal-tab-content.active { display: block; }
 
-        /* 탭 1. STATUS */
         .power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid rgba(184, 148, 80, 0.2); border-radius: 2px; }
         .power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Noto Serif KR', serif; font-weight: bold; color: var(--gold-light);}
         .stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.8); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; }
         .stat-bar-fill { height: 100%; width: 0; transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); }
 
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
         .stat-item { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.2); padding: 8px; border-radius: 2px; display: flex; flex-direction: column; align-items: center; }
         .stat-label { font-size: 0.65rem; color: var(--gold-dark); font-family: 'Cinzel', serif; margin-bottom: 4px; letter-spacing: 1px; }
         .stat-val { font-size: 0.85rem; font-weight: bold; color: var(--text-main); text-align: center; }
 
-        /* 탭 2. ABILITY & LORE */
         .ability-box { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.3); padding: 15px; border-radius: 2px; margin-bottom: 15px; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); text-align: center; }
         .ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 8px; letter-spacing: 2px; font-weight: bold; }
         .ability-text { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; margin-bottom: 15px; border-bottom: 1px dashed rgba(184,148,80,0.3); padding-bottom: 10px; }
@@ -175,17 +163,14 @@
         
         .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 2px; border-left: 3px solid var(--gold-dark); position: relative; font-family: 'Noto Serif KR', serif; margin-top: 15px;}
 
-        /* 안대 버튼 */
         .eyepatch-btn { background: rgba(0,0,0,0.8); color: var(--witch-color); border: 1px solid var(--witch-color); padding: 8px 20px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; font-family: 'Noto Serif KR', serif; transition: 0.3s; }
         .eyepatch-btn:active { transform: scale(0.95); }
 
-        /* 탭 3. ARCHIVE (갤러리) */
         .archive-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-light); text-align: center; margin-bottom: 15px; letter-spacing: 2px; }
         .extra-images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .extra-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; border: 1px solid rgba(184, 148, 80, 0.3); cursor: pointer; transition: 0.3s; filter: sepia(0.2); }
         .extra-img:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,0.8); position: relative; filter: sepia(0); }
         
-        /* 라이트박스 뷰어 */
         .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .lightbox-overlay.show { display: flex; opacity: 1; }
         .lightbox-content { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
@@ -198,7 +183,6 @@
         .lightbox-close:hover { color: var(--gold-light); transform: scale(1.1); }
         .lightbox-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 2px; }
 
-        /* 고지도 스타일 */
         .dim-toggle { background: rgba(0,0,0,0.6); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; }
         .dim-toggle.witch-mode { border-color: var(--witch-color); }
         .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: radial-gradient(circle at center, #3a2818, #140d0b); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px #000; }
@@ -248,11 +232,11 @@
                 <p>본래 마녀들은 인간들과 어우러져 평화롭게 살아가고 있었다. 그러나 20년전 국가의 국교가 자신들의 부흥을 위해 마녀들을 이단으로 규정하고 무자비한 척결을 시작했다.</p>
             </div>
             <div class="card">
-                <h2><i class="fas fa-chess-rook"></i> 종교 국가 (인간 진영)</h2>
+                <h2><i class="fas fa-chess-rook"></i> 아이젠 왕국 (인간 진영)</h2>
                 <p>마녀 사냥을 주도하는 권력의 중심. 신의 뜻을 명분으로 검사들을 앞세워 마녀들을 처단한다.</p>
             </div>
             <div class="card">
-                <h2><i class="fas fa-moon"></i> 은신처 (마녀 차원)</h2>
+                <h2><i class="fas fa-moon"></i> 닉스 (마녀 차원)</h2>
                 <p>칼날을 피해 도망친 마녀들이 숨어든 일그러진 차원. 이곳에서 언젠가 다가올 날을 위해 힘을 기르고 있다.</p>
             </div>
         </main>
@@ -366,19 +350,25 @@
                 <button class="inner-tab-btn" onclick="filterChars('human', this)">인간</button>
                 <button class="inner-tab-btn" onclick="filterChars('neutral', this)">중립</button>
             </div>
+            
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="char-search-input" placeholder="이름 또는 특징 검색..." onkeyup="handleSearch()">
+            </div>
+
             <div id="character-list-container"></div>
         </main>
         
         <main id="tab-map" class="content-section">
             <div style="text-align: center;">
                 <button id="dim-toggle-btn" class="dim-toggle" onclick="toggleMapDimension()">
-                    <span id="dim-btn-text">기록 전환: 인간계 </span> <i class="fas fa-exchange-alt"></i>
+                    <span id="dim-btn-text">기록 전환: 아이젠 (인간계) </span> <i class="fas fa-exchange-alt"></i>
                 </button>
             </div>
             <div id="map-main-card" class="card">
                 <h2 style="justify-content: center; margin-bottom: 10px;">
                     <i id="map-main-icon" class="fas fa-map" style="color: var(--human-color);"></i> 
-                    <span id="map-main-title-text" style="color: var(--human-color);"> 인간 왕국 고지도</span>
+                    <span id="map-main-title-text" style="color: var(--human-color);"> 아이젠 왕국 고지도</span>
                 </h2>
                 <div id="antique-map-board" class="antique-map-board human-theme">
                     <div class="horizontal-line"></div>
@@ -401,7 +391,7 @@
             <i class="fas fa-times modal-close" onclick="closeModal(event, 'char-modal', true)"></i>
             
             <div class="modal-img-wrapper" onclick="openLightbox(0)">
-                <img id="modal-img" src="" class="modal-img" alt="캐릭터 이미지">
+                <img id="modal-img" src="" class="modal-img" alt="캐릭터 이미지" onerror="this.onerror=null; this.src='https://placehold.co/300x300/1a120e/b89450?text=?';">
             </div>
             <div id="luna-action" style="display: none; margin-top: -10px; margin-bottom: 15px;">
                 <button class="eyepatch-btn" onclick="toggleEyepatch()">
@@ -422,9 +412,10 @@
                 <div class="stat-grid">
                     <div class="stat-item"><span class="stat-label">MBTI</span><span id="modal-mbti" class="stat-val"></span></div>
                     <div class="stat-item"><span class="stat-label">ENNEAGRAM</span><span id="modal-eg" class="stat-val"></span></div>
+                    <div class="stat-item"><span class="stat-label">SIZE</span><span id="modal-size" class="stat-val"></span></div>
                     <div class="stat-item"><span class="stat-label">AGE</span><span id="modal-age" class="stat-val"></span></div>
                     <div class="stat-item"><span class="stat-label">HEIGHT</span><span id="modal-height" class="stat-val"></span></div>
-                    <div class="stat-item" style="grid-column: span 2;"><span class="stat-label">ALIGNMENT</span><span id="modal-align" class="stat-val"></span></div>
+                    <div class="stat-item"><span class="stat-label">ALIGNMENT</span><span id="modal-align" class="stat-val"></span></div>
                 </div>
 
                 <div class="power-stats">
@@ -483,7 +474,7 @@
         <i class="fas fa-times lightbox-close" onclick="closeLightbox(event, true)"></i>
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <i class="fas fa-chevron-left nav-arrow left-arrow" onclick="navigateLightbox(-1)"></i>
-            <img id="lightbox-img" class="lightbox-img" src="" alt="확대 이미지">
+            <img id="lightbox-img" class="lightbox-img" src="" alt="확대 이미지" onerror="this.onerror=null; this.src='https://placehold.co/600x600/1a120e/b89450?text=?';">
             <i class="fas fa-chevron-right nav-arrow right-arrow" onclick="navigateLightbox(1)"></i>
         </div>
         <div id="lightbox-counter" class="lightbox-counter">1 / 7</div>
@@ -502,44 +493,53 @@
     });
 
     const charData = [
-        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조종', abilityDesc: '지정된 공간의 중력을 자유자재로 조절하여 적을 짓누르거나 물체를 부양시킨다. 힘을 개방하면 공간 자체를 붕괴시킬 수 있다.', mbti: 'INTJ', enneagram: '8w9', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:40, mag:100, agi:80, int:95}, desc: '마녀의 여왕. 항상 마녀들이 어떻게 해야 안전할지 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤츤거리는 성격.' },
-        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '차원문 개방', abilityDesc: '원하는 장소나 다른 차원으로 연결되는 게이트를 연다. 단순한 이동을 넘어 차원의 틈새로 적의 공격을 흡수하거나 반사할 수도 있다.', mbti: 'INTP', enneagram: '5w4', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:20, mag:95, agi:50, int:100}, desc: '인간계에 작은 도서관을 운영 중. 도서관은 겉으론 평범하지만 그녀의 엄청난 능력으로 차원을 오갈 수 있는 비밀 통로다. 책 읽는 걸 좋아하며 약간의 귀차니즘.' },
-        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종 및 성장', abilityDesc: '주변의 식물을 순식간에 성장시켜 거대한 가시 덩굴이나 맹독성 꽃을 피워낸다. 자연 친화적인 치유 마법도 구사한다.', mbti: 'ISFP', enneagram: '9w1', age: '121세', height: '166cm', alignment: '중립 선', stats: {str:30, mag:75, agi:55, int:65}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 사는 중이다.' },
-        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성 및 폭주', abilityDesc: '자신이나 타인의 피를 매개로 치명적인 혈검이나 가시를 생성한다. 적의 체내 혈액을 직접 끓어오르게 만드는 잔혹한 기술을 보유했다.', mbti: 'ENTJ', enneagram: '8w7', age: '111세', height: '168cm', alignment: '혼돈 악', stats: {str:70, mag:90, agi:85, int:80}, desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 하는 과격파. 에델가르드가 폭주를 저지하고 있다.' },
-        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', abilityDesc: '자신의 신체나 무기에 압도적인 질량을 부여하여 파괴력을 극대화한다. 가벼운 나뭇가지조차 성벽을 부수는 둔기로 바꿀 수 있다.', mbti: 'ESTP', enneagram: '7w8', age: '72세', height: '170cm', alignment: '혼돈 선', stats: {str:100, mag:60, agi:80, int:40}, desc: '엄청난 운동광. 바다 근처에 살며 매일 런닝과 근력 운동을 거르지 않는다. 질량을 부여해 주먹 한 방으로 바위를 부순다.' },
-        { id: 'k', name: '루나', faction: 'witch', level: '9써클 대마법사', ability: '공허의 영역 / 마나 감지', abilityDesc: '평소에는 마나의 흐름을 꿰뚫어 보는 감지 능력을 사용한다. 안대를 벗는 순간, 시야에 닿는 특정 공간의 존재 자체를 지워버리는 파괴적인 공허의 영역이 전개된다.', mbti: 'INFJ', enneagram: '4w5', age: '321세', height: '160cm', alignment: '참 중립', stats: {str:35, mag:85, agi:70, int:95}, desc: '미래를 보고 마나의 흐름을 읽는 패시브를 지녔다. 눈의 피로를 덜기 위해 안대를 쓴다. 말이 없지만 동료들을 가장 많이 챙긴다.' },
-        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '마도 연금술', abilityDesc: '마나를 물리적, 화학적으로 변성시켜 기적에 가까운 포션과 폭발물, 마도구를 순식간에 합성해 낸다.', mbti: 'ISTP', enneagram: '5w6', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:40, mag:60, agi:50, int:85}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
-        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '마나 인형 조종', abilityDesc: '무생물인 인형에 자신의 마나와 생명력을 불어넣어 강력한 병기로 부린다. 인형들은 시야를 공유하며 자율적으로 전투를 수행한다.', mbti: 'INFP', enneagram: '4w3', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:10, mag:65, agi:80, int:60}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
-        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터', ability: '왕실 전승 보검 루미나스', abilityDesc: '왕가에 전해 내려오는 성검. 사용자의 오라를 빛의 속성으로 변환시켜, 닿는 모든 사악한 마나를 정화하고 베어버린다.', mbti: 'ESTJ', enneagram: '3w4', age: '35세', height: '175cm', alignment: '질서 중립', stats: {str:85, mag:10, agi:80, int:75}, desc: '종교 국가의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
-        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 대검', abilityDesc: '성인의 키만 한 거대한 대검. 그녀의 압도적인 근력과 극한의 오라가 결합되어 산을 가르고 강을 끊는 파괴력을 일격에 방출한다.', mbti: 'ISTJ', enneagram: '1w2', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:70}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
-        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 정식 롱소드', abilityDesc: '표준적인 정식 검술을 구사하지만, 교과서적으로 완벽한 공방일체의 검술과 기민한 민첩성을 자랑한다.', mbti: 'ISFJ', enneagram: '6w5', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:75, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
-        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', abilityDesc: '소리 없이 적의 사각으로 파고들어 급소를 노리는 암살검. 오라를 숨기고 기척을 지우는 은신술에 특화되어 있다.', mbti: 'ISTP', enneagram: '5w6', age: '26세', height: '178cm', alignment: '절대 중립', stats: {str:80, mag:15, agi:100, int:75}, desc: '여왕의 그림자. 비밀 호위 임무와 동시에 은신처 외곽의 마녀들을 암살하는 더러운 일을 병행한다.' },
-        { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '교단 제식 메이스', abilityDesc: '전투보다는 호신용으로 지니고 다니는 메이스. 그녀의 진짜 무기는 방대한 지식과 교단의 비밀을 꿰뚫어 보는 지능이다.', mbti: 'INTP', enneagram: '5w4', age: '20세', height: '156cm', alignment: '질서 선', stats: {str:20, mag:30, agi:30, int:85}, desc: '무력은 약하지만 학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
-        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', abilityDesc: '거친 용병 생활에 최적화된 변칙적인 곡도. 상대의 허점을 찌르는 잔혹하고 실전적인 검술을 사용한다.', mbti: 'ENTP', enneagram: '7w8', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:10, agi:80, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 성향의 정보상 겸 용병.' },
-        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '하위 원소 마법', abilityDesc: '혼혈의 한계로 고위 마법은 쓰지 못하지만, 불, 물, 바람 등 하위 원소를 매우 빠르고 다채롭게 조합하여 전투에 응용한다.', mbti: 'ISFP', enneagram: '9w8', age: '20세', height: '154cm', alignment: '참 중립', stats: {str:40, mag:40, agi:60, int:50}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 깊은 산속에 홀로 숨어 산다.' },
-        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', abilityDesc: '전성기 시절의 무력을 그대로 간직한 사신의 낫. 자연의 이치를 담은 거대한 검강이 낫의 궤적을 따라 폭풍처럼 몰아친다.', mbti: 'ISFJ', enneagram: '2w1', age: '74세', height: '185cm', alignment: '질서 선', stats: {str:100, mag:10, agi:100, int:100}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
+        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조작', abilityDesc: '지정된 공간의 중력을 자유자재로 조절하여 적을 짓누르거나 물체를 부양시킨다. 힘을 개방하면 공간 자체를 붕괴시킬 수 있다.', mbti: 'INTJ', enneagram: '8w9', breast: 'C컵', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:40, mag:100, agi:80, int:95}, desc: '닉스의 여왕. 마녀의 안전을 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤데레 성격.' },
+        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '공간 게이트 생성 및 반사', abilityDesc: '원하는 장소나 다른 차원으로 연결되는 게이트 생성, 차원의 틈새로 적의 공격을 흡수하고 반사한다.', mbti: 'INTP', enneagram: '5w4', breast: 'A컵', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:20, mag:95, agi:50, int:100}, desc: '엄청난 권능으로 차원을 오갈 수 있는 비밀 통로 관리자. 책 읽는 걸 좋아하며 약간의 귀차니즘을 가지고 있다.' },
+        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종 및 급속 성장', abilityDesc: '주변의 식물을 순식간에 성장시켜 거대한 가시 덩굴이나 맹독성 꽃을 피워낸다. 자연 친화적인 치유 마법도 구사한다.', mbti: 'ISFP', enneagram: '9w1', breast: 'G컵', age: '121세', height: '166cm', alignment: '중립 선', stats: {str:30, mag:75, agi:55, int:65}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 생활한다.' },
+        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성 및 조종', abilityDesc: '자신이나 타인의 피를 매개로 치명적인 혈검이나 가시를 생성한다. 적의 체내 혈액을 직접 끓어오르게 만드는 잔혹한 기술을 보유했다.', mbti: 'ENTJ', enneagram: '8w7', breast: 'H컵', age: '111세', height: '168cm', alignment: '혼돈 악', stats: {str:70, mag:90, agi:85, int:80}, desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 한다. 현재 에델가르드가 폭주를 저지하고 있다.' },
+        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', abilityDesc: '자신의 신체나 무기에 압도적인 질량을 부여하여 파괴력을 극대화한다. 가벼운 나뭇가지조차 성벽을 부수는 둔기로 바꿀 수 있다.', mbti: 'ESTP', enneagram: '7w8', breast: 'B컵', age: '72세', height: '170cm', alignment: '혼돈 선', stats: {str:100, mag:50, agi:80, int:50}, desc: '엄청난 운동광. 북쪽 바다 근처에 살며 매일 런닝과 근력 운동을 거르지 않는다.' },
+        { id: 'k', name: '루나', faction: 'witch', level: '9써클 대마법사', ability: '마나 감지 (패시브) / 공허의 영역', abilityDesc: '마나의 흐름을 꿰뚫어 본다. 안대를 벗는 순간, 시야에 닿는 특정 공간의 존재 자체를 지워버리는 파괴적인 공허의 영역이 전개된다.', mbti: 'INFJ', enneagram: '4w5', breast: 'D컵', age: '321세', height: '160cm', alignment: '참 중립', stats: {str:35, mag:85, agi:70, int:90}, desc: '마나가 눈에 보여 피로를 덜기 위해 안대를 착용한다. 말이 없지만 동료들을 가장 많이 챙김. 안대를 벗으면 모든 스탯이 10 상승하며 공허의 영역이 해방된다.' },
+        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', abilityDesc: '마나를 물리적, 화학적으로 변성시켜 기적에 가까운 포션과 폭발물, 마도구를 순식간에 합성해 낸다.', mbti: 'ISTP', enneagram: '5w6', breast: 'D컵', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:20, mag:40, agi:30, int:40}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
+        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', abilityDesc: '무생물인 인형에 자신의 마나와 생명력을 불어넣어 강력한 병기로 부린다. 인형들은 시야를 공유하며 자율적으로 전투를 수행한다.', mbti: 'INFP', enneagram: '4w3', breast: 'A컵', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:10, mag:50, agi:30, int:55}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠지고 말끝을 흐린다.' },
+        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터', ability: '왕실검 루미나스', abilityDesc: '왕가에 전해 내려오는 성검. 사용자의 오라를 빛의 속성으로 변환시켜, 닿는 모든 사악한 마나를 정화하고 베어버린다.', mbti: 'ESTJ', enneagram: '3w4', breast: 'A컵', age: '35세', height: '160cm', alignment: '질서 중립', stats: {str:90, mag:10, agi:90, int:75}, desc: '아이젠의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
+        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 검', abilityDesc: '성인의 키만 한 거대한 대검. 그녀의 압도적인 근력과 극한의 오라가 결합되어 산을 가르고 강을 끊는 파괴력을 일격에 방출한다.', mbti: 'ISTJ', enneagram: '1w2', breast: 'C컵', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:70}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
+        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 검', abilityDesc: '표준적인 정식 검술을 구사하지만, 교과서적으로 완벽한 공방일체의 검술과 기민한 민첩성을 자랑한다.', mbti: 'ISFJ', enneagram: '6w5', breast: 'B컵', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:65, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
+        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', abilityDesc: '소리 없이 적의 사각으로 파고들어 급소를 노리는 암살검. 오라를 숨기고 기척을 지우는 은신술에 특화되어 있다.', mbti: 'ISTP', enneagram: '5w6', breast: 'A컵', age: '26세', height: '151cm', alignment: '절대 중립', stats: {str:80, mag:0, agi:100, int:75}, desc: '여왕의 그림자. 비밀 호위 임무와 동시에 인간계의 마녀들을 암살하며 몸팔기 빼고 더러운 일을 병행한다.' },
+        { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '호신용 메이스', abilityDesc: '전투보다는 호신용으로 지니고 다니는 메이스. 그녀의 진짜 무기는 방대한 지식과 교단의 비밀을 꿰뚫어 보는 지능이다.', mbti: 'INTP', enneagram: '5w4', breast: 'H컵', age: '20세', height: '163cm', alignment: '질서 선', stats: {str:20, mag:30, agi:30, int:85}, desc: '학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
+        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', abilityDesc: '거친 용병 생활에 최적화된 변칙적인 곡도. 상대의 허점을 찌르는 잔혹하고 실전적인 검술을 사용한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'A컵', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:40, mag:10, agi:55, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 정보상 겸 용병. 허~접♡, 좆밥♡, 바~보♡ 같은 말투를 사용한다.' },
+        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '원소 마법', abilityDesc: '혼혈의 한계로 고위 마법은 쓰지 못하지만, 불, 물, 바람 등 하위 원소를 매우 빠르고 다채롭게 조합하여 전투에 응용한다.', mbti: 'ISFP', enneagram: '9w8', breast: 'B컵', age: '20세', height: '156cm', alignment: '참 중립', stats: {str:20, mag:30, agi:20, int:35}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 인간계 동쪽 깊은 산속에 홀로 숨어 산다.' },
+        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', abilityDesc: '전성기 시절의 무력을 그대로 간직한 사신의 낫. 자연의 이치를 담은 거대한 검강이 낫의 궤적을 따라 폭풍처럼 몰아친다.', mbti: 'ISFJ', enneagram: '2w1', breast: 'B컵', age: '74세', height: '180cm', alignment: '질서 선', stats: {str:100, mag:10, agi:100, int:100}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
     ];
 
-    function preloadImages() {
-        const imageUrls = charData.map(char => `https://igx.kr/u/LY/${char.id}/1`);
-        imageUrls.push(`https://igx.kr/u/LY/l/1`);
-        imageUrls.forEach(url => { const img = new Image(); img.src = url; });
-    }
-    preloadImages();
+    let currentFactionFilter = 'all';
+    let currentSearchQuery = '';
 
-    function renderCharacters(filter = 'all') {
+    function renderCharacters() {
         const container = document.getElementById('character-list-container');
         container.innerHTML = '';
-        const filtered = charData.filter(c => filter === 'all' || c.faction === filter);
+        
+        const filtered = charData.filter(c => {
+            const matchFaction = currentFactionFilter === 'all' || c.faction === currentFactionFilter;
+            const matchSearch = c.name.includes(currentSearchQuery) || c.desc.includes(currentSearchQuery) || c.level.includes(currentSearchQuery);
+            return matchFaction && matchSearch;
+        });
+
+        if (filtered.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.9rem;">검색된 기록이 없습니다.</div>';
+            return;
+        }
+
         filtered.forEach(char => {
             const thumbColor = char.faction === 'witch' ? 'thumb-witch' : (char.faction === 'human' ? 'thumb-human' : 'thumb-neutral');
             const factionText = char.faction === 'witch' ? '마녀' : (char.faction === 'human' ? '인간' : '중립');
             const factionTag = `<span style="color:var(--${char.faction}-color); font-size:0.8rem; margin-right:5px;">[${factionText}]</span>`;
+            const fallbackImg = `https://placehold.co/150x150/1a120e/b89450?text=?`;
+            
             const el = document.createElement('div');
             el.className = 'char-item';
             el.onclick = () => openCharModal(char);
             el.innerHTML = `
-                <img src="https://igx.kr/u/LY/${char.id}/1" class="char-thumb ${thumbColor}" onerror="this.src='https://via.placeholder.com/50/222/fff?text=?'">
+                <img src="https://igx.kr/u/LY/${char.id}/1" class="char-thumb ${thumbColor}" onerror="this.onerror=null; this.src='${fallbackImg}';">
                 <div class="char-info">
                     <div class="char-name">${factionTag}${char.name}</div>
                     <div class="char-sub">${char.level}</div>
@@ -549,19 +549,32 @@
             container.appendChild(el);
         });
     }
+    
+    function handleSearch() {
+        currentSearchQuery = document.getElementById('char-search-input').value.trim();
+        renderCharacters();
+    }
+
+    function filterChars(type, btn) {
+        document.querySelectorAll('.inner-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFactionFilter = type;
+        renderCharacters();
+    }
+    
     renderCharacters();
 
     const humanMapNodes = [
-        { id: 'h1', name: '뤼미에르', fullName: '성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', x: 50, y: 50, desc: '인간 진영의 심장부. 마녀 척결을 위한 모든 군사 명령이 하달된다.' },
+        { id: 'h1', name: '뤼미에르', fullName: '아이젠 성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', x: 50, y: 50, desc: '인간 진영의 심장부. 마녀 척결을 위한 모든 군사 명령이 하달된다.' },
         { id: 'h2', name: '아이기스', fullName: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', x: 25, y: 35, desc: '끝없는 무력 단련과 전술 훈련이 이루어지는 철벽의 성채.' },
         { id: 'h3', name: '이단심문소', fullName: '이단 심문소 연옥', type: '고문 수용소', faction: 'human', icon: 'fa-fire-burner', x: 75, y: 40, desc: '마녀들이 수용되는 끔찍한 장소. 한 번 들어가면 살아서 나올 수 없다.' },
         { id: 'h4', name: '지하 오즈', fullName: '지하 도시 오즈', type: '불법 암시장', faction: 'neutral', icon: 'fa-dungeon', x: 80, y: 75, desc: '정보상이나 용병들이 암약하는 교단의 감시가 닿지 않는 슬럼가.' },
-        { id: 'h5', name: '도서관', fullName: '비밀 도서관 (세라)', type: '차원 연결점', faction: 'neutral', icon: 'fa-book-journal-whills', x: 15, y: 70, desc: '조건이 맞으면 마녀들의 은신처 차원으로 넘어갈 수 있는 비밀 게이트.' },
+        { id: 'h5', name: '도서관', fullName: '비밀 도서관 (세라)', type: '차원 연결점', faction: 'neutral', icon: 'fa-book-journal-whills', x: 15, y: 70, desc: '조건이 맞으면 닉스 은신처 차원으로 넘어갈 수 있는 비밀 게이트.' },
         { id: 'h6', name: '바르간', fullName: '상업도시 바르간', type: '경제 중심지', faction: 'human', icon: 'fa-coins', x: 45, y: 20, desc: '인간계 최대 상업 도시. 뒤에서는 마녀 사냥 자금이 은밀하게 거래된다.' },
         { id: 'h7', name: '공동묘지', fullName: '잿빛 공동묘지', type: '중립 구역', faction: 'neutral', icon: 'fa-cross', x: 50, y: 85, desc: '과거 대전쟁이 일어났던 격전지. 죽은 자들의 영혼을 달래는 으스스한 장소다.' }
     ];
     const witchMapNodes = [
-        { id: 'w1', name: '여왕의 옥좌', fullName: '에델가르드의 옥좌', type: '통치 구역', faction: 'witch', icon: 'fa-crown', x: 50, y: 50, desc: '일그러진 차원의 중심부. 에델가르드가 중력을 제어해 차원의 붕괴를 막고 있다. 차원의 핵' },
+        { id: 'w1', name: '여왕의 옥좌', fullName: '에델가르드의 옥좌', type: '통치 구역', faction: 'witch', icon: 'fa-crown', x: 50, y: 50, desc: '일그러진 닉스 차원의 중심부. 에델가르드가 중력을 제어해 차원의 붕괴를 막고 있다.' },
         { id: 'w2', name: '관측소', fullName: '별무리 관측소', type: '예지 구역', faction: 'witch', icon: 'fa-meteor', x: 75, y: 25, desc: '마나의 흐름이 모이는 거대한 마탑. 루나가 미래를 관측한다.' },
         { id: 'w3', name: '핏빛 호수', fullName: '핏빛 호수', type: '위험 방어선', faction: 'witch', icon: 'fa-water', x: 85, y: 65, desc: '다가가는 자의 혈액을 끓어오르게 만드는 천연 요새.' },
         { id: 'w4', name: '생명 온실', fullName: '생명의 온실', type: '휴식 구역', faction: 'witch', icon: 'fa-leaf', x: 20, y: 40, desc: '생명의 기운이 감도는 식물원. 상처 입은 마녀들에게 안식을 제공한다.' },
@@ -582,15 +595,15 @@
         document.getElementById('map-main-card').style.borderColor = borderColor;
         document.getElementById('map-main-icon').className = currentMapDim === 'human' ? 'fas fa-map' : 'fas fa-scroll';
         document.getElementById('map-main-icon').style.color = borderColor;
-        document.getElementById('map-main-title-text').innerText = currentMapDim === 'human' ? ' 인간 왕국 고지도' : ' 마녀 은신처 지도';
+        document.getElementById('map-main-title-text').innerText = currentMapDim === 'human' ? ' 아이젠 왕국 고지도' : ' 닉스 은신처 지도';
         document.getElementById('map-main-title-text').style.color = borderColor;
 
         if (currentMapDim === 'human') {
             document.getElementById('dim-toggle-btn').className = 'dim-toggle';
-            document.getElementById('dim-btn-text').innerText = '기록 전환: 인간계 ';
+            document.getElementById('dim-btn-text').innerText = '기록 전환: 아이젠 (인간계) ';
         } else {
             document.getElementById('dim-toggle-btn').className = 'dim-toggle witch-mode';
-            document.getElementById('dim-btn-text').innerText = '기록 전환: 마녀 차원 ';
+            document.getElementById('dim-btn-text').innerText = '기록 전환: 닉스 (마녀 차원) ';
         }
 
         board.innerHTML = '<div class="horizontal-line"></div><div class="vertical-line"></div>';
@@ -622,12 +635,6 @@
         if(element) element.classList.add('active');
     }
 
-    function filterChars(type, btn) {
-        document.querySelectorAll('.inner-tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderCharacters(type);
-    }
-
     function switchModalTab(tabId) {
         document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
         document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -636,7 +643,6 @@
         document.getElementById(`btn-tab-${tabId.split('-')[1]}`).classList.add('active');
     }
 
-    // 아코디언 높이 동적 계산 (버그 완벽 수정)
     function toggleAccordion(element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
@@ -728,7 +734,6 @@
         const abilityText = document.getElementById('modal-ability-text');
         const abilityDesc = document.getElementById('modal-ability-desc');
 
-        // 모달을 열 때마다 무조건 첫 번째(STATUS) 탭부터 보이도록 초기화
         switchModalTab('m-status');
 
         img.style.animation = 'none';
@@ -757,12 +762,12 @@
 
         document.getElementById('modal-mbti').innerText = char.mbti;
         document.getElementById('modal-eg').innerText = char.enneagram;
+        document.getElementById('modal-size').innerText = char.breast;
         document.getElementById('modal-age').innerText = char.age;
         document.getElementById('modal-height').innerText = char.height;
         document.getElementById('modal-align').innerText = char.alignment;
         document.getElementById('modal-align').style.color = borderColor;
         
-        // 중요: archive-title 태그가 복구되었습니다.
         document.getElementById('archive-title').style.color = borderColor;
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
         document.getElementById('modal-desc').innerText = char.desc;
@@ -857,7 +862,9 @@
     function updateLightboxView() {
         const imgEl = document.getElementById('lightbox-img');
         const url = currentGalleryUrls[currentLightboxIndex];
-        if(url) imgEl.src = url;
+        if(url) {
+            imgEl.src = url;
+        }
         
         let validCount = 0; let currentDisplayNum = 0;
         for(let i=0; i<currentGalleryUrls.length; i++) {
