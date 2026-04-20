@@ -73,9 +73,14 @@
         }
 
         .header { flex: 0 0 auto; padding: 35px 20px 15px; text-align: center; background: linear-gradient(to bottom, rgba(0,0,0,0.9) 30%, transparent); position: relative; z-index: 10; border-bottom: 1px solid rgba(184, 148, 80, 0.2); }
-        .header h1 { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 900; letter-spacing: 4px; color: var(--gold-light); text-shadow: 2px 2px 4px #000; }
+        .header h1 { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 900; letter-spacing: 4px; color: var(--gold-light); text-shadow: 2px 2px 4px #000; cursor: pointer; transition: 0.3s; }
+        .header h1:hover { color: #fff; text-shadow: 0 0 10px var(--gold-light); }
         .header p { font-size: 0.75rem; color: var(--gold-dark); margin-top: 5px; letter-spacing: 4px; font-weight: bold; font-family: 'Cinzel', serif; }
         
+        /* 노래 버튼 스타일 */
+        .music-toggle { position: absolute; top: 32px; right: 20px; font-size: 1.3rem; color: var(--gold-dark); cursor: pointer; transition: 0.3s; padding: 5px; z-index: 20; }
+        .music-toggle:hover { color: var(--gold-light); transform: scale(1.1); }
+
         .content-wrapper { flex: 1 1 auto; height: 0; overflow-y: auto; padding: 15px 20px 20px; position: relative; z-index: 5; }
         .content-section { display: none; animation: fadeIn 0.4s ease-out forwards; }
         .content-section.active { display: block; }
@@ -85,6 +90,7 @@
             background-color: var(--bg-card); border: 1px solid var(--gold-dark); 
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0,0,0,0.6);
             border-radius: 4px; padding: 22px; margin-bottom: 20px; transition: 0.3s; position: relative;
+            line-height: 1.6;
         }
         .card::before, .card::after { content: ''; position: absolute; width: 10px; height: 10px; border: 1px solid var(--gold-light); opacity: 0.5; }
         .card::before { top: 5px; left: 5px; border-right: none; border-bottom: none; }
@@ -122,9 +128,9 @@
         .char-sub { font-size: 0.8rem; color: var(--text-muted); }
 
         .bottom-nav { flex: 0 0 75px; width: 100%; background: var(--nav-bg); border-top: 2px solid var(--gold-dark); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -5px 20px rgba(0,0,0,0.8); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #887a63; width: 25%; height: 100%; cursor: pointer; transition: 0.3s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #887a63; width: 20%; height: 100%; cursor: pointer; transition: 0.3s; }
         .nav-item i { font-size: 1.3rem; margin-bottom: 5px; transition: 0.2s; }
-        .nav-item span { font-size: 0.75rem; font-weight: bold; font-family: 'Noto Serif KR', serif; }
+        .nav-item span { font-size: 0.7rem; font-weight: bold; font-family: 'Noto Serif KR', serif; }
         .nav-item.active { color: var(--gold-light); }
         .nav-item.active i { text-shadow: 0 0 10px rgba(230, 194, 122, 0.5); transform: translateY(-3px); }
 
@@ -221,8 +227,11 @@
     <div class="wood-bg"></div>
 
     <header class="header">
-        <h1>WITCH HUNT</h1>
+        <h1 onclick="switchTab('tab-world')">WITCH HUNT</h1>
         <p>GRIMOIRE OPENED</p>
+        <div class="music-toggle" onclick="toggleBGM()">
+            <i id="music-icon" class="fas fa-volume-up"></i>
+        </div>
     </header>
 
     <div class="content-wrapper">
@@ -231,6 +240,17 @@
                 <h2><i class="fas fa-scroll"></i> 척결과 도피</h2>
                 <p>본래 마녀들은 인간들과 어우러져 평화롭게 살아가고 있었다. 그러나 20년전 국가의 국교가 자신들의 부흥을 위해 마녀들을 이단으로 규정하고 무자비한 척결을 시작했다.</p>
             </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-fire"></i> 오라 (Aura)</h2>
+                <p>육체의 한계를 극한으로 밀어붙여 짜낸 생명력의 결정체. 아이젠 왕국의 검사들이 주로 사용하며, 무기에 오라를 둘러 강도와 예리함을 극대화하거나 신체 능력을 폭발적으로 강화한다.</p>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-sparkles"></i> 마력 (Mana)</h2>
+                <p>세상 만물에 깃든 신비로운 자연 에너지. 마녀들은 심장에 개방된 '마나홀'을 통해 이 에너지를 감응하고 조작할 수 있다. 오라가 육체의 힘이라면, 마력은 지성과 정신의 힘이다.</p>
+            </div>
+
             <div class="card">
                 <h2><i class="fas fa-chess-rook"></i> 아이젠 왕국 (인간 진영)</h2>
                 <p>마녀 사냥을 주도하는 권력의 중심. 신의 뜻을 명분으로 검사들을 앞세워 마녀들을 처단한다.</p>
@@ -242,17 +262,30 @@
         </main>
 
         <main id="tab-levels" class="content-section">
+            <div class="card" style="border-color: var(--gold-light);">
+                <h2><i class="fas fa-chart-bar"></i> 기초 스탯 및 한계 돌파</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6;">
+                    일반적인 필멸자(인간)의 능력치 한계는 다음과 같다. 하지만 <strong>오라(Aura)를 사용</strong>하거나 <strong>마력(Mana)을 감지</strong>하는 순간, 종족의 물리적 한계점이 뚫리며 상상을 초월하는 수치(10 초과)를 얻게 된다.
+                </p>
+                <ul style="font-size: 0.8rem; color: var(--text-main); line-height: 1.8; padding-left: 20px; margin-bottom: 10px;">
+                    <li><strong style="color:var(--human-color);">근력 (STR) 5 ~ 10</strong> : 10은 건장한 젊은 남성(농부, 대장장이 등), 5는 평균 성인.</li>
+                    <li><strong style="color:var(--witch-color);">마력 (MAG) 0 ~ 3</strong> : 일반인은 마나 감응력이 거의 없거나 희박함.</li>
+                    <li><strong style="color:var(--neutral-color);">민첩 (AGI) 5 ~ 10</strong> : 평범한 반사 신경. 10은 매우 재빠른 수준.</li>
+                    <li><strong style="color:var(--gold-light);">지능 (INT) 8 ~ 12</strong> : 일상적인 사고. 교육받은 학자는 15~20까지 상승.</li>
+                </ul>
+            </div>
+
             <div class="card">
                 <h2><i class="fas fa-khanda"></i> 인간의 경지 (무력)</h2>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">트레이니 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">검술의 기초를 닦는 단계. 육체를 단련하며 무기의 특성을 이해하기 시작한다.
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 20+ / 민첩 20+</div>
+                    <div class="accordion-body">검술의 기초를 닦는 단계. 육체를 단련하며 필멸자의 한계를 서서히 넘어서기 시작한다.
+                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 15+ / 민첩 15+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">소드 유저 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">오라를 느끼고 검에 싣기 시작하는 단계.
+                    <div class="accordion-body">오라를 느끼고 검에 싣기 시작하는 단계. 육체의 한계를 완전히 부순다.
                         <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 40+ / 민첩 40+</div>
                     </div>
                 </div>
@@ -270,14 +303,14 @@
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">소드마스터 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">검강을 형성하며일기당천의 무력을 지닌 초인.
+                    <div class="accordion-body">검강을 형성하며 일기당천의 무력을 지닌 초인.
                         <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 85+ / 민첩 85+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">그랜드마스터 <i class="fas fa-chevron-down"></i></div>
                     <div class="accordion-body">자연의 이치를 깨닫고 검과 하나가 된 전설적인 경지. 단신으로 재앙을 막아낸다.
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 95+ / 민첩 90+</div>
+                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 95+ / 민첩 95+</div>
                     </div>
                 </div>
             </div>
@@ -287,51 +320,51 @@
                 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">1 써클 (기초) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">심장에 첫 마나홀을 형성한 상태. 작은 불꽃이나 물방울을 만들어내는 일상적인 수준이다.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 10+ / 지능 10+</div>
+                    <div class="accordion-body">심장에 첫 마나홀을 형성한 상태. 마력을 감응하여 정신적 한계(INT)가 확장된다.
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 10+ / 지능 15+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">2 써클 (수습) <i class="fas fa-chevron-down"></i></div>
                     <div class="accordion-body">본격적인 원소 마법의 발현. 전투에 응용할 수 있는 기초적인 마법 화살 등을 구사한다.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 20+ / 지능 20+</div>
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 20+ / 지능 25+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">3 써클 (정규) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">척결관들과 맞설 수 있는 일반적인 마녀의 경지. 두 가지 이상의 마법을 연계하거나 하위 원소를 능숙하게 다룬다.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 30+ / 지능 30+</div>
+                    <div class="accordion-body">척결관들과 맞설 수 있는 일반적인 마녀의 경지. 두 가지 이상의 마법을 연계한다.
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 30+ / 지능 35+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">4 써클 (숙련) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">마나의 형태 변환이 자유로워지며, 넓은 범위에 피해를 주거나 복잡한 마도 연금술을 시도할 수 있는 단계.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 40+ / 지능 40+</div>
+                    <div class="accordion-body">마나의 형태 변환이 자유로워지며, 넓은 범위에 피해를 주거나 복잡한 연금술을 시도한다.
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 40+ / 지능 45+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">5 써클 (정예) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">자신만의 '고유 능력'이 뚜렷하게 발현되고 심화되는 기점. 소규모 군대를 상대로도 압도적인 우위를 점한다.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 50+ / 지능 50+</div>
+                    <div class="accordion-body">자신만의 '고유 능력'이 뚜렷하게 발현되고 심화되는 기점. 소규모 군대를 상대한다.
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 50+ / 지능 55+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">6 써클 (대마녀) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">마나의 흐름이 자연과 동화되기 시작하는 경지. 기상 이변을 일으키거나 거대한 지형을 바꿀 수 있는 전략적 가치를 지닌다.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 60+ / 지능 60+</div>
+                    <div class="accordion-body">마나의 흐름이 자연과 동화되기 시작하는 경지. 거대한 지형을 바꿀 수 있는 전략적 가치.
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 60+ / 지능 65+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">7 써클 (초월) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">아크메이저에 오르기 직전의 벽. 물리법칙을 비틀고 왜곡하며, 단신으로 거대한 성채를 잿더미로 만들 수 있다.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 70+ / 지능 70+</div>
+                    <div class="accordion-body">물리법칙을 비틀고 왜곡하며, 단신으로 거대한 성채를 잿더미로 만들 수 있다.
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 70+ / 지능 75+</div>
                     </div>
                 </div>
                 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)" style="color:var(--witch-color);">8 써클 (아크메이저) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body">차원의 법칙에 간섭할 수 있는 대마법사. 혼자서 한 나라의 군대를 궤멸시킬 전략 병기급 존재.
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 80+ / 지능 80+</div>
+                    <div class="accordion-body">차원의 법칙에 간섭할 수 있는 대마법사. 혼자서 한 나라의 군대를 궤멸시킨다.
+                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 80+ / 지능 85+</div>
                     </div>
                 </div>
                 <div class="accordion-item">
@@ -377,6 +410,30 @@
                 <div id="map-grid-container" class="map-list-container"></div>
             </div>
         </main>
+
+        <main id="tab-commands" class="content-section">
+            <div class="card" style="border-color: var(--gold-light);">
+                <h2><i class="fas fa-terminal"></i> 시스템 명령어</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+                    AI 혹은 인터페이스 조정 시 활용할 수 있는 시스템 전용 명령어 목록입니다.
+                </p>
+                
+                <div class="req-stat-box" style="margin-bottom: 12px; display: block;">
+                    <span class="req-label" style="color: var(--gold-light);">!요약</span>
+                    <span style="color: var(--text-main);">최근 대화를 요약합니다.</span>
+                </div>
+                
+                <div class="req-stat-box" style="margin-bottom: 12px; display: block;">
+                    <span class="req-label" style="color: var(--human-color);">!디버그</span>
+                    <span style="color: var(--text-main);">이미지 등 출력 오류 발생 시 사용해주세요.</span>
+                </div>
+                
+                <div class="req-stat-box" style="margin-bottom: 0; display: block;">
+                    <span class="req-label" style="color: var(--witch-color);">!사칭</span>
+                    <span style="color: var(--text-main);">유저 사칭 및 권한 탈취 시도 시 사용해주세요.</span>
+                </div>
+            </div>
+        </main>
     </div>
 
     <nav class="bottom-nav">
@@ -384,6 +441,7 @@
         <div class="nav-item" data-tab="tab-levels" onclick="switchTab('tab-levels', this)"><i class="fas fa-khanda"></i><span>경지</span></div>
         <div class="nav-item" data-tab="tab-characters" onclick="switchTab('tab-characters', this)"><i class="fas fa-user-shield"></i><span>인물</span></div>
         <div class="nav-item" data-tab="tab-map" onclick="switchTab('tab-map', this)"><i class="fas fa-compass"></i><span>지도</span></div>
+        <div class="nav-item" data-tab="tab-commands" onclick="switchTab('tab-commands', this)"><i class="fas fa-terminal"></i><span>명령어</span></div>
     </nav>
 
     <div id="char-modal" class="modal-overlay" onclick="closeModal(event, 'char-modal')">
@@ -492,24 +550,37 @@
         }, 1000);
     });
 
+    // 노래 끄고 켜는 함수
+    function toggleBGM() {
+        const bgm = document.getElementById('bgm');
+        const icon = document.getElementById('music-icon');
+        if (bgm.paused) {
+            bgm.play();
+            icon.className = 'fas fa-volume-up';
+        } else {
+            bgm.pause();
+            icon.className = 'fas fa-volume-mute';
+        }
+    }
+
     const charData = [
-        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조작', abilityDesc: '지정된 공간의 중력을 자유자재로 조절하여 적을 짓누르거나 물체를 부양시킨다. 힘을 개방하면 공간 자체를 붕괴시킬 수 있다.', mbti: 'INTJ', enneagram: '8w9', breast: 'C컵', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:40, mag:100, agi:80, int:95}, desc: '닉스의 여왕. 마녀의 안전을 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤데레 성격.' },
-        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '공간 게이트 생성 및 반사', abilityDesc: '원하는 장소나 다른 차원으로 연결되는 게이트 생성, 차원의 틈새로 적의 공격을 흡수하고 반사한다.', mbti: 'INTP', enneagram: '5w4', breast: 'A컵', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:20, mag:95, agi:50, int:100}, desc: '엄청난 권능으로 차원을 오갈 수 있는 비밀 통로 관리자. 책 읽는 걸 좋아하며 약간의 귀차니즘을 가지고 있다.' },
-        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종 및 급속 성장', abilityDesc: '주변의 식물을 순식간에 성장시켜 거대한 가시 덩굴이나 맹독성 꽃을 피워낸다. 자연 친화적인 치유 마법도 구사한다.', mbti: 'ISFP', enneagram: '9w1', breast: 'G컵', age: '121세', height: '166cm', alignment: '중립 선', stats: {str:30, mag:75, agi:55, int:65}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 생활한다.' },
-        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성 및 조종', abilityDesc: '자신이나 타인의 피를 매개로 치명적인 혈검이나 가시를 생성한다. 적의 체내 혈액을 직접 끓어오르게 만드는 잔혹한 기술을 보유했다.', mbti: 'ENTJ', enneagram: '8w7', breast: 'H컵', age: '111세', height: '168cm', alignment: '혼돈 악', stats: {str:70, mag:90, agi:85, int:80}, desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 한다. 현재 에델가르드가 폭주를 저지하고 있다.' },
-        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', abilityDesc: '자신의 신체나 무기에 압도적인 질량을 부여하여 파괴력을 극대화한다. 가벼운 나뭇가지조차 성벽을 부수는 둔기로 바꿀 수 있다.', mbti: 'ESTP', enneagram: '7w8', breast: 'B컵', age: '72세', height: '170cm', alignment: '혼돈 선', stats: {str:100, mag:50, agi:80, int:50}, desc: '엄청난 운동광. 북쪽 바다 근처에 살며 매일 런닝과 근력 운동을 거르지 않는다.' },
-        { id: 'k', name: '루나', faction: 'witch', level: '9써클 대마법사', ability: '마나 감지 (패시브) / 공허의 영역', abilityDesc: '마나의 흐름을 꿰뚫어 본다. 안대를 벗는 순간, 시야에 닿는 특정 공간의 존재 자체를 지워버리는 파괴적인 공허의 영역이 전개된다.', mbti: 'INFJ', enneagram: '4w5', breast: 'D컵', age: '321세', height: '160cm', alignment: '참 중립', stats: {str:35, mag:85, agi:70, int:90}, desc: '마나가 눈에 보여 피로를 덜기 위해 안대를 착용한다. 말이 없지만 동료들을 가장 많이 챙김. 안대를 벗으면 모든 스탯이 10 상승하며 공허의 영역이 해방된다.' },
-        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', abilityDesc: '마나를 물리적, 화학적으로 변성시켜 기적에 가까운 포션과 폭발물, 마도구를 순식간에 합성해 낸다.', mbti: 'ISTP', enneagram: '5w6', breast: 'D컵', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:20, mag:40, agi:30, int:40}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 연금술사.' },
-        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', abilityDesc: '무생물인 인형에 자신의 마나와 생명력을 불어넣어 강력한 병기로 부린다. 인형들은 시야를 공유하며 자율적으로 전투를 수행한다.', mbti: 'INFP', enneagram: '4w3', breast: 'A컵', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:10, mag:50, agi:30, int:55}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠지고 말끝을 흐린다.' },
-        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터', ability: '왕실검 루미나스', abilityDesc: '왕가에 전해 내려오는 성검. 사용자의 오라를 빛의 속성으로 변환시켜, 닿는 모든 사악한 마나를 정화하고 베어버린다.', mbti: 'ESTJ', enneagram: '3w4', breast: 'A컵', age: '35세', height: '160cm', alignment: '질서 중립', stats: {str:90, mag:10, agi:90, int:75}, desc: '아이젠의 여왕. 자신의 사람에겐 따듯하지만 적에겐 피도 눈물도 없다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
-        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 검', abilityDesc: '성인의 키만 한 거대한 대검. 그녀의 압도적인 근력과 극한의 오라가 결합되어 산을 가르고 강을 끊는 파괴력을 일격에 방출한다.', mbti: 'ISTJ', enneagram: '1w2', breast: 'C컵', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:70}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
-        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 검', abilityDesc: '표준적인 정식 검술을 구사하지만, 교과서적으로 완벽한 공방일체의 검술과 기민한 민첩성을 자랑한다.', mbti: 'ISFJ', enneagram: '6w5', breast: 'B컵', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:65, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
-        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', abilityDesc: '소리 없이 적의 사각으로 파고들어 급소를 노리는 암살검. 오라를 숨기고 기척을 지우는 은신술에 특화되어 있다.', mbti: 'ISTP', enneagram: '5w6', breast: 'A컵', age: '26세', height: '151cm', alignment: '절대 중립', stats: {str:80, mag:0, agi:100, int:75}, desc: '여왕의 그림자. 비밀 호위 임무와 동시에 인간계의 마녀들을 암살하며 몸팔기 빼고 더러운 일을 병행한다.' },
-        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '은단검', abilityDesc: '마녀에게 치명적인 단검.', mbti: 'ENTP', enneagram: '7w8', breast: 'C컵', age: '24세', height: '155cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:70, int:80}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 뼈가 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년. 피 냄새를 맡으면 이성을 잃고 폭주한다.' },
-        { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '호신용 메이스', abilityDesc: '전투보다는 호신용으로 지니고 다니는 메이스. 그녀의 진짜 무기는 방대한 지식과 교단의 비밀을 꿰뚫어 보는 지능이다.', mbti: 'INTP', enneagram: '5w4', breast: 'H컵', age: '20세', height: '163cm', alignment: '질서 선', stats: {str:20, mag:30, agi:30, int:85}, desc: '학구열이 뛰어난 수녀. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
-        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', abilityDesc: '거친 용병 생활에 최적화된 변칙적인 곡도. 상대의 허점을 찌르는 잔혹하고 실전적인 검술을 사용한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'A컵', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:40, mag:10, agi:55, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 정보상 겸 용병. 허~접♡, 좆밥♡, 바~보♡ 같은 말투를 사용한다.' },
-        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '원소 마법', abilityDesc: '혼혈의 한계로 고위 마법은 쓰지 못하지만, 불, 물, 바람 등 하위 원소를 매우 빠르고 다채롭게 조합하여 전투에 응용한다.', mbti: 'ISFP', enneagram: '9w8', breast: 'B컵', age: '20세', height: '156cm', alignment: '참 중립', stats: {str:20, mag:30, agi:20, int:35}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 인간계 동쪽 깊은 산속에 홀로 숨어 산다.' },
-        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', abilityDesc: '전성기 시절의 무력을 그대로 간직한 사신의 낫. 자연의 이치를 담은 거대한 검강이 낫의 궤적을 따라 폭풍처럼 몰아친다.', mbti: 'ISFJ', enneagram: '2w1', breast: 'B컵', age: '74세', height: '180cm', alignment: '질서 선', stats: {str:100, mag:10, agi:100, int:100}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
+        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조작', abilityDesc: '지정된 공간의 중력을 자유자재로 조절하여 적을 짓누르거나 물체를 부양시킨다. 힘을 개방하면 공간 자체를 붕괴시킬 수 있다.', mbti: 'INTJ', enneagram: '8w9', breast: 'C컵', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:15, mag:100, agi:60, int:95}, desc: '닉스의 여왕. 마녀의 안전을 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤데레 성격.' },
+        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '공간 게이트 생성 및 반사', abilityDesc: '원하는 장소나 다른 차원으로 연결되는 게이트 생성, 차원의 틈새로 적의 공격을 흡수하고 반사한다.', mbti: 'INTP', enneagram: '5w4', breast: 'A컵', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:8, mag:95, agi:30, int:100}, desc: '엄청난 권능으로 차원을 오갈 수 있는 비밀 통로 관리자. 책 읽는 걸 좋아하며 약한 귀차니즘 탓에 육체 능력은 일반인 이하다.' },
+        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종 및 급속 성장', abilityDesc: '주변의 식물을 순식간에 성장시켜 거대한 가시 덩굴이나 맹독성 꽃을 피워낸다. 자연 친화적인 치유 마법도 구사한다.', mbti: 'ISFP', enneagram: '9w1', breast: 'G컵', age: '121세', height: '166cm', alignment: '중립 선', stats: {str:12, mag:75, agi:40, int:65}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 생활한다.' },
+        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성 및 조종', abilityDesc: '자신이나 타인의 피를 매개로 치명적인 혈검이나 가시를 생성한다. 적의 체내 혈액을 직접 끓어오르게 만드는 잔혹한 기술을 보유했다.', mbti: 'ENTJ', enneagram: '8w7', breast: 'H컵', age: '111세', height: '168cm', alignment: '혼돈 악', stats: {str:50, mag:90, agi:70, int:80}, desc: '과거의 끔끔한 일로 인해 인간을 척결하고 복수하고 싶어 한다. 현재 에델가르드가 폭주를 저지하고 있다.' },
+        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', abilityDesc: '자신의 신체나 무기에 압도적인 질량을 부여하여 파괴력을 극대화한다. 가벼운 나뭇가지조차 성벽을 부수는 둔기로 바꿀 수 있다.', mbti: 'ESTP', enneagram: '7w8', breast: 'B컵', age: '72세', height: '170cm', alignment: '혼돈 선', stats: {str:100, mag:50, agi:80, int:20}, desc: '엄청난 운동광. 마녀임에도 마법보단 육체를 극한으로 단련해, 질량을 부여한 주먹 하나로 성벽을 부순다. (대신 지능은 일반인 수준이다.)' },
+        { id: 'k', name: '루나', faction: 'witch', level: '9써클 대마법사', ability: '마나 감지 (패시브) / 공허의 영역', abilityDesc: '마나의 흐름을 꿰뚫어 본다. 안대를 벗는 순간, 시야에 닿는 특정 공간의 존재 자체를 지워버리는 파괴적인 공허의 영역이 전개된다.', mbti: 'INFJ', enneagram: '4w5', breast: 'D컵', age: '321세', height: '160cm', alignment: '참 중립', stats: {str:10, mag:85, agi:50, int:90}, desc: '마나가 눈에 보여 피로를 덜기 위해 안대를 착용한다. 말이 없지만 동료들을 가장 많이 챙김. 안대를 벗으면 모든 스탯이 10 상승하며 공허의 영역이 해방된다.' },
+        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', abilityDesc: '마나를 물리적, 화학적으로 변성시켜 기적에 가까운 포션과 폭발물, 마도구를 순식간에 합성해 낸다.', mbti: 'ISTP', enneagram: '5w6', breast: 'D컵', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:6, mag:45, agi:15, int:85}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 천재 연금술사. 운동을 안 해서 근력은 아주 약하다.' },
+        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', abilityDesc: '무생물인 인형에 자신의 마나와 생명력을 불어넣어 강력한 병기로 부린다. 인형들은 시야를 공유하며 자율적으로 전투를 수행한다.', mbti: 'INFP', enneagram: '4w3', breast: 'A컵', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:5, mag:55, agi:15, int:50}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 본체의 신체능력은 평범한 어린애 수준. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
+        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터', ability: '왕실검 루미나스', abilityDesc: '왕가에 전해 내려오는 성검. 사용자의 오라를 빛의 속성으로 변환시켜, 닿는 모든 사악한 마나를 정화하고 베어버린다.', mbti: 'ESTJ', enneagram: '3w4', breast: 'A컵', age: '35세', height: '160cm', alignment: '질서 중립', stats: {str:90, mag:15, agi:90, int:75}, desc: '아이젠의 여왕. 오라를 통한 신체 강화로 초인적인 무력을 지녔다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
+        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 검', abilityDesc: '성인의 키만 한 거대한 대검. 그녀의 압도적인 근력과 극한의 오라가 결합되어 산을 가르고 강을 끊는 파괴력을 일격에 방출한다.', mbti: 'ISTJ', enneagram: '1w2', breast: 'C컵', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:80, int:60}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
+        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 검', abilityDesc: '표준적인 정식 검술을 구사하지만, 교과서적으로 완벽한 공방일체의 검술과 기민한 민첩성을 자랑한다.', mbti: 'ISFJ', enneagram: '6w5', breast: 'B컵', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:65, mag:0, agi:70, int:55}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
+        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', abilityDesc: '소리 없이 적의 사각으로 파고들어 급소를 노리는 암살검. 오라를 숨기고 기척을 지우는 은신술에 특화되어 있다.', mbti: 'ISTP', enneagram: '5w6', breast: 'A컵', age: '26세', height: '151cm', alignment: '절대 중립', stats: {str:75, mag:5, agi:100, int:70}, desc: '여왕의 그림자. 인간의 범주를 아득히 초월한 민첩성을 지녔다. 인간계의 마녀들을 암살하며 몸팔기 빼고 더러운 일을 병행한다.' },
+        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '징벌의 가시 채찍', abilityDesc: '닿는 순간 신경을 직접 타격해 고통을 수십 배로 증폭시키는 특수 무기. 살점을 찢어낼 뿐만 아니라, 자신의 피를 매개로 오라를 더욱 흉악하게 강화한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'D컵', age: '24세', height: '168cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:85, int:75}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 뼈가 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년. 피 냄새를 맡으면 이성을 잃고 폭주한다.' },
+        { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '호신용 메이스', abilityDesc: '전투보다는 호신용으로 지니고 다니는 메이스. 그녀의 진짜 무기는 방대한 지식과 교단의 비밀을 꿰뚫어 보는 지능이다.', mbti: 'INTP', enneagram: '5w4', breast: 'H컵', age: '20세', height: '163cm', alignment: '질서 선', stats: {str:15, mag:15, agi:15, int:85}, desc: '일반인을 갓 벗어난 육체 능력을 가졌지만, 학구열만큼은 대륙 최고 수준이다. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
+        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', abilityDesc: '거친 용병 생활에 최적화된 변칙적인 곡도. 상대의 허점을 찌르는 잔혹하고 실전적인 검술을 사용한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'A컵', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:5, agi:60, int:75}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 정보상 겸 용병. 허~접♡, 좆밥♡, 바~보♡ 같은 말투를 사용한다.' },
+        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '원소 마법', abilityDesc: '혼혈의 한계로 고위 마법은 쓰지 못하지만, 불, 물, 바람 등 하위 원소를 매우 빠르고 다채롭게 조합하여 전투에 응용한다.', mbti: 'ISFP', enneagram: '9w8', breast: 'B컵', age: '20세', height: '156cm', alignment: '참 중립', stats: {str:15, mag:35, agi:25, int:40}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 인간계 동쪽 깊은 산속에 홀로 숨어 산다.' },
+        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', abilityDesc: '전성기 시절의 무력을 그대로 간직한 사신의 낫. 자연의 이치를 담은 거대한 검강이 낫의 궤적을 따라 폭풍처럼 몰아친다.', mbti: 'ISFJ', enneagram: '2w1', breast: 'B컵', age: '74세', height: '180cm', alignment: '질서 선', stats: {str:100, mag:10, agi:95, int:80}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
     ];
 
     let currentFactionFilter = 'all';
@@ -632,8 +703,15 @@
     function switchTab(tabId, element) {
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        
         document.getElementById(tabId).classList.add('active');
-        if(element) element.classList.add('active');
+        
+        if(element) {
+            element.classList.add('active');
+        } else {
+            const targetBtn = document.querySelector(`[data-tab='${tabId}']`);
+            if(targetBtn) targetBtn.classList.add('active');
+        }
     }
 
     function switchModalTab(tabId) {
@@ -885,14 +963,3 @@
         document.getElementById('map-modal-title').style.color = themeColor;
         document.getElementById('map-modal-title').style.textShadow = `0 0 10px ${themeColor}`;
         document.getElementById('map-modal-type').innerText = node.type;
-        document.getElementById('map-modal-type').style.color = themeColor;
-        
-        document.getElementById('map-modal-desc').style.borderLeftColor = themeColor;
-        document.getElementById('map-modal-desc').innerText = node.desc;
-
-        modal.classList.add('show');
-    }
-</script>
-
-</body>
-</html>
