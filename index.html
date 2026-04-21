@@ -30,12 +30,43 @@
             background-color: #000; font-family: 'Noto Serif KR', serif;
             color: var(--text-main); display: flex; justify-content: center; align-items: center;
             height: 100dvh; margin: 0; overflow: hidden;
+            transition: background-color 0.5s, color 0.5s;
         }
 
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
 
+        /* ======================================= */
+        /* 이스터에그 (호에에 모드) 스타일 */
+        /* ======================================= */
+        body.syan-mode {
+            --bg-base: #fff0f5; 
+            --bg-card: rgba(255, 228, 225, 0.95); 
+            --gold-light: #ff69b4; 
+            --gold-dark: #ff1493; 
+            --witch-color: #ff69b4;
+            --human-color: #ff69b4;
+            --neutral-color: #ff69b4;
+            --text-main: #c71585; 
+            --text-muted: #db7093;
+            --nav-bg: rgba(255, 240, 245, 0.95);
+            font-family: 'Comic Sans MS', 'Malgun Gothic', sans-serif !important;
+        }
+        body.syan-mode .wood-bg {
+            background: linear-gradient(rgba(255,240,245,0.85), rgba(255,228,225,0.95)),
+                        repeating-linear-gradient(to right, transparent, transparent 40px, rgba(255,105,180,0.1) 40px, rgba(255,105,180,0.1) 80px) !important;
+        }
+        body.syan-mode .header h1, body.syan-mode .entrance-title {
+            font-family: 'Comic Sans MS', sans-serif !important;
+            text-shadow: 0 0 15px rgba(255,105,180,0.8) !important;
+        }
+        body.syan-mode .modal-content { background: #fff0f5; }
+        body.syan-mode .char-thumb, body.syan-mode .modal-img, body.syan-mode .extra-img { filter: sepia(0) !important; border-radius: 50% !important; border-color: var(--gold-light) !important; }
+        body.syan-mode .stat-bar-bg { background: rgba(255,105,180,0.2) !important; }
+        body.syan-mode .stat-bar-fill { background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,105,180,0.8)) !important; }
+
+        /* 진입 스크린 */
         .entrance-screen {
             position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh;
             background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column;
@@ -56,11 +87,12 @@
         @keyframes candleFlicker { 0% { text-shadow: 0 0 10px rgba(230,194,122,0.3); } 100% { text-shadow: 0 0 25px rgba(230,194,122,0.8); } }
         @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
+        /* 앱 컨테이너 */
         .app-container {
             width: 100%; max-width: 480px; height: 100dvh; background-color: var(--bg-base);
             position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.9);
             display: none; flex-direction: column; overflow: hidden;
-            opacity: 0; transform: scale(1.02);
+            opacity: 0; transform: scale(1.02); transition: background-color 0.5s;
         }
         .app-container.start { display: flex; animation: openGrimoire 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes openGrimoire { 0% { opacity: 0; transform: scale(1.05); filter: brightness(0); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
@@ -69,7 +101,7 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
             background: linear-gradient(rgba(20,13,10,0.85), rgba(20,13,10,0.95)),
                         repeating-linear-gradient(to right, transparent, transparent 40px, rgba(0,0,0,0.2) 40px, rgba(0,0,0,0.2) 80px);
-            pointer-events: none;
+            pointer-events: none; transition: background 0.5s;
         }
 
         .header { flex: 0 0 auto; padding: 35px 20px 15px; text-align: center; background: linear-gradient(to bottom, rgba(0,0,0,0.9) 30%, transparent); position: relative; z-index: 10; border-bottom: 1px solid rgba(184, 148, 80, 0.2); }
@@ -88,7 +120,7 @@
         .card {
             background-color: var(--bg-card); border: 1px solid var(--gold-dark); 
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0,0,0,0.6);
-            border-radius: 4px; padding: 22px; margin-bottom: 20px; transition: 0.3s; position: relative;
+            border-radius: 4px; padding: 22px; margin-bottom: 20px; transition: background-color 0.5s, border-color 0.5s; position: relative;
             line-height: 1.6;
         }
         .card::before, .card::after { content: ''; position: absolute; width: 10px; height: 10px; border: 1px solid var(--gold-light); opacity: 0.5; }
@@ -104,7 +136,7 @@
         .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding-bottom 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; padding-bottom: 0; }
         .accordion-body.open { padding-bottom: 15px; }
 
-        .req-stat-box { margin-top: 10px; padding: 6px 12px; background: rgba(0,0,0,0.6); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; color: var(--gold-light); font-size: 0.75rem; font-family: 'Noto Serif KR', serif; display: inline-block; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
+        .req-stat-box { margin-top: 10px; padding: 6px 12px; background: rgba(0,0,0,0.6); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; color: var(--gold-light); font-size: 0.75rem; font-family: 'Noto Serif KR', serif; display: inline-block; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); transition: 0.3s; }
         .req-label { color: var(--text-muted); margin-right: 5px; font-weight: bold; }
 
         .search-container { position: relative; margin-bottom: 15px; }
@@ -118,7 +150,7 @@
 
         .char-item { display: flex; align-items: center; padding: 12px; border-radius: 4px; background: rgba(0,0,0,0.4); margin-bottom: 10px; cursor: pointer; border: 1px solid rgba(184, 148, 80, 0.1); transition: 0.2s; }
         .char-item:hover { background: rgba(184, 148, 80, 0.1); transform: translateY(-2px); border-color: var(--gold-dark); }
-        .char-thumb { width: 52px; height: 52px; border-radius: 4px; object-fit: cover; border: 2px solid; margin-right: 15px; filter: sepia(0.3); }
+        .char-thumb { width: 52px; height: 52px; border-radius: 4px; object-fit: cover; border: 2px solid; margin-right: 15px; filter: sepia(0.3); transition: 0.3s; }
         .thumb-witch { border-color: var(--witch-color); }
         .thumb-human { border-color: var(--human-color); }
         .thumb-neutral { border-color: var(--neutral-color); }
@@ -126,7 +158,7 @@
         .char-name { font-weight: bold; font-size: 1rem; margin-bottom: 4px; color: var(--gold-light); }
         .char-sub { font-size: 0.8rem; color: var(--text-muted); }
 
-        .bottom-nav { flex: 0 0 75px; width: 100%; background: var(--nav-bg); border-top: 2px solid var(--gold-dark); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -5px 20px rgba(0,0,0,0.8); }
+        .bottom-nav { flex: 0 0 75px; width: 100%; background: var(--nav-bg); border-top: 2px solid var(--gold-dark); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -5px 20px rgba(0,0,0,0.8); transition: background-color 0.5s; }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #887a63; width: 20%; height: 100%; cursor: pointer; transition: 0.3s; }
         .nav-item i { font-size: 1.3rem; margin-bottom: 5px; transition: 0.2s; }
         .nav-item span { font-size: 0.7rem; font-weight: bold; font-family: 'Noto Serif KR', serif; }
@@ -135,8 +167,7 @@
 
         .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 400; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.show { display: flex; opacity: 1; }
-        /* 스크롤 제어를 위해 modal-content에 overflow 적용 */
-        .modal-content { width: 92%; max-height: 88%; background: #1a120e; border: 2px solid var(--gold-dark); border-radius: 4px; overflow-y: auto; position: relative; padding: 25px 20px; box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.9); text-align: center; scroll-behavior: smooth; }
+        .modal-content { width: 92%; max-height: 88%; background: #1a120e; border: 2px solid var(--gold-dark); border-radius: 4px; overflow-y: auto; position: relative; padding: 25px 20px; box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.9); text-align: center; scroll-behavior: smooth; transition: background-color 0.5s; }
         .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.8rem; color: var(--gold-dark); cursor: pointer; z-index: 10; transition: 0.2s; }
         .modal-close:hover { color: var(--gold-light); transform: scale(1.1); }
         
@@ -145,7 +176,7 @@
 
         .modal-img-wrapper { position: relative; display: inline-block; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
         .modal-img-wrapper:hover { transform: scale(1.02); }
-        .modal-img { width: 150px; height: 150px; border-radius: 4px; object-fit: cover; border: 3px solid; box-shadow: 0 8px 20px rgba(0,0,0,0.8); filter: sepia(0.2); }
+        .modal-img { width: 150px; height: 150px; border-radius: 4px; object-fit: cover; border: 3px solid; box-shadow: 0 8px 20px rgba(0,0,0,0.8); filter: sepia(0.2); transition: 0.3s; }
         .modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; }
         .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
         
@@ -155,22 +186,22 @@
         .modal-tab-content { display: none; animation: fadeIn 0.3s; text-align: left; }
         .modal-tab-content.active { display: block; }
 
-        .power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid rgba(184, 148, 80, 0.2); border-radius: 2px; }
+        .power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid rgba(184, 148, 80, 0.2); border-radius: 2px; transition: 0.3s; }
         .power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Noto Serif KR', serif; font-weight: bold; color: var(--gold-light);}
-        .stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.8); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; }
+        .stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.8); border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; transition: 0.3s; }
         .stat-bar-fill { height: 100%; width: 0; transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); }
 
         .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
-        .stat-item { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.2); padding: 8px; border-radius: 2px; display: flex; flex-direction: column; align-items: center; }
+        .stat-item { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.2); padding: 8px; border-radius: 2px; display: flex; flex-direction: column; align-items: center; transition: 0.3s; }
         .stat-label { font-size: 0.65rem; color: var(--gold-dark); font-family: 'Cinzel', serif; margin-bottom: 4px; letter-spacing: 1px; }
         .stat-val { font-size: 0.85rem; font-weight: bold; color: var(--text-main); text-align: center; }
 
-        .ability-box { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.3); padding: 15px; border-radius: 2px; margin-bottom: 15px; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); text-align: center; }
+        .ability-box { background: rgba(0,0,0,0.5); border: 1px solid rgba(184, 148, 80, 0.3); padding: 15px; border-radius: 2px; margin-bottom: 15px; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); text-align: center; transition: 0.3s; }
         .ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 8px; letter-spacing: 2px; font-weight: bold; }
         .ability-text { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; margin-bottom: 15px; border-bottom: 1px dashed rgba(184,148,80,0.3); padding-bottom: 10px; }
         .ability-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; font-family: 'Noto Serif KR', serif; }
         
-        .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 2px; border-left: 3px solid var(--gold-dark); position: relative; font-family: 'Noto Serif KR', serif; margin-top: 15px;}
+        .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 2px; border-left: 3px solid var(--gold-dark); position: relative; font-family: 'Noto Serif KR', serif; margin-top: 15px; transition: 0.3s; }
 
         .eyepatch-btn { background: rgba(0,0,0,0.8); color: var(--witch-color); border: 1px solid var(--witch-color); padding: 8px 20px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; font-family: 'Noto Serif KR', serif; transition: 0.3s; }
         .eyepatch-btn:active { transform: scale(0.95); }
@@ -194,7 +225,7 @@
 
         .dim-toggle { background: rgba(0,0,0,0.6); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; }
         .dim-toggle.witch-mode { border-color: var(--witch-color); }
-        .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: radial-gradient(circle at center, #3a2818, #140d0b); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px #000; }
+        .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: radial-gradient(circle at center, #3a2818, #140d0b); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px #000; transition: 0.3s; }
         .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; }
         .antique-map-board::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 1px dashed rgba(184, 148, 80, 0.2); border-radius: 50%; pointer-events: none; }
         .antique-map-board .horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(184, 148, 80, 0.1); pointer-events: none; }
@@ -593,6 +624,9 @@
     let currentSearchQuery = '';
     let currentFilteredChars = [];
     let currentCharIndex = 0;
+    
+    // 시안송 모드 (이스터에그 상태)
+    let isSyanMode = false;
 
     function renderCharacters() {
         const container = document.getElementById('character-list-container');
@@ -613,16 +647,21 @@
             const thumbColor = char.faction === 'witch' ? 'thumb-witch' : (char.faction === 'human' ? 'thumb-human' : 'thumb-neutral');
             const factionText = char.faction === 'witch' ? '마녀' : (char.faction === 'human' ? '인간' : '중립');
             const factionTag = `<span style="color:var(--${char.faction}-color); font-size:0.8rem; margin-right:5px;">[${factionText}]</span>`;
+            
+            // 이스터에그 적용 여부에 따른 이미지 및 텍스트 렌더링
+            const displayImg = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${char.id}/1`;
+            const displaySub = isSyanMode ? '호에에~♡' : char.level;
+            
             const fallbackImg = `https://placehold.co/150x150/1a120e/b89450?text=?`;
             
             const el = document.createElement('div');
             el.className = 'char-item';
             el.onclick = () => openCharModal(char);
             el.innerHTML = `
-                <img src="https://igx.kr/u/LY/${char.id}/1" class="char-thumb ${thumbColor}" onerror="this.onerror=null; this.src='${fallbackImg}';">
+                <img src="${displayImg}" class="char-thumb ${thumbColor}" onerror="this.onerror=null; this.src='${fallbackImg}';">
                 <div class="char-info">
                     <div class="char-name">${factionTag}${char.name}</div>
-                    <div class="char-sub">${char.level}</div>
+                    <div class="char-sub">${displaySub}</div>
                 </div>
                 <i class="fas fa-expand-alt" style="color:var(--gold-dark); font-size:0.8rem;"></i>
             `;
@@ -631,7 +670,19 @@
     }
     
     function handleSearch() {
-        currentSearchQuery = document.getElementById('char-search-input').value.trim();
+        const query = document.getElementById('char-search-input').value.trim().toLowerCase();
+        
+        // 이스터에그 조건 체크
+        if (query === '시안송' || query === 'syansong') {
+            isSyanMode = true;
+            document.body.classList.add('syan-mode');
+            currentSearchQuery = ''; // 검색어 자체를 리셋하여 전체 목록 표시
+        } else {
+            isSyanMode = false;
+            document.body.classList.remove('syan-mode');
+            currentSearchQuery = query;
+        }
+        
         renderCharacters();
     }
 
@@ -789,17 +840,17 @@
         }, 150);
     }
 
-    let isLunaEyepatchOn = true;
-    let currentGalleryUrls = []; 
-    let currentLightboxIndex = 0;
-
     function loadExtraImages(charCode, themeColor) {
         const container = document.getElementById('modal-extra-images');
         container.innerHTML = '';
-        currentGalleryUrls = [`https://igx.kr/u/LY/${charCode}/1`];
+        
+        // 이스터에그 발동 중이면 갤러리 이미지도 모두 호에에 이미지로 변경
+        const targetBaseUrl = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${charCode}`;
+        
+        currentGalleryUrls = [isSyanMode ? targetBaseUrl : `${targetBaseUrl}/1`];
 
         for (let i = 2; i <= 7; i++) {
-            const url = `https://igx.kr/u/LY/${charCode}/${i}`;
+            const url = isSyanMode ? targetBaseUrl : `${targetBaseUrl}/${i}`;
             currentGalleryUrls.push(url); 
             const arrIndex = i - 1; 
 
@@ -831,13 +882,9 @@
         const abilityText = document.getElementById('modal-ability-text');
         const abilityDesc = document.getElementById('modal-ability-desc');
 
-        // 현재 선택된 캐릭터의 인덱스 추적 (이동 기능용)
         currentCharIndex = currentFilteredChars.findIndex(c => c.id === char.id);
 
-        // 창이 열릴 때마다 혹은 캐릭터를 넘길 때마다 루나 안대 상태 초기화
         isLunaEyepatchOn = true;
-        
-        // 스크롤 최상단으로 강제 초기화
         document.getElementById('char-modal-content').scrollTop = 0;
 
         switchModalTab('m-status');
@@ -851,7 +898,9 @@
         
         document.getElementById('modal-name').innerText = char.name;
         document.getElementById('modal-name').style.color = borderColor;
-        document.getElementById('modal-level').innerText = char.level;
+        
+        // 이스터에그 텍스트 처리
+        document.getElementById('modal-level').innerText = isSyanMode ? '호에에~♡' : char.level;
 
         document.querySelectorAll('.modal-tab-btn').forEach(btn => {
             btn.style.setProperty('--gold-light', borderColor);
@@ -861,38 +910,38 @@
         if (char.faction === 'human' || (char.faction === 'neutral' && !char.level.includes('써클'))) {
             labelStr = '사용 무기 (WEAPON)';
         }
-        abilityLabel.innerText = labelStr;
+        abilityLabel.innerText = isSyanMode ? '호에에?' : labelStr;
         abilityLabel.style.color = borderColor;
-        abilityText.innerText = char.ability;
-        abilityDesc.innerText = char.abilityDesc; 
+        abilityText.innerText = isSyanMode ? '호에에에!' : char.ability;
+        abilityDesc.innerText = isSyanMode ? '호에에... 호에에엥~♡' : char.abilityDesc; 
 
-        document.getElementById('modal-mbti').innerText = char.mbti;
-        document.getElementById('modal-eg').innerText = char.enneagram;
-        document.getElementById('modal-size').innerText = char.breast;
-        document.getElementById('modal-age').innerText = char.age;
-        document.getElementById('modal-height').innerText = char.height;
-        document.getElementById('modal-align').innerText = char.alignment;
+        document.getElementById('modal-mbti').innerText = isSyanMode ? 'HOEE' : char.mbti;
+        document.getElementById('modal-eg').innerText = isSyanMode ? '호에' : char.enneagram;
+        document.getElementById('modal-size').innerText = isSyanMode ? '호에컵' : char.breast;
+        document.getElementById('modal-age').innerText = isSyanMode ? '호에짤' : char.age;
+        document.getElementById('modal-height').innerText = isSyanMode ? '호에cm' : char.height;
+        document.getElementById('modal-align').innerText = isSyanMode ? '호에에' : char.alignment;
         document.getElementById('modal-align').style.color = borderColor;
         
         document.getElementById('archive-title').style.color = borderColor;
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
-        document.getElementById('modal-desc').innerText = char.desc;
+        document.getElementById('modal-desc').innerText = isSyanMode ? '호에에~ 호에에에엥~♡ 호에에에에에에에에에!!!' : char.desc;
 
         let activeCharCode = char.id;
         let bonusStats = 0; 
 
         if(char.id === 'k') {
             activeCharCode = 'k';
-            img.src = `https://igx.kr/u/LY/${activeCharCode}/1`;
+            img.src = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${activeCharCode}/1`;
             lunaAction.style.display = 'block';
             document.getElementById('luna-btn-text').innerText = "안대 벗기기";
             document.getElementById('luna-btn-icon').className = "fas fa-eye-slash";
             
-            abilityText.innerText = '마나 감지 (봉인 중)';
+            if(!isSyanMode) abilityText.innerText = '마나 감지 (봉인 중)';
             abilityText.style.textShadow = 'none';
             abilityText.style.color = borderColor;
         } else {
-            img.src = `https://igx.kr/u/LY/${char.id}/1`;
+            img.src = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${char.id}/1`;
             lunaAction.style.display = 'none';
             abilityText.style.textShadow = 'none';
             abilityText.style.color = borderColor;
@@ -916,7 +965,7 @@
         setTimeout(() => {
             isLunaEyepatchOn = !isLunaEyepatchOn; 
             const newCode = isLunaEyepatchOn ? 'k' : 'l';
-            img.src = `https://igx.kr/u/LY/${newCode}/1`;
+            img.src = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${newCode}/1`;
             document.getElementById('luna-btn-text').innerText = isLunaEyepatchOn ? "안대 벗기기" : "안대 씌우기";
             document.getElementById('luna-btn-icon').className = isLunaEyepatchOn ? "fas fa-eye-slash" : "fas fa-eye";
             loadExtraImages(newCode, 'var(--witch-color)');
@@ -924,14 +973,16 @@
             const luna = charData.find(c => c.id === 'k');
             let bonus = 0;
             if (isLunaEyepatchOn) {
-                abilityText.innerText = '마나 감지 (봉인 중)';
+                if(!isSyanMode) abilityText.innerText = '마나 감지 (봉인 중)';
                 abilityText.style.color = 'var(--witch-color)';
                 abilityText.style.textShadow = 'none';
             } else {
                 bonus = 10;
-                abilityText.innerText = '★ 공허의 영역 (Void Domain) ★';
-                abilityText.style.color = '#fff';
-                abilityText.style.textShadow = '0 0 10px var(--witch-color)';
+                if(!isSyanMode) {
+                    abilityText.innerText = '★ 공허의 영역 (Void Domain) ★';
+                    abilityText.style.color = '#fff';
+                    abilityText.style.textShadow = '0 0 10px var(--witch-color)';
+                }
             }
             
             setStatBar('stat-str', luna.stats.str + bonus, 'var(--witch-color)');
