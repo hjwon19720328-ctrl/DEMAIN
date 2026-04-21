@@ -112,7 +112,7 @@
             pointer-events: none; 
         }
 
-        /* 헤더 위치 및 버튼 겹침 방지 */
+        /* 헤더 위치 및 버튼 겹침 방지 완벽 수정 */
         .header { flex: 0 0 auto; padding: 15px 20px 15px; text-align: center; position: relative; border-bottom: 1px solid var(--fx-color); z-index: 10; transition: border-color 0.5s; display: flex; flex-direction: column; }
         .header-controls { display: flex; justify-content: flex-end; gap: 12px; align-items: center; z-index: 20; margin-bottom: 10px; width: 100%; }
         .ctrl-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; width: 40px; }
@@ -269,7 +269,7 @@
 
     <div class="content-wrapper" id="main-content-area">
         <main id="tab-world" class="content-section active">
-            <div class="card" id="card-main-lore" style="border-color: var(--gold-light);">
+            <div class="card" style="border-color: var(--gold-light);">
                 <h2 id="lore-title-1"><i class="fas fa-scroll"></i> 경계의 삶</h2>
                 <p id="lore-desc-1" class="desc-text" data-orig="중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.">중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.</p>
             </div>
@@ -512,7 +512,23 @@
         { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', x: 50, y: 85, desc: '인간계와 이어지는 유일한 통로. 에델가르드의 봉인으로 보호받는다.' }
     ];
 
-    // --- 3. 세계관 가변 텍스트 데이터 ---
+    // --- 3. 이미지 프리로드 (안대 딜레이 제거) ---
+    function preloadImages() {
+        const urls = ['https://igx.kr/u/LJ/g/c'];
+        charData.forEach(c => {
+            urls.push(`https://igx.kr/u/LY/${c.id}/1`);
+            if (c.id === 'k') {
+                for(let i=1; i<=7; i++) {
+                    urls.push(`https://igx.kr/u/LY/k/${i}`);
+                    urls.push(`https://igx.kr/u/LY/l/${i}`);
+                }
+            }
+        });
+        urls.forEach(url => { const img = new Image(); img.src = url; });
+    }
+    preloadImages();
+
+    // --- 4. 세계관 가변 텍스트 데이터 ---
     const loreTexts = {
         neutral: {
             t1: "경계의 삶", d1: "중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.",
@@ -540,7 +556,7 @@
         }
     };
 
-    // --- 4. 상태 관리 변수 ---
+    // --- 5. 상태 관리 변수 ---
     const themes = ['neutral', 'witch', 'human']; // 중립이 기본
     let currentThemeIdx = 0; 
     let currentFactionFilter = 'all';
@@ -554,22 +570,6 @@
     let currentLightboxIndex = 0;
     let statIntervals = {};
 
-    // --- 5. 이미지 프리로드 (안대 딜레이 제거) ---
-    function preloadImages() {
-        const urls = ['https://igx.kr/u/LJ/g/c'];
-        charData.forEach(c => {
-            urls.push(`https://igx.kr/u/LY/${c.id}/1`);
-            if (c.id === 'k') {
-                for(let i=1; i<=7; i++) {
-                    urls.push(`https://igx.kr/u/LY/k/${i}`);
-                    urls.push(`https://igx.kr/u/LY/l/${i}`);
-                }
-            }
-        });
-        urls.forEach(url => { const img = new Image(); img.src = url; });
-    }
-    preloadImages();
-
     // --- 6. 앰비언트 파티클 이펙트 ---
     const canvasFx = document.getElementById('ambient-fx');
     const ctxFx = canvasFx.getContext('2d');
@@ -581,6 +581,7 @@
         canvasFx.height = container.clientHeight || window.innerHeight;
     }
     window.addEventListener('resize', initCanvas);
+    initCanvas();
 
     class ParticleFx {
         constructor() { this.reset(); }
@@ -598,7 +599,7 @@
             if (this.y < 0) this.reset();
         }
         draw() {
-            let color = "107, 142, 35"; // 중립
+            let color = "107, 142, 35"; // 중립 (올리브 그린)
             if (isSyanMode) color = "255, 105, 180";
             else if (themes[currentThemeIdx] === 'witch') color = "138, 43, 226";
             else if (themes[currentThemeIdx] === 'human') color = "178, 34, 34";
@@ -620,6 +621,7 @@
         particlesFx.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animateFx);
     }
+    animateFx();
 
     // --- 7. 기능 제어 함수들 ---
     document.getElementById('entrance-screen').addEventListener('click', function() {
@@ -629,8 +631,6 @@
         setTimeout(() => { 
             this.style.display = 'none'; 
             document.getElementById('app-main').classList.add('start'); 
-            initCanvas(); 
-            animateFx(); 
         }, 1000);
     });
 
@@ -644,6 +644,7 @@
 
     function updateLoreTexts(themeName) {
         const lore = loreTexts[themeName];
+        
         const updateCard = (num, titleIcon, titleText, descText) => {
             const titleEl = document.getElementById(`lore-title-${num}`);
             const descEl = document.getElementById(`lore-desc-${num}`);
@@ -687,6 +688,7 @@
             subTitle.innerText = "NEUTRAL EDITION";
         }
 
+        // 세계관 텍스트 동적 변경
         updateLoreTexts(theme);
         triggerGlitch();
     }
@@ -696,8 +698,13 @@
     function toggleBGM() {
         const bgm = document.getElementById('bgm');
         const icon = document.getElementById('music-icon');
-        if (bgm.paused) { bgm.play(); icon.className = 'fas fa-volume-up ctrl-btn'; }
-        else { bgm.pause(); icon.className = 'fas fa-volume-mute ctrl-btn'; }
+        if (bgm.paused) {
+            bgm.play();
+            icon.className = 'fas fa-volume-up ctrl-btn';
+        } else {
+            bgm.pause();
+            icon.className = 'fas fa-volume-mute ctrl-btn';
+        }
     }
 
     function switchTab(tabId, element) {
@@ -753,14 +760,20 @@
         
         if (query === '시안송' || query === 'syansong') {
             if(!isSyanMode) triggerGlitch();
-            isSyanMode = true; document.body.classList.add('syan-mode'); currentSearchQuery = ''; 
+            isSyanMode = true;
+            document.body.classList.add('syan-mode');
+            currentSearchQuery = ''; 
+            
             descTexts.forEach(el => {
                 if(!el.dataset.orig) el.dataset.orig = el.innerHTML;
                 el.innerHTML = "시안송짱은 뉴비에오~♡ 호에에엥... 아무것도 몰라요 호에에...";
             });
         } else {
             if(isSyanMode) triggerGlitch();
-            isSyanMode = false; document.body.classList.remove('syan-mode'); currentSearchQuery = query;
+            isSyanMode = false;
+            document.body.classList.remove('syan-mode');
+            currentSearchQuery = query;
+            
             descTexts.forEach(el => {
                 if(el.dataset.orig) el.innerHTML = el.dataset.orig;
             });
@@ -774,6 +787,7 @@
         currentFactionFilter = type;
         renderCharacters();
     }
+    
     renderCharacters();
 
     function renderMap() {
@@ -946,8 +960,6 @@
 
         loadExtraImages(activeCharCode, borderColor);
         modal.classList.add('show');
-        
-        setTimeout(initCanvas, 100);
     }
 
     function toggleEyepatch() {
