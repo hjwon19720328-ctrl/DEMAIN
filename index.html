@@ -963,3 +963,14 @@
         document.getElementById('map-modal-title').style.color = themeColor;
         document.getElementById('map-modal-title').style.textShadow = `0 0 10px ${themeColor}`;
         document.getElementById('map-modal-type').innerText = node.type;
+        document.getElementById('map-modal-type').style.color = themeColor;
+        
+        document.getElementById('map-modal-desc').style.borderLeftColor = themeColor;
+        document.getElementById('map-modal-desc').innerText = node.desc;
+
+        modal.classList.add('show');
+    }
+</script>
+
+</body>
+</html>
