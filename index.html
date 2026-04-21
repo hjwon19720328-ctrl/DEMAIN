@@ -14,45 +14,36 @@
             --witch-color: #8a2be2; 
             --human-color: #b22222; 
             --neutral-color: #6b8e23; 
-            
             --bg-base: #140d0b; 
             --bg-card: rgba(30, 20, 15, 0.85); 
-            
             --text-main: #e8dcc4; 
             --text-muted: #a39681;
-            
             --nav-bg: rgba(20, 13, 10, 0.95);
+            --fx-color: rgba(184, 148, 80, 0.3);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            background-color: #000; font-family: 'Noto Serif KR', serif;
-            color: var(--text-main); display: flex; justify-content: center; align-items: center;
-            height: 100dvh; margin: 0; overflow: hidden;
-            transition: background-color 0.5s, color 0.5s;
+        /* 라이트 모드 (아이젠 데이) */
+        body.light-theme {
+            --bg-base: #d9ceb2;
+            --bg-card: rgba(255, 255, 245, 0.9);
+            --text-main: #2b1b12;
+            --text-muted: #5d4d37;
+            --nav-bg: rgba(217, 206, 178, 0.98);
+            --gold-dark: #8b6d31;
+            --fx-color: rgba(139, 109, 49, 0.2);
         }
 
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
-
-        /* ======================================= */
-        /* 이스터에그 (호에에 모드) 스타일 */
-        /* ======================================= */
+        /* 시안송 모드 */
         body.syan-mode {
             --bg-base: #fff0f5; 
             --bg-card: rgba(255, 228, 225, 0.95); 
-            --gold-light: #ff69b4; 
-            --gold-dark: #ff1493; 
-            --witch-color: #ff69b4;
-            --human-color: #ff69b4;
-            --neutral-color: #ff69b4;
-            --text-main: #c71585; 
-            --text-muted: #db7093;
+            --gold-light: #ff69b4; --gold-dark: #ff1493; 
+            --witch-color: #ff69b4; --human-color: #ff69b4; --neutral-color: #ff69b4;
+            --text-main: #c71585; --text-muted: #db7093;
             --nav-bg: rgba(255, 240, 245, 0.95);
             font-family: 'Comic Sans MS', 'Malgun Gothic', sans-serif !important;
         }
+
         body.syan-mode .wood-bg {
             background: linear-gradient(rgba(255,240,245,0.85), rgba(255,228,225,0.95)),
                         repeating-linear-gradient(to right, transparent, transparent 40px, rgba(255,105,180,0.1) 40px, rgba(255,105,180,0.1) 80px) !important;
@@ -66,36 +57,41 @@
         body.syan-mode .stat-bar-bg { background: rgba(255,105,180,0.2) !important; }
         body.syan-mode .stat-bar-fill { background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,105,180,0.8)) !important; }
 
-        /* 진입 스크린 */
-        .entrance-screen {
-            position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh;
-            background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; cursor: pointer;
-            transition: opacity 1s ease-out;
-        }
-        .entrance-title {
-            font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 6px;
-            color: var(--gold-light); text-shadow: 0 0 20px rgba(230, 194, 122, 0.5); margin-bottom: 20px;
-            animation: candleFlicker 3s infinite alternate;
-            text-align: center; width: 100%; padding-left: 6px; box-sizing: border-box;
-        }
-        .entrance-hint {
-            font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-muted); letter-spacing: 3px;
-            animation: pulseText 2s infinite; padding: 10px 20px; border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px;
-            text-align: center;
-        }
-        @keyframes candleFlicker { 0% { text-shadow: 0 0 10px rgba(230,194,122,0.3); } 100% { text-shadow: 0 0 25px rgba(230,194,122,0.8); } }
-        @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-        /* 앱 컨테이너 */
+        body {
+            background-color: var(--bg-base); font-family: 'Noto Serif KR', serif;
+            color: var(--text-main); display: flex; justify-content: center; align-items: center;
+            height: 100dvh; margin: 0; overflow: hidden; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
+
+        /* 앰비언트 캔버스 */
+        #ambient-fx {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+
+        /* 차원 이동 글리치 애니메이션 */
+        @keyframes dimension-glitch {
+            0% { transform: translate(0); filter: brightness(1) contrast(1); }
+            10% { transform: translate(-5px, 2px); filter: brightness(2) contrast(1.5); }
+            20% { transform: translate(5px, -2px); }
+            30% { transform: translate(-2px, 2px); filter: brightness(1) contrast(1); }
+            100% { transform: translate(0); }
+        }
+        .glitch-active { animation: dimension-glitch 0.4s ease-out; }
+
         .app-container {
             width: 100%; max-width: 480px; height: 100dvh; background-color: var(--bg-base);
-            position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.9);
-            display: none; flex-direction: column; overflow: hidden;
-            opacity: 0; transform: scale(1.02); transition: background-color 0.5s;
+            position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            display: none; flex-direction: column; overflow: hidden; z-index: 10;
         }
-        .app-container.start { display: flex; animation: openGrimoire 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        @keyframes openGrimoire { 0% { opacity: 0; transform: scale(1.05); filter: brightness(0); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
+        .app-container.start { display: flex; animation: openGrimoire 1.2s forwards; }
+        @keyframes openGrimoire { 0% { opacity: 0; transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
 
         .wood-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
@@ -104,13 +100,15 @@
             pointer-events: none; transition: background 0.5s;
         }
 
-        .header { flex: 0 0 auto; padding: 35px 20px 15px; text-align: center; background: linear-gradient(to bottom, rgba(0,0,0,0.9) 30%, transparent); position: relative; z-index: 10; border-bottom: 1px solid rgba(184, 148, 80, 0.2); }
-        .header h1 { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 900; letter-spacing: 4px; color: var(--gold-light); text-shadow: 2px 2px 4px #000; cursor: pointer; transition: 0.3s; }
+        /* 헤더 위치 및 버튼 겹침 방지 */
+        .header { flex: 0 0 auto; padding: 40px 20px 15px; text-align: center; position: relative; border-bottom: 1px solid var(--fx-color); }
+        .header h1 { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 4px; color: var(--gold-light); text-shadow: 2px 2px 4px rgba(0,0,0,0.3); cursor: pointer; display: inline-block; padding: 0 50px; z-index: 10; position: relative; }
         .header h1:hover { color: #fff; text-shadow: 0 0 10px var(--gold-light); }
         .header p { font-size: 0.75rem; color: var(--gold-dark); margin-top: 5px; letter-spacing: 4px; font-weight: bold; font-family: 'Cinzel', serif; }
         
-        .music-toggle { position: absolute; top: 32px; right: 20px; font-size: 1.3rem; color: var(--gold-dark); cursor: pointer; transition: 0.3s; padding: 5px; z-index: 20; }
-        .music-toggle:hover { color: var(--gold-light); transform: scale(1.1); }
+        .header-controls { position: absolute; top: 40px; right: 15px; display: flex; gap: 15px; align-items: center; z-index: 20; }
+        .ctrl-btn { font-size: 1.3rem; color: var(--gold-dark); cursor: pointer; transition: 0.3s; padding: 5px; }
+        .ctrl-btn:hover { color: var(--gold-light); transform: scale(1.1); }
 
         .content-wrapper { flex: 1 1 auto; height: 0; overflow-y: auto; padding: 15px 20px 20px; position: relative; z-index: 5; }
         .content-section { display: none; animation: fadeIn 0.4s ease-out forwards; }
@@ -165,19 +163,23 @@
         .nav-item.active { color: var(--gold-light); }
         .nav-item.active i { text-shadow: 0 0 10px rgba(230, 194, 122, 0.5); transform: translateY(-3px); }
 
+        /* 진입 스크린 */
+        .entrance-screen { position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh; background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 1s ease-out; }
+        .entrance-title { font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 6px; color: var(--gold-light); text-shadow: 0 0 20px rgba(230, 194, 122, 0.5); margin-bottom: 20px; animation: candleFlicker 3s infinite alternate; text-align: center; width: 100%; padding-left: 6px; box-sizing: border-box; }
+        .entrance-hint { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-muted); letter-spacing: 3px; animation: pulseText 2s infinite; padding: 10px 20px; border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; text-align: center; }
+
+        /* 모달 및 라이트박스 */
         .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 400; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content { width: 92%; max-height: 88%; background: #1a120e; border: 2px solid var(--gold-dark); border-radius: 4px; overflow-y: auto; position: relative; padding: 25px 20px; box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.9); text-align: center; scroll-behavior: smooth; transition: background-color 0.5s; }
         .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.8rem; color: var(--gold-dark); cursor: pointer; z-index: 10; transition: 0.2s; }
         .modal-close:hover { color: var(--gold-light); transform: scale(1.1); }
-        
         .char-nav-btn { font-size: 1.4rem; color: var(--gold-dark); cursor: pointer; transition: 0.3s; padding: 5px 15px; }
         .char-nav-btn:hover { color: var(--gold-light); transform: scale(1.2); text-shadow: 0 0 10px rgba(230,194,122,0.5); }
-
         .modal-img-wrapper { position: relative; display: inline-block; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
         .modal-img-wrapper:hover { transform: scale(1.02); }
         .modal-img { width: 150px; height: 150px; border-radius: 4px; object-fit: cover; border: 3px solid; box-shadow: 0 8px 20px rgba(0,0,0,0.8); filter: sepia(0.2); transition: 0.3s; }
-        .modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; }
+        .modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 0; }
         .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
         
         .modal-tab-menu { display: flex; border-bottom: 2px solid rgba(184, 148, 80, 0.3); margin-bottom: 20px; }
@@ -223,7 +225,7 @@
         .lightbox-close:hover { color: var(--gold-light); transform: scale(1.1); }
         .lightbox-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 2px; }
 
-        .dim-toggle { background: rgba(0,0,0,0.6); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; }
+        .dim-toggle { background: rgba(0,0,0,0.6); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; width: 100%; max-width: 300px; }
         .dim-toggle.witch-mode { border-color: var(--witch-color); }
         .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: radial-gradient(circle at center, #3a2818, #140d0b); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px #000; transition: 0.3s; }
         .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; }
@@ -246,10 +248,12 @@
         .map-icon { font-size: 1.5rem; margin-bottom: 6px; color: var(--gold-dark); }
         .map-node-title { font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; line-height: 1.2; }
         .map-node-type { font-size: 0.6rem; color: var(--gold-dark); font-family: 'Cinzel', serif; }
+        .desc-text { line-height: 1.6; }
     </style>
 </head>
 <body>
 
+<canvas id="ambient-fx"></canvas>
 <audio id="bgm" src="8bit.mp3" loop preload="auto"></audio>
 
 <div id="entrance-screen" class="entrance-screen">
@@ -263,12 +267,13 @@
     <header class="header">
         <h1 onclick="switchTab('tab-world')">WITCH HUNT</h1>
         <p>GRIMOIRE OPENED</p>
-        <div class="music-toggle" onclick="toggleBGM()">
-            <i id="music-icon" class="fas fa-volume-up"></i>
+        <div class="header-controls">
+            <i id="theme-btn" class="fas fa-moon ctrl-btn" onclick="toggleTheme()"></i>
+            <i id="music-icon" class="fas fa-volume-up ctrl-btn" onclick="toggleBGM()"></i>
         </div>
     </header>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="main-content-area">
         <main id="tab-world" class="content-section active">
             <div class="card" style="border-color: var(--gold-light);">
                 <h2><i class="fas fa-scroll"></i> 척결과 도피</h2>
@@ -298,7 +303,7 @@
         <main id="tab-levels" class="content-section">
             <div class="card" style="border-color: var(--gold-light);">
                 <h2><i class="fas fa-chart-bar"></i> 기초 스탯 및 한계 돌파</h2>
-                <p class="desc-text" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6;">
+                <p class="desc-text" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
                     일반적인 필멸자(인간)의 능력치 한계는 다음과 같다. 하지만 <strong>오라(Aura)를 사용</strong>하거나 <strong>마력(Mana)을 감지</strong>하는 순간, 종족의 물리적 한계점이 뚫리며 상상을 초월하는 수치(10 초과)를 얻게 된다.
                 </p>
                 <ul style="font-size: 0.8rem; color: var(--text-main); line-height: 1.8; padding-left: 20px; margin-bottom: 10px;">
@@ -449,7 +454,7 @@
             <div class="card" style="border-color: var(--gold-light);">
                 <h2><i class="fas fa-terminal"></i> 시스템 명령어</h2>
                 <p class="desc-text" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
-                    RP 진행 시 활용할 수 있는 시스템 전용 명령어 목록입니다. 대화창에 아래 명령어를 입력해 주세요.
+                    AI 혹은 인터페이스 조정 시 활용할 수 있는 시스템 전용 명령어 목록입니다. 대화창에 아래 명령어를 입력해 주세요.
                 </p>
                 
                 <div class="req-stat-box" style="margin-bottom: 12px; display: block;">
@@ -588,18 +593,6 @@
         }, 1000);
     });
 
-    function toggleBGM() {
-        const bgm = document.getElementById('bgm');
-        const icon = document.getElementById('music-icon');
-        if (bgm.paused) {
-            bgm.play();
-            icon.className = 'fas fa-volume-up';
-        } else {
-            bgm.pause();
-            icon.className = 'fas fa-volume-mute';
-        }
-    }
-
     const charData = [
         { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조작', abilityDesc: '지정된 공간의 중력을 자유자재로 조절하여 적을 짓누르거나 물체를 부양시킨다. 힘을 개방하면 공간 자체를 붕괴시킬 수 있다.', mbti: 'INTJ', enneagram: '8w9', breast: 'C컵', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:15, mag:100, agi:60, int:95}, desc: '닉스의 여왕. 마녀의 안전을 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤데레 성격.' },
         { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '공간 게이트 생성 및 반사', abilityDesc: '원하는 장소나 다른 차원으로 연결되는 게이트 생성, 차원의 틈새로 적의 공격을 흡수하고 반사한다.', mbti: 'INTP', enneagram: '5w4', breast: 'A컵', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:8, mag:95, agi:30, int:100}, desc: '엄청난 권능으로 차원을 오갈 수 있는 비밀 통로 관리자. 책 읽는 걸 좋아하며 약한 귀차니즘 탓에 육체 능력은 일반인 이하다.' },
@@ -613,7 +606,7 @@
         { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 검', abilityDesc: '성인의 키만 한 거대한 대검. 그녀의 압도적인 근력과 극한의 오라가 결합되어 산을 가르고 강을 끊는 파괴력을 일격에 방출한다.', mbti: 'ISTJ', enneagram: '1w2', breast: 'C컵', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:65}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
         { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 검', abilityDesc: '표준적인 정식 검술을 구사하지만, 교과서적으로 완벽한 공방일체의 검술과 기민한 민첩성을 자랑한다.', mbti: 'ISFJ', enneagram: '6w5', breast: 'B컵', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:65, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
         { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', abilityDesc: '소리 없이 적의 사각으로 파고들어 급소를 노리는 암살검. 오라를 숨기고 기척을 지우는 은신술에 특화되어 있다.', mbti: 'ISTP', enneagram: '5w6', breast: 'A컵', age: '26세', height: '151cm', alignment: '절대 중립', stats: {str:75, mag:5, agi:100, int:75}, desc: '여왕의 그림자. 인간의 범주를 아득히 초월한 민첩성을 지녔다. 인간계의 마녀들을 암살하며 몸팔기 빼고 더러운 일을 병행한다.' },
-        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '징벌의 가시 채찍', abilityDesc: '닿는 순간 신경을 직접 타격해 고통을 수십 배로 증폭시키는 특수 무기. 살점을 찢어낼 뿐만 아니라, 자신의 피를 매개로 오라를 더욱 흉악하게 강화한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'D컵', age: '24세', height: '168cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:85, int:85}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 뼈가 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년.' },
+        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '징벌의 가시 채찍', abilityDesc: '닿는 순간 신경을 직접 타격해 고통을 수십 배로 증폭시키는 특수 무기. 살점을 찢어낼 뿐만 아니라, 자신의 피를 매개로 오라를 더욱 흉악하게 강화한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'D컵', age: '24세', height: '168cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:85, int:85}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 뼈가 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년. 피 냄새를 맡으면 이성을 잃고 폭주한다.' },
         { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '호신용 메이스', abilityDesc: '전투보다는 호신용으로 지니고 다니는 메이스. 그녀의 진짜 무기는 방대한 지식과 교단의 비밀을 꿰뚫어 보는 지능이다.', mbti: 'INTP', enneagram: '5w4', breast: 'H컵', age: '20세', height: '163cm', alignment: '질서 선', stats: {str:15, mag:15, agi:15, int:95}, desc: '일반인을 갓 벗어난 육체 능력을 가졌지만, 지능과 학구열만큼은 대륙 최고 수준이다. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
         { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', abilityDesc: '거친 용병 생활에 최적화된 변칙적인 곡도. 상대의 허점을 찌르는 잔혹하고 실전적인 검술을 사용한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'A컵', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:5, agi:60, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 정보상 겸 용병. 허~접♡, 좆밥♡, 바~보♡ 같은 말투를 사용한다.' },
         { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '원소 마법', abilityDesc: '혼혈의 한계로 고위 마법은 쓰지 못하지만, 불, 물, 바람 등 하위 원소를 매우 빠르고 다채롭게 조합하여 전투에 응용한다.', mbti: 'ISFP', enneagram: '9w8', breast: 'B컵', age: '20세', height: '156cm', alignment: '참 중립', stats: {str:15, mag:35, agi:25, int:65}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 인간계 동쪽 깊은 산속에 홀로 숨어 산다.' },
@@ -624,9 +617,85 @@
     let currentSearchQuery = '';
     let currentFilteredChars = [];
     let currentCharIndex = 0;
-    
-    // 시안송 모드 (이스터에그 상태)
     let isSyanMode = false;
+
+    // --- 앰비언트 캔버스 파티클 효과 ---
+    const canvas = document.getElementById('ambient-fx');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function initCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * -1 - 0.5;
+            this.opacity = Math.random() * 0.5 + 0.2;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.y < 0) this.reset();
+        }
+        draw() {
+            let color = "230, 194, 122"; 
+            if (isSyanMode) color = "255, 105, 180";
+            else if (currentMapDim === 'witch') color = "138, 43, 226";
+            else color = "178, 34, 34";
+
+            ctx.fillStyle = `rgba(${color}, ${this.opacity})`;
+            if (isSyanMode) {
+                ctx.font = "12px serif";
+                ctx.fillText("♥", this.x, this.y);
+            } else {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    function triggerGlitch() {
+        const container = document.getElementById('app-main');
+        container.classList.add('glitch-active');
+        setTimeout(() => container.classList.remove('glitch-active'), 400);
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+        const btn = document.getElementById('theme-btn');
+        btn.classList.toggle('fa-moon');
+        btn.classList.toggle('fa-sun');
+        triggerGlitch();
+    }
+
+    function toggleBGM() {
+        const bgm = document.getElementById('bgm');
+        const icon = document.getElementById('music-icon');
+        if (bgm.paused) {
+            bgm.play();
+            icon.className = 'fas fa-volume-up ctrl-btn';
+        } else {
+            bgm.pause();
+            icon.className = 'fas fa-volume-mute ctrl-btn';
+        }
+    }
 
     function renderCharacters() {
         const container = document.getElementById('character-list-container');
@@ -648,10 +717,8 @@
             const factionText = char.faction === 'witch' ? '마녀' : (char.faction === 'human' ? '인간' : '중립');
             const factionTag = `<span style="color:var(--${char.faction}-color); font-size:0.8rem; margin-right:5px;">[${factionText}]</span>`;
             
-            // 이스터에그 적용 여부에 따른 이미지 및 텍스트 렌더링
             const displayImg = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${char.id}/1`;
-            const displaySub = isSyanMode ? '호에에~' : char.level;
-            
+            const displaySub = isSyanMode ? '호에에~♡' : char.level;
             const fallbackImg = `https://placehold.co/150x150/1a120e/b89450?text=?`;
             
             const el = document.createElement('div');
@@ -677,23 +744,21 @@
             isSyanMode = true;
             document.body.classList.add('syan-mode');
             currentSearchQuery = ''; 
+            triggerGlitch();
             
-            // 모든 설명 텍스트를 뉴비/호에에 문구로 변경
             descTexts.forEach(el => {
                 if(!el.dataset.orig) el.dataset.orig = el.innerHTML;
-                el.innerHTML = "시안송짱은 뉴비에오~ 호에에엥... 아무것도 몰라요...";
+                el.innerHTML = "시안송짱은 뉴비에오~♡ 호에에엥... 아무것도 몰라요 호에에...";
             });
         } else {
             isSyanMode = false;
             document.body.classList.remove('syan-mode');
             currentSearchQuery = query;
             
-            // 원래 설명으로 복구
             descTexts.forEach(el => {
                 if(el.dataset.orig) el.innerHTML = el.dataset.orig;
             });
         }
-        
         renderCharacters();
     }
 
@@ -725,7 +790,6 @@
         { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', x: 50, y: 85, desc: '인간계와 이어지는 유일한 통로. 에델가르드의 봉인으로 보호받는다.' }
     ];
 
-    let currentMapDim = 'human';
     function renderMap() {
         const board = document.getElementById('antique-map-board');
         const listContainer = document.getElementById('map-grid-container');
@@ -767,7 +831,11 @@
             listContainer.appendChild(el);
         });
     }
-    function toggleMapDimension() { currentMapDim = currentMapDim === 'human' ? 'witch' : 'human'; renderMap(); }
+    function toggleMapDimension() { 
+        currentMapDim = currentMapDim === 'human' ? 'witch' : 'human'; 
+        triggerGlitch();
+        renderMap(); 
+    }
     renderMap();
 
     function switchTab(tabId, element) {
@@ -856,7 +924,6 @@
         container.innerHTML = '';
         
         const targetBaseUrl = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${charCode}`;
-        
         currentGalleryUrls = [isSyanMode ? targetBaseUrl : `${targetBaseUrl}/1`];
 
         for (let i = 2; i <= 7; i++) {
@@ -909,7 +976,7 @@
         document.getElementById('modal-name').innerText = char.name;
         document.getElementById('modal-name').style.color = borderColor;
         
-        document.getElementById('modal-level').innerText = isSyanMode ? '호에에~' : char.level;
+        document.getElementById('modal-level').innerText = isSyanMode ? '호에에~♡' : char.level;
 
         document.querySelectorAll('.modal-tab-btn').forEach(btn => {
             btn.style.setProperty('--gold-light', borderColor);
@@ -921,20 +988,20 @@
         }
         abilityLabel.innerText = isSyanMode ? '뉴비의 능력' : labelStr;
         abilityLabel.style.color = borderColor;
-        abilityText.innerText = isSyanMode ? '시안송짱' : char.ability;
-        abilityDesc.innerText = isSyanMode ? '시안송짱은 뉴비에오~ 아무것도 몰라요...' : char.abilityDesc; 
+        abilityText.innerText = isSyanMode ? '호에에파워!' : char.ability;
+        abilityDesc.innerText = isSyanMode ? '시안송짱은 뉴비에오~♡ 아무것도 몰라요 호에에...' : char.abilityDesc; 
 
-        document.getElementById('modal-mbti').innerText = isSyanMode ? 'ISTP' : char.mbti;
-        document.getElementById('modal-eg').innerText = isSyanMode ? 'ㅁ?ㄹ' : char.enneagram;
-        document.getElementById('modal-size').innerText = isSyanMode ? '몰?루' : char.breast;
-        document.getElementById('modal-age').innerText = isSyanMode ? '서른마흔다섯살' : char.age;
-        document.getElementById('modal-height').innerText = isSyanMode ? '178cm' : char.height;
+        document.getElementById('modal-mbti').innerText = isSyanMode ? 'HOEE' : char.mbti;
+        document.getElementById('modal-eg').innerText = isSyanMode ? '호에' : char.enneagram;
+        document.getElementById('modal-size').innerText = isSyanMode ? '호에컵' : char.breast;
+        document.getElementById('modal-age').innerText = isSyanMode ? '호에짤' : char.age;
+        document.getElementById('modal-height').innerText = isSyanMode ? '호에cm' : char.height;
         document.getElementById('modal-align').innerText = isSyanMode ? '호에에' : char.alignment;
         document.getElementById('modal-align').style.color = borderColor;
         
         document.getElementById('archive-title').style.color = borderColor;
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
-        document.getElementById('modal-desc').innerText = isSyanMode ? '시안송짱은 뉴비에오...' : char.desc;
+        document.getElementById('modal-desc').innerText = isSyanMode ? '시안송짱은 뉴비에오~♡ 호에에엥~♡ 호에에에에에에에에에!!!' : char.desc;
 
         let activeCharCode = char.id;
         let bonusStats = 0; 
@@ -988,7 +1055,7 @@
             } else {
                 bonus = 10;
                 if(!isSyanMode) {
-                    abilityText.innerText = '★공허의 영역 (Void Domain)★';
+                    abilityText.innerText = '★ 공허의 영역 (Void Domain) ★';
                     abilityText.style.color = '#fff';
                     abilityText.style.textShadow = '0 0 10px var(--witch-color)';
                 }
@@ -1047,8 +1114,7 @@
         
         document.getElementById('map-modal-desc').style.borderLeftColor = themeColor;
         
-        // 맵 설명에도 이스터에그 적용
-        document.getElementById('map-modal-desc').innerText = isSyanMode ? "시안송짱은 뉴비에오... 호에에..." : node.desc;
+        document.getElementById('map-modal-desc').innerText = isSyanMode ? "시안송짱은 뉴비에오... 호에에?♡" : node.desc;
 
         modal.classList.add('show');
     }
