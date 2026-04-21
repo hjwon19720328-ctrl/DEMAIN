@@ -1,212 +1,241 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>마녀사냥 - GRIMOIRE EDITION</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Serif+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-/* ======================================= */
-/* 1. 마녀 테마 (기본 / Dark Fantasy) */
-/* ======================================= */
-:root { 
-    --gold-light: #e6c27a; 
-    --gold-dark: #b89450; 
-    --witch-color: #8a2be2; 
-    --human-color: #b22222; 
-    --neutral-color: #6b8e23; 
-    --bg-base: #140d0b; 
-    --bg-card: rgba(30, 20, 15, 0.85); 
-    --text-main: #e8dcc4; 
-    --text-muted: #a39681; 
-    --nav-bg: rgba(20, 13, 10, 0.95); 
-    --fx-color: rgba(184, 148, 80, 0.3);
-    --card-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0,0,0,0.6);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHRONICLE OF FATE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Serif+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ======================================= */
+        /* 공통 변수 및 초기 테마 (중립 - Neutral) */
+        /* ======================================= */
+        :root { 
+            --gold-light: #a9c25d; 
+            --gold-dark: #556b2f; 
+            --witch-color: #8a2be2; 
+            --human-color: #b22222; 
+            --neutral-color: #6b8e23; 
+            --bg-base: #111510; 
+            --bg-card: rgba(25, 32, 22, 0.85); 
+            --text-main: #dbe5d0; 
+            --text-muted: #8b9c7a; 
+            --nav-bg: rgba(17, 21, 16, 0.95); 
+            --fx-color: rgba(107, 142, 35, 0.3);
+            --card-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.8);
+        }
 
-/* ======================================= */
-/* 2. 인간 테마 (신성 / Holy Light) */
-/* ======================================= */
-body.theme-human { 
-    --bg-base: #f4f1ea; 
-    --bg-card: rgba(255, 255, 255, 0.95); 
-    --text-main: #2b1b12; 
-    --text-muted: #665544; 
-    --nav-bg: rgba(244, 241, 234, 0.98); 
-    --gold-light: #b22222; 
-    --gold-dark: #8b0000; 
-    --fx-color: rgba(178, 34, 34, 0.2);
-    --card-shadow: 0 4px 15px rgba(178, 34, 34, 0.1);
-}
-body.theme-human .wood-bg { background: linear-gradient(rgba(244,241,234,0.9), rgba(255,255,255,0.95)), repeating-linear-gradient(to right, transparent, transparent 40px, rgba(178,34,34,0.03) 40px, rgba(178,34,34,0.03) 80px); }
-body.theme-human .modal-content { background: #f4f1ea; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-body.theme-human .stat-item { background: rgba(255,255,255,0.8); border-color: rgba(178,34,34,0.2); }
-body.theme-human .ability-box { background: rgba(255,255,255,0.8); box-shadow: inset 0 0 10px rgba(178,34,34,0.05); }
-body.theme-human .char-item { background: rgba(255,255,255,0.7); }
+        /* 마녀 테마 (닉스 - Witch) */
+        body.theme-witch { 
+            --bg-base: #140d0b; 
+            --bg-card: rgba(30, 20, 15, 0.85); 
+            --text-main: #e8dcc4; 
+            --text-muted: #a39681; 
+            --nav-bg: rgba(20, 13, 10, 0.95);
+            --gold-light: #e6c27a; 
+            --gold-dark: #b89450; 
+            --fx-color: rgba(184, 148, 80, 0.3);
+            --card-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0,0,0,0.6);
+        }
 
-/* ======================================= */
-/* 3. 중립 테마 (자연 / Dark Forest) */
-/* ======================================= */
-body.theme-neutral {
-    --bg-base: #111510;
-    --bg-card: rgba(25, 32, 22, 0.85);
-    --text-main: #dbe5d0;
-    --text-muted: #8b9c7a;
-    --nav-bg: rgba(17, 21, 16, 0.95);
-    --gold-light: #a9c25d;
-    --gold-dark: #556b2f;
-    --fx-color: rgba(107, 142, 35, 0.3);
-    --card-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.8);
-}
-body.theme-neutral .wood-bg { background: linear-gradient(rgba(17,21,16,0.85), rgba(17,21,16,0.95)), repeating-linear-gradient(to right, transparent, transparent 40px, rgba(107,142,35,0.05) 40px, rgba(107,142,35,0.05) 80px); }
-body.theme-neutral .modal-content { background: #111510; }
+        /* 인간 테마 (아이젠 - Human) */
+        body.theme-human { 
+            --bg-base: #f4f1ea; 
+            --bg-card: rgba(255, 255, 255, 0.95); 
+            --text-main: #2b1b12; 
+            --text-muted: #665544; 
+            --nav-bg: rgba(244, 241, 234, 0.98); 
+            --gold-light: #b22222; 
+            --gold-dark: #8b0000; 
+            --fx-color: rgba(178, 34, 34, 0.15);
+            --card-shadow: 0 4px 15px rgba(178, 34, 34, 0.1);
+        }
 
-/* ======================================= */
-/* 4. 이스터에그 (호에에 모드) */
-/* ======================================= */
-body.syan-mode { --bg-base: #fff0f5; --bg-card: rgba(255, 228, 225, 0.95); --gold-light: #ff69b4; --gold-dark: #ff1493; --witch-color: #ff69b4; --human-color: #ff69b4; --neutral-color: #ff69b4; --text-main: #c71585; --text-muted: #db7093; --nav-bg: rgba(255, 240, 245, 0.95); --card-shadow: 0 5px 20px rgba(255,105,180,0.2); font-family: 'Comic Sans MS', 'Malgun Gothic', sans-serif !important; }
-body.syan-mode .wood-bg { background: linear-gradient(rgba(255,240,245,0.85), rgba(255,228,225,0.95)), repeating-linear-gradient(to right, transparent, transparent 40px, rgba(255,105,180,0.1) 40px, rgba(255,105,180,0.1) 80px) !important; }
-body.syan-mode .header h1, body.syan-mode .entrance-title { font-family: 'Comic Sans MS', sans-serif !important; text-shadow: 0 0 15px rgba(255,105,180,0.8) !important; }
-body.syan-mode .modal-content { background: #fff0f5; }
-body.syan-mode .char-thumb, body.syan-mode .modal-img, body.syan-mode .extra-img { filter: sepia(0) !important; border-radius: 50% !important; border-color: var(--gold-light) !important; }
-body.syan-mode .stat-bar-bg { background: rgba(255,105,180,0.2) !important; }
-body.syan-mode .stat-bar-fill { background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,105,180,0.8)) !important; }
+        /* 시안송 모드 */
+        body.syan-mode { 
+            --bg-base: #fff0f5; 
+            --bg-card: rgba(255, 228, 225, 0.95); 
+            --gold-light: #ff69b4; 
+            --gold-dark: #ff1493; 
+            --witch-color: #ff69b4; 
+            --human-color: #ff69b4; 
+            --neutral-color: #ff69b4; 
+            --text-main: #c71585; 
+            --text-muted: #db7093; 
+            --nav-bg: rgba(255, 240, 245, 0.95); 
+            font-family: 'Comic Sans MS', 'Malgun Gothic', sans-serif !important; 
+        }
+        body.syan-mode .wood-bg { background: linear-gradient(rgba(255,240,245,0.85), rgba(255,228,225,0.95)), repeating-linear-gradient(to right, transparent, transparent 40px, rgba(255,105,180,0.1) 40px, rgba(255,105,180,0.1) 80px) !important; }
+        body.syan-mode .header h1, body.syan-mode .entrance-title { font-family: 'Comic Sans MS', sans-serif !important; text-shadow: 0 0 15px rgba(255,105,180,0.8) !important; }
+        body.syan-mode .modal-content { background: #fff0f5; }
+        body.syan-mode .char-thumb, body.syan-mode .modal-img, body.syan-mode .extra-img { filter: sepia(0) !important; border-radius: 50% !important; border-color: var(--gold-light) !important; }
+        body.syan-mode .stat-bar-bg { background: rgba(255,105,180,0.2) !important; }
+        body.syan-mode .stat-bar-fill { background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,105,180,0.8)) !important; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; color: var(--text-main); display: flex; justify-content: center; align-items: center; height: 100dvh; margin: 0; overflow: hidden; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; 
+            color: var(--text-main); display: flex; justify-content: center; align-items: center; 
+            height: 100dvh; margin: 0; overflow: hidden; transition: 0.5s; 
+        }
 
-#ambient-fx { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        ::-webkit-scrollbar { width: 5px; } 
+        ::-webkit-scrollbar-track { background: transparent; } 
+        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
 
-@keyframes dimension-glitch { 0% { transform: translate(0); filter: brightness(1) contrast(1); } 10% { transform: translate(-5px, 2px); filter: brightness(2) contrast(1.5); } 20% { transform: translate(5px, -2px); } 30% { transform: translate(-2px, 2px); filter: brightness(1) contrast(1); } 100% { transform: translate(0); } }
-.glitch-active { animation: dimension-glitch 0.4s ease-out; }
+        /* 앰비언트 캔버스 */
+        #ambient-fx { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
-.app-container { width: 100%; max-width: 480px; height: 100dvh; background-color: var(--bg-base); position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.5); display: none; flex-direction: column; overflow: hidden; z-index: 10; transition: background-color 0.5s; }
-.app-container.start { display: flex; animation: openGrimoire 1.2s forwards; }
-@keyframes openGrimoire { 0% { opacity: 0; transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
-.wood-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: linear-gradient(rgba(20,13,10,0.85), rgba(20,13,10,0.95)), repeating-linear-gradient(to right, transparent, transparent 40px, rgba(0,0,0,0.2) 40px, rgba(0,0,0,0.2) 80px); pointer-events: none; transition: background 0.5s; }
+        /* 차원 이동 글리치 애니메이션 */
+        @keyframes dimension-glitch { 
+            0% { transform: translate(0); filter: brightness(1); } 
+            10% { transform: translate(-5px, 2px); filter: brightness(2); } 
+            20% { transform: translate(5px, -2px); } 
+            30% { transform: translate(-2px, 2px); filter: brightness(1); } 
+            100% { transform: translate(0); } 
+        }
+        .glitch-active { animation: dimension-glitch 0.4s ease-out; }
 
-.header { flex: 0 0 auto; padding: 40px 20px 15px; text-align: center; position: relative; border-bottom: 1px solid var(--fx-color); z-index: 10; transition: 0.5s; }
-.header h1 { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 4px; color: var(--gold-light); text-shadow: 2px 2px 4px rgba(0,0,0,0.3); cursor: pointer; display: inline-block; position: relative; transition: 0.3s; }
-.header h1:hover { transform: scale(1.02); text-shadow: 0 0 10px var(--gold-light); }
-.header p { font-size: 0.75rem; color: var(--gold-dark); margin-top: 5px; letter-spacing: 4px; font-weight: bold; font-family: 'Cinzel', serif; transition: 0.3s; }
+        .app-container { 
+            width: 100%; max-width: 480px; height: 100dvh; background-color: var(--bg-base); 
+            position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.5); 
+            display: none; flex-direction: column; overflow: hidden; z-index: 10; transition: background-color 0.5s; 
+        }
+        .app-container.start { display: flex; animation: openGrimoire 1.2s forwards; }
+        @keyframes openGrimoire { 0% { opacity: 0; transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+        
+        .wood-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; 
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)); 
+            pointer-events: none; 
+        }
 
-.header-controls { position: absolute; top: 40px; right: 15px; display: flex; gap: 12px; align-items: center; z-index: 20; }
-.theme-toggle-wrapper { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; }
-.theme-toggle-wrapper:hover { transform: scale(1.05); }
-.ctrl-btn { font-size: 1.3rem; color: var(--gold-dark); transition: 0.3s; }
-.theme-label { font-size: 0.6rem; font-weight: bold; color: var(--gold-dark); margin-top: 3px; }
+        /* 헤더 위치 및 버튼 겹침 방지 */
+        .header { flex: 0 0 auto; padding: 40px 20px 15px; text-align: center; position: relative; border-bottom: 1px solid var(--fx-color); z-index: 10; transition: 0.5s; }
+        .header-title-container { width: 70%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        .header h1 { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 900; letter-spacing: 3px; color: var(--gold-light); text-shadow: 2px 2px 4px rgba(0,0,0,0.3); cursor: pointer; transition: 0.3s; margin-bottom: 5px;}
+        .header h1:hover { color: #fff; text-shadow: 0 0 10px var(--gold-light); }
+        .header p { font-size: 0.7rem; color: var(--gold-dark); letter-spacing: 4px; font-weight: bold; font-family: 'Cinzel', serif; transition: 0.3s; margin:0; }
+        
+        .header-controls { position: absolute; top: 35px; right: 15px; display: flex; gap: 10px; align-items: center; z-index: 20; }
+        .ctrl-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; width: 40px; }
+        .ctrl-item:hover { transform: scale(1.05); }
+        .ctrl-btn { font-size: 1.2rem; color: var(--gold-dark); transition: 0.3s; padding: 2px; }
+        .ctrl-label { font-size: 0.55rem; font-weight: bold; color: var(--gold-dark); margin-top: 3px; text-transform: uppercase; }
 
-.content-wrapper { flex: 1 1 auto; height: 0; overflow-y: auto; padding: 15px 20px 20px; position: relative; z-index: 5; }
-.content-section { display: none; animation: fadeIn 0.4s ease-out forwards; }
-.content-section.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .content-wrapper { flex: 1 1 auto; height: 0; overflow-y: auto; padding: 15px 20px 20px; position: relative; z-index: 5; }
+        .content-section { display: none; animation: fadeIn 0.4s ease-out forwards; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.card { background-color: var(--bg-card); border: 1px solid var(--gold-dark); box-shadow: var(--card-shadow); border-radius: 4px; padding: 22px; margin-bottom: 20px; transition: 0.5s; position: relative; line-height: 1.6; }
-.card::before, .card::after { content: ''; position: absolute; width: 10px; height: 10px; border: 1px solid var(--gold-light); opacity: 0.5; transition: 0.5s; }
-.card::before { top: 5px; left: 5px; border-right: none; border-bottom: none; }
-.card::after { bottom: 5px; right: 5px; border-left: none; border-top: none; }
-.card h2 { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 15px; color: var(--gold-light); border-bottom: 1px dashed var(--gold-dark); padding-bottom: 8px; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .card { background-color: var(--bg-card); border: 1px solid var(--gold-dark); box-shadow: var(--card-shadow); border-radius: 4px; padding: 22px; margin-bottom: 20px; transition: background-color 0.5s, border-color 0.5s; position: relative; line-height: 1.6; }
+        .card::before, .card::after { content: ''; position: absolute; width: 10px; height: 10px; border: 1px solid var(--gold-light); opacity: 0.5; transition: 0.5s; }
+        .card::before { top: 5px; left: 5px; border-right: none; border-bottom: none; }
+        .card::after { bottom: 5px; right: 5px; border-left: none; border-top: none; }
+        .card h2 { font-family: 'Cinzel', serif; font-size: 1.1rem; margin-bottom: 12px; color: var(--gold-light); border-bottom: 1px dashed var(--gold-dark); padding-bottom: 8px; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
 
-.accordion-item { border-bottom: 1px solid rgba(184, 148, 80, 0.2); } .accordion-item:last-child { border-bottom: none; }
-.accordion-header { padding: 15px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: color 0.3s; }
-.accordion-header:hover { color: var(--gold-light); } .accordion-header i { transition: transform 0.3s; color: var(--gold-dark); }
-.accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding-bottom 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; padding-bottom: 0; }
-.accordion-body.open { padding-bottom: 15px; }
+        .accordion-item { border-bottom: 1px solid rgba(184, 148, 80, 0.2); } .accordion-item:last-child { border-bottom: none; }
+        .accordion-header { padding: 15px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: color 0.3s; }
+        .accordion-header:hover { color: var(--gold-light); } .accordion-header i { transition: transform 0.3s; color: var(--gold-dark); }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding-bottom 0.3s ease-out; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; padding-bottom: 0; }
+        .accordion-body.open { padding-bottom: 15px; }
 
-.req-stat-box { margin-top: 10px; padding: 6px 12px; background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); border-radius: 2px; color: var(--gold-light); font-size: 0.75rem; font-family: 'Noto Serif KR', serif; display: inline-block; transition: 0.3s; }
-.req-label { color: var(--text-muted); margin-right: 5px; font-weight: bold; }
+        .req-stat-box { margin-top: 10px; padding: 6px 12px; background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); border-radius: 2px; color: var(--gold-light); font-size: 0.75rem; font-family: 'Noto Serif KR', serif; display: inline-block; transition: 0.3s; }
+        .req-label { color: var(--text-muted); margin-right: 5px; font-weight: bold; }
 
-.search-container { position: relative; margin-bottom: 15px; } .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gold-dark); }
-#char-search-input { width: 100%; padding: 12px 12px 12px 40px; background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); border-radius: 4px; color: var(--text-main); font-family: 'Noto Serif KR', serif; font-size: 0.9rem; transition: 0.3s; }
-#char-search-input:focus { outline: none; border-color: var(--gold-light); box-shadow: 0 0 10px var(--fx-color); }
+        .search-container { position: relative; margin-bottom: 15px; } .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gold-dark); }
+        #char-search-input { width: 100%; padding: 12px 12px 12px 40px; background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); border-radius: 4px; color: var(--text-main); font-family: 'Noto Serif KR', serif; font-size: 0.9rem; transition: 0.3s; }
+        #char-search-input:focus { outline: none; border-color: var(--gold-light); box-shadow: 0 0 10px var(--fx-color); }
 
-.inner-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; }
-.inner-tab-btn { background: rgba(0,0,0,0.1); color: var(--text-muted); border: 1px solid var(--fx-color); padding: 8px 16px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; font-family: 'Noto Serif KR', serif; }
-.inner-tab-btn.active { border-color: var(--gold-light); color: var(--bg-base); background: var(--gold-dark); font-weight: bold; box-shadow: 0 0 10px var(--fx-color); }
+        .inner-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; }
+        .inner-tab-btn { background: rgba(0,0,0,0.1); color: var(--text-muted); border: 1px solid var(--fx-color); padding: 8px 16px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; font-family: 'Noto Serif KR', serif; }
+        .inner-tab-btn.active { border-color: var(--gold-light); color: var(--bg-base); background: var(--gold-dark); font-weight: bold; box-shadow: 0 0 10px var(--fx-color); }
 
-.char-item { display: flex; align-items: center; padding: 12px; border-radius: 4px; background: rgba(0,0,0,0.2); margin-bottom: 10px; cursor: pointer; border: 1px solid var(--fx-color); transition: 0.3s; }
-.char-item:hover { background: var(--fx-color); transform: translateY(-2px); border-color: var(--gold-dark); }
-.char-thumb { width: 52px; height: 52px; border-radius: 4px; object-fit: cover; border: 2px solid; margin-right: 15px; filter: sepia(0.3); transition: 0.3s; }
-.thumb-witch { border-color: var(--witch-color); } .thumb-human { border-color: var(--human-color); } .thumb-neutral { border-color: var(--neutral-color); }
-.char-info { flex: 1; } .char-name { font-weight: bold; font-size: 1rem; margin-bottom: 4px; color: var(--gold-light); } .char-sub { font-size: 0.8rem; color: var(--text-muted); }
+        .char-item { display: flex; align-items: center; padding: 12px; border-radius: 4px; background: rgba(0,0,0,0.2); margin-bottom: 10px; cursor: pointer; border: 1px solid var(--fx-color); transition: 0.3s; }
+        .char-item:hover { background: var(--fx-color); transform: translateY(-2px); border-color: var(--gold-dark); }
+        .char-thumb { width: 52px; height: 52px; border-radius: 4px; object-fit: cover; border: 2px solid; margin-right: 15px; filter: sepia(0.3); transition: 0.3s; }
+        .thumb-witch { border-color: var(--witch-color); } .thumb-human { border-color: var(--human-color); } .thumb-neutral { border-color: var(--neutral-color); }
+        .char-info { flex: 1; } .char-name { font-weight: bold; font-size: 1rem; margin-bottom: 4px; color: var(--gold-light); } .char-sub { font-size: 0.8rem; color: var(--text-muted); }
 
-.bottom-nav { flex: 0 0 75px; width: 100%; background: var(--nav-bg); border-top: 2px solid var(--gold-dark); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); transition: 0.5s; }
-.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #887a63; width: 20%; height: 100%; cursor: pointer; transition: 0.3s; }
-.nav-item i { font-size: 1.3rem; margin-bottom: 5px; transition: 0.2s; } .nav-item span { font-size: 0.7rem; font-weight: bold; font-family: 'Noto Serif KR', serif; }
-.nav-item.active { color: var(--gold-light); } .nav-item.active i { text-shadow: 0 0 10px var(--fx-color); transform: translateY(-3px); }
+        .bottom-nav { flex: 0 0 75px; width: 100%; background: var(--nav-bg); border-top: 2px solid var(--gold-dark); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); transition: background-color 0.5s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #887a63; width: 20%; height: 100%; cursor: pointer; transition: 0.3s; }
+        .nav-item i { font-size: 1.3rem; margin-bottom: 5px; transition: 0.2s; } .nav-item span { font-size: 0.7rem; font-weight: bold; font-family: 'Noto Serif KR', serif; }
+        .nav-item.active { color: var(--gold-light); } .nav-item.active i { text-shadow: 0 0 10px var(--fx-color); transform: translateY(-3px); }
 
-.entrance-screen { position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh; background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 1s ease-out; }
-.entrance-title { font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 6px; color: var(--gold-light); text-shadow: 0 0 20px rgba(230, 194, 122, 0.5); margin-bottom: 20px; animation: candleFlicker 3s infinite alternate; text-align: center; width: 100%; padding-left: 6px; box-sizing: border-box; }
-.entrance-hint { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-muted); letter-spacing: 3px; animation: pulseText 2s infinite; padding: 10px 20px; border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; text-align: center; }
+        .entrance-screen { position: absolute; top: 0; left: 0; width: 100vw; height: 100dvh; background: radial-gradient(circle at center, #2b1b12 0%, #000000 100%); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: opacity 1s ease-out; }
+        .entrance-title { font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 6px; color: var(--gold-light); text-shadow: 0 0 20px rgba(230, 194, 122, 0.5); margin-bottom: 20px; animation: candleFlicker 3s infinite alternate; text-align: center; width: 100%; padding-left: 6px; box-sizing: border-box; }
+        .entrance-hint { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-muted); letter-spacing: 3px; animation: pulseText 2s infinite; padding: 10px 20px; border: 1px solid rgba(184, 148, 80, 0.3); border-radius: 2px; text-align: center; }
 
-.modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 400; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
-.modal-overlay.show { display: flex; opacity: 1; }
-.modal-content { width: 92%; max-height: 88%; background: var(--bg-base); border: 2px solid var(--gold-dark); border-radius: 4px; overflow-y: auto; position: relative; padding: 25px 20px; box-shadow: var(--card-shadow); text-align: center; scroll-behavior: smooth; transition: 0.5s; }
-.modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.8rem; color: var(--gold-dark); cursor: pointer; z-index: 10; transition: 0.2s; } .modal-close:hover { color: var(--gold-light); transform: scale(1.1); }
-.char-nav-btn { font-size: 1.4rem; color: var(--gold-dark); cursor: pointer; transition: 0.3s; padding: 5px 15px; } .char-nav-btn:hover { color: var(--gold-light); transform: scale(1.2); text-shadow: 0 0 10px var(--fx-color); }
-.modal-img-wrapper { position: relative; display: inline-block; margin-bottom: 15px; cursor: pointer; transition: 0.3s; } .modal-img-wrapper:hover { transform: scale(1.02); }
-.modal-img { width: 150px; height: 150px; border-radius: 4px; object-fit: cover; border: 3px solid; box-shadow: 0 8px 20px rgba(0,0,0,0.5); filter: sepia(0.2); transition: 0.3s; }
-.modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 0;} .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
-.modal-tab-menu { display: flex; border-bottom: 2px solid var(--fx-color); margin-bottom: 20px; }
-.modal-tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-family: 'Cinzel', serif; font-size: 0.85rem; padding: 10px 5px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 1px; border-bottom: 2px solid transparent; margin-bottom: -2px; }
-.modal-tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold-light); text-shadow: 0 0 10px var(--fx-color); }
-.modal-tab-content { display: none; animation: fadeIn 0.3s; text-align: left; } .modal-tab-content.active { display: block; }
+        .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 400; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .modal-content { width: 92%; max-height: 88%; background: var(--bg-base); border: 2px solid var(--gold-dark); border-radius: 4px; overflow-y: auto; position: relative; padding: 25px 20px; box-shadow: var(--card-shadow); text-align: center; scroll-behavior: smooth; transition: background-color 0.5s; }
+        .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.8rem; color: var(--gold-dark); cursor: pointer; z-index: 10; transition: 0.2s; } .modal-close:hover { color: var(--gold-light); transform: scale(1.1); }
+        .char-nav-btn { font-size: 1.4rem; color: var(--gold-dark); cursor: pointer; transition: 0.3s; padding: 5px 15px; } .char-nav-btn:hover { color: var(--gold-light); transform: scale(1.2); text-shadow: 0 0 10px var(--fx-color); }
+        .modal-img-wrapper { position: relative; display: inline-block; margin-bottom: 15px; cursor: pointer; transition: 0.3s; } .modal-img-wrapper:hover { transform: scale(1.02); }
+        .modal-img { width: 150px; height: 150px; border-radius: 4px; object-fit: cover; border: 3px solid; box-shadow: 0 8px 20px rgba(0,0,0,0.8); filter: sepia(0.2); transition: 0.3s; }
+        .modal-name { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 0;} .modal-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
+        
+        .modal-tab-menu { display: flex; border-bottom: 2px solid var(--fx-color); margin-bottom: 20px; }
+        .modal-tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-family: 'Cinzel', serif; font-size: 0.85rem; padding: 10px 5px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 1px; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .modal-tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold-light); text-shadow: 0 0 10px var(--fx-color); }
+        .modal-tab-content { display: none; animation: fadeIn 0.3s; text-align: left; } .modal-tab-content.active { display: block; }
 
-.power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.1); padding: 15px; border: 1px solid var(--fx-color); border-radius: 2px; transition: 0.3s; }
-.power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Noto Serif KR', serif; font-weight: bold; color: var(--gold-light);}
-.stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.2); border: 1px solid var(--fx-color); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; transition: 0.3s; }
-.stat-bar-fill { height: 100%; width: 0; transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); }
+        .power-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.1); padding: 15px; border: 1px solid var(--fx-color); border-radius: 2px; transition: 0.3s; }
+        .power-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: 'Noto Serif KR', serif; font-weight: bold; color: var(--gold-light);}
+        .stat-bar-bg { flex: 1; height: 10px; background: rgba(0,0,0,0.2); border: 1px solid var(--fx-color); border-radius: 2px; margin: 0 10px; position: relative; overflow: hidden; transition: 0.3s; }
+        .stat-bar-fill { height: 100%; width: 0; transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); }
 
-.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
-.stat-item { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); padding: 8px; border-radius: 2px; display: flex; flex-direction: column; align-items: center; transition: 0.3s; }
-.stat-label { font-size: 0.65rem; color: var(--gold-dark); font-family: 'Cinzel', serif; margin-bottom: 4px; letter-spacing: 1px; }
-.stat-val { font-size: 0.85rem; font-weight: bold; color: var(--text-main); text-align: center; }
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+        .stat-item { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); padding: 8px; border-radius: 2px; display: flex; flex-direction: column; align-items: center; transition: 0.3s; }
+        .stat-label { font-size: 0.65rem; color: var(--gold-dark); font-family: 'Cinzel', serif; margin-bottom: 4px; letter-spacing: 1px; } .stat-val { font-size: 0.85rem; font-weight: bold; color: var(--text-main); text-align: center; }
 
-.ability-box { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); padding: 15px; border-radius: 2px; margin-bottom: 15px; text-align: center; transition: 0.3s; }
-.ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 8px; letter-spacing: 2px; font-weight: bold; }
-.ability-text { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; }
-.modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.1); border-radius: 2px; border-left: 3px solid var(--gold-dark); position: relative; font-family: 'Noto Serif KR', serif; margin-top: 15px; transition: 0.3s; }
+        .ability-box { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); padding: 15px; border-radius: 2px; margin-bottom: 15px; text-align: center; transition: 0.3s; }
+        .ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 8px; letter-spacing: 2px; font-weight: bold; }
+        .ability-text { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; margin-bottom: 0; }
+        
+        .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.1); border-radius: 2px; border-left: 3px solid var(--gold-dark); position: relative; font-family: 'Noto Serif KR', serif; margin-top: 15px; transition: 0.3s; }
 
-.eyepatch-btn { background: rgba(0,0,0,0.8); color: var(--witch-color); border: 1px solid var(--witch-color); padding: 8px 20px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; font-family: 'Noto Serif KR', serif; transition: 0.3s; } .eyepatch-btn:active { transform: scale(0.95); }
-.archive-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-light); text-align: center; margin-bottom: 15px; letter-spacing: 2px; }
-.extra-images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.extra-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; border: 1px solid var(--fx-color); cursor: pointer; transition: 0.3s; filter: sepia(0.2); } .extra-img:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,0.5); position: relative; filter: sepia(0); }
+        .eyepatch-btn { background: rgba(0,0,0,0.8); color: var(--witch-color); border: 1px solid var(--witch-color); padding: 8px 20px; border-radius: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 10px; font-weight: bold; font-family: 'Noto Serif KR', serif; transition: 0.3s; } .eyepatch-btn:active { transform: scale(0.95); }
+        .archive-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-light); text-align: center; margin-bottom: 15px; letter-spacing: 2px; }
+        .extra-images-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .extra-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; border: 1px solid var(--fx-color); cursor: pointer; transition: 0.3s; filter: sepia(0.2); } .extra-img:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,0.5); position: relative; filter: sepia(0); }
 
-.lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
-.lightbox-overlay.show { display: flex; opacity: 1; }
-.lightbox-content { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.lightbox-img { max-width: 85%; max-height: 80%; border-radius: 4px; border: 3px solid var(--gold-dark); box-shadow: 0 0 30px #000; object-fit: contain; }
-.nav-arrow { position: absolute; font-size: 2.5rem; color: var(--gold-dark); cursor: pointer; padding: 20px; transition: 0.3s; z-index: 10; } .nav-arrow:hover { color: var(--gold-light); transform: scale(1.2); }
-.left-arrow { left: 2%; } .right-arrow { right: 2%; }
-.lightbox-close { position: absolute; top: 25px; right: 25px; font-size: 2rem; color: var(--gold-dark); cursor: pointer; z-index: 1001; transition: 0.3s; } .lightbox-close:hover { color: var(--gold-light); transform: scale(1.1); }
-.lightbox-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 2px; }
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
+        .lightbox-overlay.show { display: flex; opacity: 1; }
+        .lightbox-content { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .lightbox-img { max-width: 85%; max-height: 80%; border-radius: 4px; border: 3px solid var(--gold-dark); box-shadow: 0 0 30px #000; object-fit: contain; }
+        .nav-arrow { position: absolute; font-size: 2.5rem; color: var(--gold-dark); cursor: pointer; padding: 20px; transition: 0.3s; z-index: 10; } .nav-arrow:hover { color: var(--gold-light); transform: scale(1.2); }
+        .left-arrow { left: 2%; } .right-arrow { right: 2%; }
+        .lightbox-close { position: absolute; top: 25px; right: 25px; font-size: 2rem; color: var(--gold-dark); cursor: pointer; z-index: 1001; transition: 0.3s; } .lightbox-close:hover { color: var(--gold-light); transform: scale(1.1); }
+        .lightbox-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 2px; }
 
-.dim-toggle { background: rgba(0,0,0,0.1); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; width: 100%; max-width: 300px; }
-.dim-toggle.witch-mode { border-color: var(--witch-color); }
-.antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px rgba(0,0,0,0.5); transition: 0.5s; }
-.antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; }
-.antique-map-board::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 1px dashed var(--fx-color); border-radius: 50%; pointer-events: none; }
-.horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--fx-color); pointer-events: none; }
-.vertical-line { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: var(--fx-color); pointer-events: none; }
+        .dim-toggle { background: rgba(0,0,0,0.1); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; width: 100%; max-width: 300px; }
+        .dim-toggle.witch-mode { border-color: var(--witch-color); }
+        .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px rgba(0,0,0,0.5); transition: 0.5s; }
+        .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; }
+        .antique-map-board::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 1px dashed var(--fx-color); border-radius: 50%; pointer-events: none; }
+        .horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--fx-color); pointer-events: none; }
+        .vertical-line { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: var(--fx-color); pointer-events: none; }
 
-.map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 10; cursor: pointer; transition: 0.3s; }
-.map-pin:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 20; }
-.pin-marker { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; background: var(--bg-base); border: 2px solid currentColor; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
-.pin-label { margin-top: 5px; font-size: 0.65rem; font-family: 'Noto Serif KR', serif; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-dark); padding: 2px 6px; border-radius: 2px; white-space: nowrap; font-weight: bold; color: var(--gold-light); }
+        .map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 10; cursor: pointer; transition: 0.3s; }
+        .map-pin:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 20; }
+        .pin-marker { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; background: var(--bg-base); border: 2px solid currentColor; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+        .pin-label { margin-top: 5px; font-size: 0.65rem; font-family: 'Noto Serif KR', serif; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-dark); padding: 2px 6px; border-radius: 2px; white-space: nowrap; font-weight: bold; color: var(--gold-light); }
 
-.human-theme .pin-marker { color: #b22222; background: #fff; }
-.witch-theme .pin-marker { color: #8a2be2; background: #000; }
-.neutral-pin .pin-marker { color: #6b8e23 !important; background: #fff !important; }
+        .human-theme .pin-marker { color: #b22222; background: #fff; }
+        .witch-theme .pin-marker { color: #8a2be2; background: #000; }
+        .neutral-pin .pin-marker { color: #6b8e23 !important; background: #fff !important; }
 
-.map-list-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.map-node { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); border-radius: 2px; padding: 12px 8px; text-align: center; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.map-node:hover { background: var(--fx-color); border-color: var(--gold-light); transform: translateY(-2px); }
-.map-icon { font-size: 1.5rem; margin-bottom: 6px; color: var(--gold-dark); }
-.map-node-title { font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; line-height: 1.2; }
-.map-node-type { font-size: 0.6rem; color: var(--gold-dark); font-family: 'Cinzel', serif; }
-.desc-text { line-height: 1.6; }
-</style>
+        .map-list-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .map-node { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); border-radius: 2px; padding: 12px 8px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .map-node:hover { background: var(--fx-color); border-color: var(--gold-light); transform: translateY(-2px); }
+        .map-icon { font-size: 1.5rem; margin-bottom: 6px; color: var(--gold-dark); }
+        .map-node-title { font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; line-height: 1.2; }
+        .map-node-type { font-size: 0.6rem; color: var(--gold-dark); font-family: 'Cinzel', serif; }
+        .desc-text { line-height: 1.6; }
+    </style>
 </head>
 <body>
 
@@ -214,7 +243,7 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
 <audio id="bgm" src="8bit.mp3" loop preload="auto"></audio>
 
 <div id="entrance-screen" class="entrance-screen">
-    <div class="entrance-title">WITCH HUNT</div>
+    <div class="entrance-title">CHRONICLE OF FATE</div>
     <div class="entrance-hint">기록을 열기 위해 터치하십시오</div>
 </div>
 
@@ -222,40 +251,32 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
     <div class="wood-bg"></div>
 
     <header class="header">
-        <h1 onclick="switchTab('tab-world')">WITCH HUNT</h1>
+        <div class="header-title-container" onclick="switchTab('tab-world')">
+            <h1>CHRONICLE OF FATE</h1>
+            <p id="sub-title">NEUTRAL EDITION</p>
+        </div>
         <div class="header-controls">
-            <div class="theme-toggle-wrapper" onclick="toggleBGM()">
+            <div class="ctrl-item" onclick="toggleBGM()">
                 <i id="music-icon" class="fas fa-volume-up ctrl-btn"></i>
-                <span class="theme-label" style="opacity: 0;">BGM</span>
+                <span class="ctrl-label">Sound</span>
             </div>
-            <div class="theme-toggle-wrapper" onclick="toggleTheme()">
-                <i id="theme-btn" class="fas fa-moon ctrl-btn"></i>
-                <span id="theme-label" class="theme-label">마녀</span>
+            <div class="ctrl-item" onclick="toggleTheme()">
+                <i id="theme-btn" class="fas fa-leaf ctrl-btn"></i>
+                <span id="theme-label" class="ctrl-label">중립</span>
             </div>
         </div>
     </header>
 
     <div class="content-wrapper" id="main-content-area">
         <main id="tab-world" class="content-section active">
-            <div class="card" style="border-color: var(--gold-light);">
-                <h2><i class="fas fa-scroll"></i> 척결과 도피</h2>
-                <p class="desc-text">본래 마녀들은 인간들과 어우러져 평화롭게 살아가고 있었다. 그러나 20년전 국가의 국교가 자신들의 부흥을 위해 마녀들을 이단으로 규정하고 무자비한 척결을 시작했다.</p>
+            <div class="card" id="card-main-lore" style="border-color: var(--gold-light);">
+                <h2 id="lore-title-1"><i class="fas fa-scroll"></i> 경계의 삶</h2>
+                <p id="lore-desc-1" class="desc-text">중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.</p>
             </div>
+            
             <div class="card">
-                <h2><i class="fas fa-fire"></i> 오라 (Aura)</h2>
-                <p class="desc-text">육체의 한계를 극한으로 밀어붙여 짜낸 생명력의 결정체. 아이젠 왕국의 검사들이 주로 사용하며, 무기에 오라를 둘러 강도와 예리함을 극대화하거나 신체 능력을 폭발적으로 강화한다.</p>
-            </div>
-            <div class="card">
-                <h2><i class="fas fa-sparkles"></i> 마력 (Mana)</h2>
-                <p class="desc-text">세상 만물에 깃든 신비로운 자연 에너지. 마녀들은 심장에 개방된 '마나홀'을 통해 이 에너지를 감응하고 조작할 수 있다. 오라가 육체의 힘이라면, 마력은 지성과 정신의 힘이다.</p>
-            </div>
-            <div class="card">
-                <h2><i class="fas fa-chess-rook"></i> 아이젠 왕국 (인간 진영)</h2>
-                <p class="desc-text">마녀 사냥을 주도하는 권력의 중심. 신의 뜻을 명분으로 검사들을 앞세워 마녀들을 처단한다.</p>
-            </div>
-            <div class="card">
-                <h2><i class="fas fa-moon"></i> 닉스 (마녀 차원)</h2>
-                <p class="desc-text">칼날을 피해 도망친 마녀들이 숨어든 일그러진 차원. 이곳에서 언젠가 다가올 날을 위해 힘을 기르고 있다.</p>
+                <h2 id="lore-title-2"><i class="fas fa-balance-scale"></i> 회색 지대</h2>
+                <p id="lore-desc-2" class="desc-text">아이젠 왕국의 감시가 닿지 않고, 닉스 차원처럼 일그러지지 않은 땅. 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다.</p>
             </div>
         </main>
 
@@ -275,109 +296,34 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
 
             <div class="card">
                 <h2><i class="fas fa-khanda"></i> 인간의 경지 (무력)</h2>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">트레이니 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">검술의 기초를 닦는 단계. 육체를 단련하며 필멸자의 한계를 서서히 넘어서기 시작한다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 15+ / 민첩 15+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">소드 유저 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">오라를 느끼고 검에 싣기 시작하는 단계. 육체의 한계를 완전히 부순다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 40+ / 민첩 40+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">익스퍼트 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">오라를 자유자재로 다루며 체외로 검기를 뿜어낼 수 있는 강자.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 60+ / 민첩 60+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">극익스퍼트 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">소드마스터로 넘어가기 직전의 벽에 도달한 경지.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 75+ / 민첩 75+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">소드마스터 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">검강을 형성하며 일기당천의 무력을 지닌 초인.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 85+ / 민첩 85+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">그랜드마스터 <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">자연의 이치를 깨닫고 검과 하나가 된 전설적인 경지. 단신으로 재앙을 막아낸다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 95+ / 민첩 95+</div>
-                    </div>
-                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">트레이니 <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">검술의 기초를 닦는 단계. 육체를 단련하며 필멸자의 한계를 서서히 넘어서기 시작한다.</span><br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 15+ / 민첩 15+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">소드 유저 <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">오라를 느끼고 검에 싣기 시작하는 단계. 육체의 한계를 완전히 부순다.</span><br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 40+ / 민첩 40+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">익스퍼트 <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">오라를 자유자재로 다루며 체외로 검기를 뿜어낼 수 있는 강자.</span><br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 60+ / 민첩 60+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">극익스퍼트 <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">소드마스터로 넘어가기 직전의 벽에 도달한 경지.</span><br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 75+ / 민첩 75+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">소드마스터 <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">검강을 형성하며 일기당천의 무력을 지닌 초인.</span><br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 85+ / 민첩 85+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">그랜드마스터 <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">자연의 이치를 깨닫고 검과 하나가 된 전설적인 경지. 단신으로 재앙을 막아낸다.</span><br><div class="req-stat-box"><i class="fas fa-dumbbell req-label"></i>돌파 권장: 근력 95+ / 민첩 95+</div></div></div>
             </div>
             
             <div class="card">
                 <h2><i class="fas fa-hat-wizard"></i> 마녀의 경지 (마법)</h2>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">1 써클 (기초) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">심장에 첫 마나홀을 형성한 상태. 마력을 감응하여 일상적인 마법을 구사한다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 10+ / 지능 55+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">2 써클 (수습) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">본격적인 원소 마법의 발현. 전투에 응용할 수 있는 기초적인 마법 화살 등을 구사한다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 20+ / 지능 60+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">3 써클 (정규) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">척결관들과 맞설 수 있는 일반적인 마녀의 경지. 두 가지 이상의 마법을 연계한다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 30+ / 지능 65+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">4 써클 (숙련) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">마나의 형태 변환이 자유로워지며, 넓은 범위에 피해를 주거나 복잡한 연금술을 시도한다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 40+ / 지능 70+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">5 써클 (정예) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">자신만의 '고유 능력'이 뚜렷하게 발현되고 심화되는 기점. 소규모 군대를 상대한다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 50+ / 지능 75+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">6 써클 (대마녀) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">마나의 흐름이 자연과 동화되기 시작하는 경지. 거대한 지형을 바꿀 수 있는 전략적 가치.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 60+ / 지능 80+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">7 써클 (초월) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">물리법칙을 비틀고 왜곡하며, 단신으로 거대한 성채를 잿더미로 만들 수 있다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 70+ / 지능 85+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)" style="color:var(--witch-color);">8 써클 (아크메이저) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">차원의 법칙에 간섭할 수 있는 대마법사. 혼자서 한 나라의 군대를 궤멸시킨다.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 80+ / 지능 90+</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)" style="color:var(--witch-color);">9 써클 (대마법사) <i class="fas fa-chevron-down"></i></div>
-                    <div class="accordion-body"><span class="desc-text">마법의 끝. 신의 영역에 닿아 법칙을 창조하거나 소멸시킬 수 있는 절대적인 경지.</span>
-                        <br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 95+ / 지능 95+</div>
-                    </div>
-                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">1 써클 (기초) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">심장에 첫 마나홀을 형성한 상태. 마력을 감응하여 일상적인 마법을 구사한다.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 10+ / 지능 55+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">2 써클 (수습) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">본격적인 원소 마법의 발현. 전투에 응용할 수 있는 기초적인 마법 화살 등을 구사한다.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 20+ / 지능 60+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">3 써클 (정규) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">척결관들과 맞설 수 있는 일반적인 마녀의 경지. 두 가지 이상의 마법을 연계한다.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 30+ / 지능 65+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">4 써클 (숙련) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">마나의 형태 변환이 자유로워지며, 넓은 범위에 피해를 주거나 복잡한 연금술을 시도한다.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 40+ / 지능 70+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">5 써클 (정예) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">자신만의 '고유 능력'이 뚜렷하게 발현되고 심화되는 기점. 소규모 군대를 상대한다.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 50+ / 지능 75+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">6 써클 (대마녀) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">마나의 흐름이 자연과 동화되기 시작하는 경지. 거대한 지형을 바꿀 수 있는 전략적 가치.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 60+ / 지능 80+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">7 써클 (초월) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">물리법칙을 비틀고 왜곡하며, 단신으로 거대한 성채를 잿더미로 만들 수 있다.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 70+ / 지능 85+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)" style="color:var(--witch-color);">8 써클 (아크메이저) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">차원의 법칙에 간섭할 수 있는 대마법사. 혼자서 한 나라의 군대를 궤멸시킨다.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 80+ / 지능 90+</div></div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)" style="color:var(--witch-color);">9 써클 (대마법사) <i class="fas fa-chevron-down"></i></div><div class="accordion-body"><span class="desc-text">마법의 끝. 신의 영역에 닿아 법칙을 창조하거나 소멸시킬 수 있는 절대적인 경지.</span><br><div class="req-stat-box"><i class="fas fa-magic req-label"></i>돌파 권장: 마력 95+ / 지능 95+</div></div></div>
             </div>
         </main>
 
         <main id="tab-characters" class="content-section">
             <div class="inner-tabs">
                 <button class="inner-tab-btn active" onclick="filterChars('all', this)">All</button>
+                <button class="inner-tab-btn" onclick="filterChars('neutral', this)">중립</button>
                 <button class="inner-tab-btn" onclick="filterChars('witch', this)">마녀</button>
                 <button class="inner-tab-btn" onclick="filterChars('human', this)">인간</button>
-                <button class="inner-tab-btn" onclick="filterChars('neutral', this)">중립</button>
             </div>
             
             <div class="search-container">
@@ -539,7 +485,7 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
 </div>
 
 <script>
-    // 진입 버튼 이벤트
+    // --- 1. 진입 화면 이벤트 ---
     document.getElementById('entrance-screen').addEventListener('click', function() {
         const bgm = document.getElementById('bgm');
         if(bgm.paused) { bgm.play().catch(e => console.log("BGM Error:", e)); }
@@ -550,7 +496,7 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
         }, 1000);
     });
 
-    // --- 전체 데이터 배열 ---
+    // --- 2. 전체 캐릭터 데이터 (16명 완벽 복구 + 인트/능력 조정치 적용) ---
     const charData = [
         { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조작', mbti: 'INTJ', enneagram: '8w9', breast: 'C컵', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:65, mag:100, agi:75, int:95}, desc: '닉스의 여왕. 마녀의 안전을 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤데레 성격.' },
         { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '공간 게이트 생성 및 반사', mbti: 'INTP', enneagram: '5w4', breast: 'A컵', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:8, mag:95, agi:30, int:100}, desc: '엄청난 권능으로 차원을 오갈 수 있는 비밀 통로 관리자. 책 읽는 걸 좋아하며 약한 귀차니즘 탓에 육체 능력은 일반인 이하다.' },
@@ -571,6 +517,7 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
         { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', mbti: 'ISFJ', enneagram: '2w1', breast: 'B컵', age: '74세', height: '180cm', alignment: '질서 선', stats: {str:100, mag:10, agi:95, int:85}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' }
     ];
 
+    // --- 3. 맵 데이터 (인간/마녀 각 7개 지역) ---
     const humanMapNodes = [
         { id: 'h1', name: '뤼미에르', fullName: '아이젠 성황도 뤼미에르', type: '수도 / 교단 성지', faction: 'human', icon: 'fa-chess-king', x: 50, y: 50, desc: '인간 진영의 심장부. 마녀 척결을 위한 모든 군사 명령이 하달된다.' },
         { id: 'h2', name: '아이기스', fullName: '요새 아이기스', type: '군사 주둔지', faction: 'human', icon: 'fa-shield-halved', x: 25, y: 35, desc: '끝없는 무력 단련과 전술 훈련이 이루어지는 철벽의 성채.' },
@@ -590,10 +537,28 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
         { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', x: 50, y: 85, desc: '인간계와 이어지는 유일한 통로. 에델가르드의 봉인으로 보호받는다.' }
     ];
 
-    // --- 변수 선언부 ---
+    // --- 4. 세계관 테마별 설명 텍스트 ---
+    const loreTexts = {
+        neutral: {
+            t1: "경계의 삶", d1: "중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.",
+            t2: "회색 지대", d2: "아이젠 왕국의 감시가 닿지 않고, 닉스 차원처럼 일그러지지 않은 땅. 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다."
+        },
+        witch: {
+            t1: "척결과 도피", d1: "본래 마녀들은 인간들과 어우러져 평화롭게 살아가고 있었다. 그러나 20년전 국가의 국교가 자신들의 부흥을 위해 마녀들을 이단으로 규정하고 무자비한 척결을 시작했다.",
+            t2: "닉스 (마녀 차원)", d2: "칼날을 피해 도망친 마녀들이 숨어든 일그러진 차원. 이곳에서 언젠가 다가올 날을 위해 힘을 기르고 있다."
+        },
+        human: {
+            t1: "성스러운 정화", d1: "신의 뜻을 거스르는 마녀들을 이 땅에서 뿌리 뽑아야 합니다. 아이젠의 검사들은 오라를 통해 이단을 척결하고 국가의 안녕을 수호합니다.",
+            t2: "아이젠 왕국 (인간 진영)", d2: "마녀 사냥을 주도하는 권력의 중심. 신의 뜻을 명분으로 검사들을 앞세워 마녀들을 처단한다."
+        }
+    };
+
+    // --- 5. 상태 관리 변수 ---
+    const themes = ['neutral', 'witch', 'human']; // 중립이 기본
+    let currentThemeIdx = 0; 
     let currentFactionFilter = 'all';
     let currentSearchQuery = '';
-    let currentFilteredChars = [];
+    let currentFilteredChars = [...charData];
     let currentCharIndex = 0;
     let currentMapDim = 'human';
     let isSyanMode = false;
@@ -601,10 +566,8 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
     let currentGalleryUrls = []; 
     let currentLightboxIndex = 0;
     let statIntervals = {};
-    const themes = ['witch', 'human', 'neutral'];
-    let currentThemeIdx = 0; 
 
-    // --- 파티클 효과 ---
+    // --- 6. 앰비언트 파티클 이펙트 ---
     const canvasFx = document.getElementById('ambient-fx');
     const ctxFx = canvasFx.getContext('2d');
     let particlesFx = [];
@@ -633,11 +596,10 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
             if (this.y < 0) this.reset();
         }
         draw() {
-            let color = "230, 194, 122"; 
+            let color = "107, 142, 35"; // 중립 (올리브 그린)
             if (isSyanMode) color = "255, 105, 180";
-            else if (currentThemeIdx === 0) color = "138, 43, 226"; // witch
-            else if (currentThemeIdx === 1) color = "178, 34, 34"; // human
-            else color = "107, 142, 35"; // neutral
+            else if (themes[currentThemeIdx] === 'witch') color = "138, 43, 226";
+            else if (themes[currentThemeIdx] === 'human') color = "178, 34, 34";
 
             ctxFx.fillStyle = `rgba(${color}, ${this.opacity})`;
             if (isSyanMode) {
@@ -650,7 +612,7 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
             }
         }
     }
-    for (let i = 0; i < 50; i++) particlesFx.push(new ParticleFx());
+    for (let i = 0; i < 40; i++) particlesFx.push(new ParticleFx());
     function animateFx() {
         ctxFx.clearRect(0, 0, canvasFx.width, canvasFx.height);
         particlesFx.forEach(p => { p.update(); p.draw(); });
@@ -658,43 +620,76 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
     }
     animateFx();
 
-    // --- 기능 로직 ---
+    // --- 7. 기능 함수들 ---
     function triggerGlitch() {
         const container = document.getElementById('app-main');
         container.classList.remove('glitch-active');
         void container.offsetWidth; 
         container.classList.add('glitch-active');
-        setTimeout(() => container.classList.remove('glitch-active'), 400);
+        setTimeout(() => container.classList.remove('glitch-active'), 300);
     }
 
     function toggleTheme() {
         currentThemeIdx = (currentThemeIdx + 1) % themes.length;
         const theme = themes[currentThemeIdx];
         
-        document.body.classList.remove('theme-human', 'theme-neutral');
+        document.body.classList.remove('theme-human', 'theme-witch', 'theme-neutral');
+        if (theme !== 'neutral') {
+            document.body.classList.add(`theme-${theme}`);
+        }
+        
         const themeBtn = document.getElementById('theme-btn');
         const themeLabel = document.getElementById('theme-label');
+        const subTitle = document.getElementById('sub-title');
         
-        if (theme === 'human') {
-            document.body.classList.add('theme-human');
-            themeBtn.className = 'fas fa-chess-rook ctrl-btn';
-            themeLabel.innerText = "인간";
-        } else if (theme === 'neutral') {
-            document.body.classList.add('theme-neutral');
-            themeBtn.className = 'fas fa-leaf ctrl-btn';
-            themeLabel.innerText = "중립";
-        } else {
+        if (theme === 'witch') {
             themeBtn.className = 'fas fa-moon ctrl-btn';
             themeLabel.innerText = "마녀";
+            subTitle.innerText = "WITCH EDITION";
+        } else if (theme === 'human') {
+            themeBtn.className = 'fas fa-chess-rook ctrl-btn';
+            themeLabel.innerText = "인간";
+            subTitle.innerText = "HUMAN EDITION";
+        } else {
+            themeBtn.className = 'fas fa-leaf ctrl-btn';
+            themeLabel.innerText = "중립";
+            subTitle.innerText = "NEUTRAL EDITION";
         }
+
+        // 세계관 텍스트 동적 변경
+        const lore = loreTexts[theme];
+        document.getElementById('lore-title-1').innerHTML = `<i class="fas fa-scroll"></i> ${lore.t1}`;
+        document.getElementById('lore-desc-1').innerText = lore.d1;
+        document.getElementById('lore-title-2').innerHTML = `<i class="fas ${theme === 'witch' ? 'fa-moon' : (theme === 'human' ? 'fa-shield' : 'fa-balance-scale')}"></i> ${lore.t2}`;
+        document.getElementById('lore-desc-2').innerText = lore.d2;
+
         triggerGlitch();
     }
 
     function toggleBGM() {
         const bgm = document.getElementById('bgm');
         const icon = document.getElementById('music-icon');
-        if (bgm.paused) { bgm.play(); icon.className = 'fas fa-volume-up ctrl-btn'; }
-        else { bgm.pause(); icon.className = 'fas fa-volume-mute ctrl-btn'; }
+        if (bgm.paused) {
+            bgm.play();
+            icon.className = 'fas fa-volume-up ctrl-btn';
+        } else {
+            bgm.pause();
+            icon.className = 'fas fa-volume-mute ctrl-btn';
+        }
+    }
+
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        
+        if(element) {
+            element.classList.add('active');
+        } else {
+            const targetBtn = document.querySelector(`[data-tab='${tabId}']`);
+            if(targetBtn) targetBtn.classList.add('active');
+        }
     }
 
     function renderCharacters() {
@@ -703,7 +698,7 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
         
         currentFilteredChars = charData.filter(c => {
             const matchFaction = currentFactionFilter === 'all' || c.faction === currentFactionFilter;
-            const matchSearch = c.name.includes(currentSearchQuery) || c.desc.includes(currentSearchQuery) || c.level.includes(currentSearchQuery);
+            const matchSearch = c.name.includes(currentSearchQuery);
             return matchFaction && matchSearch;
         });
 
@@ -787,10 +782,10 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
         document.getElementById('map-main-title-text').style.color = borderColor;
 
         if (currentMapDim === 'human') {
-            document.getElementById('dim-toggle-btn').className = 'dim-toggle';
+            document.getElementById('dim-toggle-btn').style.borderColor = 'var(--human-color)';
             document.getElementById('dim-btn-text').innerText = '기록 전환: 아이젠 (인간계) ';
         } else {
-            document.getElementById('dim-toggle-btn').className = 'dim-toggle witch-mode';
+            document.getElementById('dim-toggle-btn').style.borderColor = 'var(--witch-color)';
             document.getElementById('dim-btn-text').innerText = '기록 전환: 닉스 (마녀 차원) ';
         }
 
@@ -821,14 +816,6 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
     }
     renderMap();
 
-    function switchTab(tabId, element) {
-        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        if(element) element.classList.add('active');
-        else { const targetBtn = document.querySelector(`[data-tab='${tabId}']`); if(targetBtn) targetBtn.classList.add('active'); }
-    }
-
     function switchModalTab(tabId) {
         document.querySelectorAll('.modal-tab-content').forEach(content => content.classList.remove('active'));
         document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -849,12 +836,12 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
     }
 
     function closeModal(e, modalId, force = false) {
-        if (force || e.target.id === modalId) document.getElementById(modalId).classList.remove('show');
+        if (force || e.target.id === modalId) { document.getElementById(modalId).classList.remove('show'); }
     }
 
     function setStatBar(id, val, color) {
         const bar = document.getElementById(id);
-        const text = document.getElementById(`stat-val-${id.split('-')[1]}`);
+        const text = document.getElementById(`v-${id.split('-')[1]}`);
         if(statIntervals[id]) clearInterval(statIntervals[id]);
         bar.style.width = '0%'; bar.style.backgroundColor = color; text.style.color = color; text.innerText = '0';
         setTimeout(() => {
@@ -893,7 +880,7 @@ body { background-color: var(--bg-base); font-family: 'Noto Serif KR', serif; co
         const modal = document.getElementById('char-modal');
         const img = document.getElementById('modal-img');
         const lunaAction = document.getElementById('luna-action');
-        const abilityLabel = document.getElementById('modal-ability-label');
+        const abilityLabel = document.querySelector('#modal-ability-box .ability-label');
         const abilityText = document.getElementById('modal-ability-text');
 
         currentCharIndex = currentFilteredChars.findIndex(c => c.id === char.id);
