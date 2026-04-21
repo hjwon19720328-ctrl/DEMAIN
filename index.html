@@ -114,7 +114,7 @@
 
         /* 헤더 위치 및 버튼 겹침 방지 */
         .header { flex: 0 0 auto; padding: 15px 20px 15px; text-align: center; position: relative; border-bottom: 1px solid var(--fx-color); z-index: 10; transition: border-color 0.5s; display: flex; flex-direction: column; }
-        .header-controls { display: flex; justify-content: flex-end; gap: 12px; align-items: center; z-index: 20; margin-bottom: 5px; width: 100%; }
+        .header-controls { display: flex; justify-content: flex-end; gap: 12px; align-items: center; z-index: 20; margin-bottom: 10px; width: 100%; }
         .ctrl-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; width: 40px; }
         .ctrl-item:hover { transform: scale(1.05); }
         .ctrl-btn { font-size: 1.2rem; color: var(--gold-dark); transition: 0.3s; padding: 2px; }
@@ -269,7 +269,7 @@
 
     <div class="content-wrapper" id="main-content-area">
         <main id="tab-world" class="content-section active">
-            <div class="card" style="border-color: var(--gold-light);">
+            <div class="card" id="card-main-lore" style="border-color: var(--gold-light);">
                 <h2 id="lore-title-1"><i class="fas fa-scroll"></i> 경계의 삶</h2>
                 <p id="lore-desc-1" class="desc-text" data-orig="중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.">중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.</p>
             </div>
@@ -336,9 +336,9 @@
         <main id="tab-characters" class="content-section">
             <div class="inner-tabs">
                 <button class="inner-tab-btn active" onclick="filterChars('all', this)">All</button>
-                <button class="inner-tab-btn" onclick="filterChars('neutral', this)">중립</button>
                 <button class="inner-tab-btn" onclick="filterChars('witch', this)">마녀</button>
                 <button class="inner-tab-btn" onclick="filterChars('human', this)">인간</button>
+                <button class="inner-tab-btn" onclick="filterChars('neutral', this)">중립</button>
             </div>
             
             <div class="search-container">
@@ -471,7 +471,7 @@
 </div>
 
 <script>
-    // --- 1. 캐릭터 전체 데이터 (17명) ---
+    // --- 1. 캐릭터 전체 데이터 ---
     const charData = [
         { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', mbti: 'ISFJ', enneagram: '2w1', breast: 'B컵', age: '74세', height: '180cm', alignment: '질서 선', stats: {str:100, mag:10, agi:95, int:85}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' },
         { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', mbti: 'ENTP', enneagram: '7w8', breast: 'A컵', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:5, agi:60, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 정보상 겸 용병. 허~접♡, 좆밥♡, 바~보♡ 같은 말투를 사용한다.' },
@@ -581,7 +581,6 @@
         canvasFx.height = container.clientHeight || window.innerHeight;
     }
     window.addEventListener('resize', initCanvas);
-    initCanvas();
 
     class ParticleFx {
         constructor() { this.reset(); }
@@ -599,7 +598,7 @@
             if (this.y < 0) this.reset();
         }
         draw() {
-            let color = "107, 142, 35"; // 중립 (올리브 그린)
+            let color = "107, 142, 35"; // 중립
             if (isSyanMode) color = "255, 105, 180";
             else if (themes[currentThemeIdx] === 'witch') color = "138, 43, 226";
             else if (themes[currentThemeIdx] === 'human') color = "178, 34, 34";
@@ -621,7 +620,6 @@
         particlesFx.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animateFx);
     }
-    animateFx();
 
     // --- 7. 기능 제어 함수들 ---
     document.getElementById('entrance-screen').addEventListener('click', function() {
@@ -631,6 +629,8 @@
         setTimeout(() => { 
             this.style.display = 'none'; 
             document.getElementById('app-main').classList.add('start'); 
+            initCanvas(); 
+            animateFx(); 
         }, 1000);
     });
 
@@ -644,7 +644,6 @@
 
     function updateLoreTexts(themeName) {
         const lore = loreTexts[themeName];
-        
         const updateCard = (num, titleIcon, titleText, descText) => {
             const titleEl = document.getElementById(`lore-title-${num}`);
             const descEl = document.getElementById(`lore-desc-${num}`);
@@ -762,14 +761,18 @@
         } else {
             if(isSyanMode) triggerGlitch();
             isSyanMode = false; document.body.classList.remove('syan-mode'); currentSearchQuery = query;
-            descTexts.forEach(el => { if(el.dataset.orig) el.innerHTML = el.dataset.orig; });
+            descTexts.forEach(el => {
+                if(el.dataset.orig) el.innerHTML = el.dataset.orig;
+            });
         }
         renderCharacters();
     }
 
     function filterChars(type, btn) {
         document.querySelectorAll('.inner-tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active'); currentFactionFilter = type; renderCharacters();
+        btn.classList.add('active');
+        currentFactionFilter = type;
+        renderCharacters();
     }
     renderCharacters();
 
@@ -815,7 +818,11 @@
         });
     }
     
-    function toggleMapDimension() { currentMapDim = currentMapDim === 'human' ? 'witch' : 'human'; triggerGlitch(); renderMap(); }
+    function toggleMapDimension() { 
+        currentMapDim = currentMapDim === 'human' ? 'witch' : 'human'; 
+        triggerGlitch();
+        renderMap(); 
+    }
     renderMap();
 
     function switchModalTab(tabId) {
@@ -939,6 +946,8 @@
 
         loadExtraImages(activeCharCode, borderColor);
         modal.classList.add('show');
+        
+        setTimeout(initCanvas, 100);
     }
 
     function toggleEyepatch() {
