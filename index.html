@@ -9,25 +9,9 @@
     
     <style>
         /* ======================================= */
-        /* 공통 변수 및 초기 테마 (중립 - Neutral) */
+        /* 기본 테마 고정 (마녀풍 - Witch Theme) */
         /* ======================================= */
         :root { 
-            --gold-light: #a9c25d; 
-            --gold-dark: #556b2f; 
-            --witch-color: #8a2be2; 
-            --human-color: #b22222; 
-            --neutral-color: #6b8e23; 
-            --bg-base: #111510; 
-            --bg-card: rgba(25, 32, 22, 0.85); 
-            --text-main: #dbe5d0; 
-            --text-muted: #8b9c7a; 
-            --nav-bg: rgba(17, 21, 16, 0.95); 
-            --fx-color: rgba(107, 142, 35, 0.3);
-            --card-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.8);
-        }
-
-        /* 마녀 테마 (닉스 - Witch) */
-        body.theme-witch { 
             --bg-base: #140d0b; 
             --bg-card: rgba(30, 20, 15, 0.85); 
             --text-main: #e8dcc4; 
@@ -37,19 +21,11 @@
             --gold-dark: #b89450; 
             --fx-color: rgba(184, 148, 80, 0.3);
             --card-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 15px rgba(0,0,0,0.6);
-        }
 
-        /* 인간 테마 (아이젠 - Human) */
-        body.theme-human { 
-            --bg-base: #f4f1ea; 
-            --bg-card: rgba(255, 255, 255, 0.95); 
-            --text-main: #2b1b12; 
-            --text-muted: #665544; 
-            --nav-bg: rgba(244, 241, 234, 0.98); 
-            --gold-light: #b22222; 
-            --gold-dark: #8b0000; 
-            --fx-color: rgba(178, 34, 34, 0.15);
-            --card-shadow: 0 4px 15px rgba(178, 34, 34, 0.1);
+            /* 진영별 고유 컬러 (캐릭터 테두리용) */
+            --witch-color: #8a2be2; 
+            --human-color: #b22222; 
+            --neutral-color: #6b8e23; 
         }
 
         /* 시안송 모드 */
@@ -211,7 +187,7 @@
         .lightbox-close { position: absolute; top: 25px; right: 25px; font-size: 2rem; color: var(--gold-dark); cursor: pointer; z-index: 1001; transition: 0.3s; } .lightbox-close:hover { color: var(--gold-light); transform: scale(1.1); }
         .lightbox-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 2px; }
 
-        .dim-toggle { background: rgba(0,0,0,0.1); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; width: 100%; max-width: 300px; }
+        .dim-toggle { background: rgba(0,0,0,0.1); border: 1px solid var(--gold-light); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; width: 100%; max-width: 300px; }
         .dim-toggle.witch-mode { border-color: var(--witch-color); }
 
         /* ======================================= */
@@ -240,20 +216,19 @@
         /* 마녀차원 북쪽 바다 오버레이 */
         .antique-map-board.witch-theme .sea-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            /* 북쪽(상단) 깊은 바다 그라데이션 */
             background: linear-gradient(to bottom, rgba(10, 30, 60, 0.9), rgba(0, 0, 0, 0) 30%) !important; 
             pointer-events: none; z-index: 1;
         }
-        .antique-map-board.witch-theme .map-pin { z-index: 10; } /* 핀이 바다 위에 오도록 */
+        .antique-map-board.witch-theme .map-pin { z-index: 10; } 
 
         .map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 10; cursor: pointer; transition: 0.3s; }
         .map-pin:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 20; }
         .pin-marker { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; background: var(--bg-base); border: 2px solid currentColor; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
         .pin-label { margin-top: 5px; font-size: 0.65rem; font-family: 'Noto Serif KR', serif; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-dark); padding: 2px 6px; border-radius: 2px; white-space: nowrap; font-weight: bold; color: var(--gold-light); }
 
-        .human-theme .pin-marker { color: #b22222; background: #fff; }
-        .witch-theme .pin-marker { color: #8a2be2; background: #000; }
-        .neutral-pin .pin-marker { color: #6b8e23 !important; background: #fff !important; }
+        .human-theme .pin-marker { color: var(--human-color); background: #fff; }
+        .witch-theme .pin-marker { color: var(--witch-color); background: #000; }
+        .neutral-pin .pin-marker { color: var(--neutral-color) !important; background: #fff !important; }
 
         .map-list-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .map-node { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); border-radius: 2px; padding: 12px 8px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -283,14 +258,10 @@
                 <i id="music-icon" class="fas fa-volume-up ctrl-btn"></i>
                 <span class="ctrl-label">Sound</span>
             </div>
-            <div class="ctrl-item" onclick="toggleTheme()">
-                <i id="theme-btn" class="fas fa-leaf ctrl-btn"></i>
-                <span id="theme-label" class="ctrl-label">중립</span>
-            </div>
         </div>
         <div class="header-title-container" onclick="switchTab('tab-world')">
             <h1>CHRONICLE OF FATE</h1>
-            <p id="sub-title">NEUTRAL EDITION</p>
+            <p id="sub-title">ARCHIVES</p>
         </div>
     </header>
 
@@ -298,27 +269,27 @@
         <main id="tab-world" class="content-section active">
             <div class="card" style="border-color: var(--gold-light);">
                 <h2 id="lore-title-1"><i class="fas fa-scroll"></i> 경계의 삶</h2>
-                <p id="lore-desc-1" class="desc-text" data-orig="중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.">중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.</p>
+                <p id="lore-desc-1" class="desc-text" data-orig="인간과 마녀, 두 진영의 대립 속에서 어느 쪽에도 속하지 못한 자들의 구역입니다. 오랜 전쟁 속에서 살아남기 위해 자신들만의 거친 질서와 생존 방식을 구축하고 있습니다.">인간과 마녀, 두 진영의 대립 속에서 어느 쪽에도 속하지 못한 자들의 구역입니다. 오랜 전쟁 속에서 살아남기 위해 자신들만의 거친 질서와 생존 방식을 구축하고 있습니다.</p>
             </div>
             <div class="card">
                 <h2 id="lore-title-2"><i class="fas fa-fire"></i> 오라 (Aura)</h2>
-                <p id="lore-desc-2" class="desc-text" data-orig="인간들이 휘두르는 폭력적인 힘. 생명력을 태워 얻는 그 힘은 강력하지만, 우리에겐 그저 엮이지 말아야 할 위험한 무기일 뿐입니다.">인간들이 휘두르는 폭력적인 힘. 생명력을 태워 얻는 그 힘은 강력하지만, 우리에겐 그저 엮이지 말아야 할 위험한 무기일 뿐입니다.</p>
+                <p id="lore-desc-2" class="desc-text" data-orig="인간이 생명력을 연소시켜 발현하는 물리적인 에너지입니다. 극도로 단련된 육체를 통해 발현되며, 강력한 파괴력과 마법 저항력을 지녀 마녀에 대항하는 인류의 핵심 전력입니다.">인간이 생명력을 연소시켜 발현하는 물리적인 에너지입니다. 극도로 단련된 육체를 통해 발현되며, 강력한 파괴력과 마법 저항력을 지녀 마녀에 대항하는 인류의 핵심 전력입니다.</p>
             </div>
             <div class="card">
                 <h2 id="lore-title-3"><i class="fas fa-sparkles"></i> 마력 (Mana)</h2>
-                <p id="lore-desc-3" class="desc-text" data-orig="마녀들이 다루는 신비로운 기운. 매혹적이지만 함부로 다가갔다간 이단 심문소의 불길에 함께 타들어 갈 수 있습니다.">마녀들이 다루는 신비로운 기운. 매혹적이지만 함부로 다가갔다간 이단 심문소의 불길에 함께 타들어 갈 수 있습니다.</p>
+                <p id="lore-desc-3" class="desc-text" data-orig="세상 만물에 깃든 기운이자 마녀들이 심장의 마나홀을 통해 다루는 신비로운 힘입니다. 원소를 다루거나 물리 법칙을 비틀어 현실에 기적을 일으키는 원천이 됩니다.">세상 만물에 깃든 기운이자 마녀들이 심장의 마나홀을 통해 다루는 신비로운 힘입니다. 원소를 다루거나 물리 법칙을 비틀어 현실에 기적을 일으키는 원천이 됩니다.</p>
             </div>
             <div class="card">
                 <h2 id="lore-title-4"><i class="fas fa-chess-rook"></i> 아이젠 왕국</h2>
-                <p id="lore-desc-4" class="desc-text" data-orig="미쳐 돌아가는 광신의 땅. 돈이 되는 의뢰는 많지만, 눈먼 칼날에 목이 달아나지 않도록 항상 조심해야 합니다.">미쳐 돌아가는 광신의 땅. 돈이 되는 의뢰는 많지만, 눈먼 칼날에 목이 달아나지 않도록 항상 조심해야 합니다.</p>
+                <p id="lore-desc-4" class="desc-text" data-orig="마녀 척결을 지상 과제로 삼고 있는 인간들의 거대한 신성 왕국입니다. 철저한 규율과 무력, 그리고 이단 심문소를 통해 대륙의 패권을 장악하고 인간 중심의 질서를 강제합니다.">마녀 척결을 지상 과제로 삼고 있는 인간들의 거대한 신성 왕국입니다. 철저한 규율과 무력, 그리고 이단 심문소를 통해 대륙의 패권을 장악하고 인간 중심의 질서를 강제합니다.</p>
             </div>
             <div class="card">
                 <h2 id="lore-title-5"><i class="fas fa-moon"></i> 닉스 차원</h2>
-                <p id="lore-desc-5" class="desc-text" data-orig="마녀들이 숨어든 일그러진 공간. 우리 같은 혼혈이나 도망자들에게는 접근조차 쉽게 허락되지 않는 미지의 영역입니다.">마녀들이 숨어든 일그러진 공간. 우리 같은 혼혈이나 도망자들에게는 접근조차 쉽게 허락되지 않는 미지의 영역입니다.</p>
+                <p id="lore-desc-5" class="desc-text" data-orig="인간들의 대대적인 사냥을 피해 마녀들이 도피하여 일구어낸 일그러진 시공간입니다. 여왕 에델가르드의 통치 아래 유지되며, 철저하게 감춰진 마녀들만의 마지막 안식처입니다.">인간들의 대대적인 사냥을 피해 마녀들이 도피하여 일구어낸 일그러진 시공간입니다. 여왕 에델가르드의 통치 아래 유지되며, 철저하게 감춰진 마녀들만의 마지막 안식처입니다.</p>
             </div>
             <div class="card">
                 <h2 id="lore-title-6"><i class="fas fa-balance-scale"></i> 회색 지대</h2>
-                <p id="lore-desc-6" class="desc-text" data-orig="아이젠 왕국의 감시가 닿지 않고, 닉스 차원처럼 일그러지지 않은 땅. 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다.">아이젠 왕국의 감시가 닿지 않고, 닉스 차원처럼 일그러지지 않은 땅. 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다.</p>
+                <p id="lore-desc-6" class="desc-text" data-orig="아이젠 왕국의 통제력도, 닉스 차원의 마력도 닿지 않는 무법 지대입니다. 버림받은 혼혈, 현상수배범, 이득을 쫓는 용병들이 모여 약육강식의 생태계를 형성하고 있습니다.">아이젠 왕국의 통제력도, 닉스 차원의 마력도 닿지 않는 무법 지대입니다. 버림받은 혼혈, 현상수배범, 이득을 쫓는 용병들이 모여 약육강식의 생태계를 형성하고 있습니다.</p>
             </div>
         </main>
 
@@ -379,7 +350,7 @@
         <main id="tab-map" class="content-section">
             <div style="text-align: center;">
                 <button id="dim-toggle-btn" class="dim-toggle" onclick="toggleMapDimension()">
-                    <span id="dim-btn-text">아이젠(인간계) 지도</span>
+                    <span id="dim-btn-text">지도 전환: 아이젠 (인간계)</span>
                 </button>
             </div>
             <div id="map-main-card" class="card">
@@ -550,7 +521,6 @@
         { id: 'w5', name: '인형의 집', fullName: '니나의 인형의 집', type: '거주 구역', faction: 'witch', icon: 'fa-ghost', x: 30, y: 80, desc: '수백 개의 움직이는 인형들이 불침번을 서는 으스스한 저택.' },
         { id: 'w6', name: '연금 공방', fullName: '시엘의 연금 공방', type: '연구 구역', faction: 'witch', icon: 'fa-flask', x: 25, y: 15, desc: '온갖 기괴한 포션과 마도구를 제작하는 장소.' },
         { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', x: 50, y: 85, desc: '인간계와 이어지는 유일한 통로. 에델가르드의 봉인으로 보호받는다.' },
-        // 수정: 피오나의 오두막 추가
         { id: 'w8', name: '피오나의 오두막', fullName: '피오나의 은밀한 오두막', type: '거주 / 육체 수련 구역', faction: 'witch', icon: 'fa-house-user', x: 50, y: 5, desc: '닉스 차원의 가장 북쪽, 바다와 맞닿은 곳에 위치한 오두막. 피오나가 홀로 육체적 한계를 돌파하기 위해 수련하며 묵는 장소이다.' }
     ];
 
@@ -570,37 +540,7 @@
     }
     preloadImages();
 
-    // --- 4. 세계관 가변 텍스트 데이터 ---
-    const loreTexts = {
-        neutral: {
-            t1: "경계의 삶", d1: "중립 지대의 이들은 인간의 법도, 마녀의 마력도 아닌 오직 자신의 의지로 살아갑니다. 두 진영의 전쟁 속에서 살아남기 위해 숨죽인 채 기회를 엿보고 있습니다.",
-            t2: "오라 (Aura)", d2: "인간들이 휘두르는 폭력적인 힘. 생명력을 태워 얻는 그 힘은 강력하지만, 우리에겐 그저 엮이지 말아야 할 위험한 무기일 뿐입니다.",
-            t3: "마력 (Mana)", d3: "마녀들이 다루는 신비로운 기운. 매혹적이지만 함부로 다가갔다간 이단 심문소의 불길에 함께 타들어 갈 수 있습니다.",
-            t4: "아이젠 왕국", d4: "미쳐 돌아가는 광신의 땅. 돈이 되는 의뢰는 많지만, 눈먼 칼날에 목이 달아나지 않도록 항상 조심해야 합니다.",
-            t5: "닉스 차원", d5: "마녀들이 숨어든 일그러진 공간. 우리 같은 혼혈이나 도망자들에게는 접근조차 쉽게 허락되지 않는 미지의 영역입니다.",
-            t6: "회색 지대", d6: "아이젠 왕국의 감시가 닿지 않고, 닉스 차원처럼 일그러지지 않은 땅. 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다."
-        },
-        witch: {
-            t1: "생존의 결속", d1: "20년 전의 비극 이후, 우리는 닉스의 뒤틀린 차원에 몸을 숨겼습니다. 억울하게 죽어간 자매들을 위해 마력을 벼리며 복수의 날을 기다립니다.",
-            t2: "야만적인 오라", d2: "마나의 흐름도 이해하지 못한 채 그저 생명력을 태워대는 미개하고 폭력적인 힘. 저들의 야만성을 여실히 보여줍니다.",
-            t3: "위대한 마력", d3: "세상 만물에 깃든 자연의 숨결이자 우리의 생명줄. 우리는 심장의 마나홀을 통해 기적을 일으키고 운명을 개척합니다.",
-            t4: "도살자들의 나라", d4: "신이라는 거짓된 우상 아래 우리를 사냥하는 학살자들의 소굴, 아이젠. 언젠가 반드시 무너뜨려야 할 원수들입니다.",
-            t5: "우리의 안식처, 닉스", d5: "일그러진 시공간 속에서도 에델가르드 님의 통치 아래 평화를 유지하고 있는 우리의 유일하고 소중한 집입니다.",
-            t6: "버려진 땅", d6: "인간도 마녀도 되지 못한 자들과 천박한 용병들이 뒹구는 더러운 곳. 우리의 고귀한 마력을 낭비할 가치조차 없는 땅입니다."
-        },
-        human: {
-            t1: "성스러운 정화", d1: "신의 뜻을 거스르는 흉악한 마녀들을 이 땅에서 뿌리 뽑아야 합니다. 오라를 통해 이단을 척결하고 국가의 안녕을 수호해야 합니다.",
-            t2: "성스러운 오라", d2: "신께서 허락하신 한계 극복의 기적. 끝없는 단련을 통해 발현되는 이 숭고한 힘만이 사악한 마녀들을 베어낼 수 있습니다.",
-            t3: "이단의 힘, 마력", d3: "세상을 현혹하고 타락시키는 끔찍한 주술. 심장에 저주받은 구멍을 뚫어 사용하는 불경하고 사악한 힘입니다.",
-            t4: "신성 왕국 아이젠", d4: "성황도 뤼미에르를 중심으로 결집한 인류의 마지막 보루. 불순한 마력을 정화하고 오직 인간만을 위한 정의로운 세상을 구축합니다.",
-            t5: "이단들의 마굴", d5: "빛을 피해 도망친 마녀들이 숨어든 끔찍한 닉스 차원. 척결관들을 이끌고 진격하여 남김없이 불태워야 할 표적입니다.",
-            t6: "타락한 빈민가", d6: "법과 질서가 무너진 불결한 슬럼가. 이단과 밀통하는 자들이 있다면 쥐도 새도 모르게 처단하여 싹을 잘라야 합니다."
-        }
-    };
-
-    // --- 5. 상태 관리 변수 ---
-    const themes = ['neutral', 'witch', 'human']; // 중립이 기본
-    let currentThemeIdx = 0; 
+    // --- 4. 상태 관리 변수 ---
     let currentFactionFilter = 'all';
     let currentSearchQuery = '';
     let currentFilteredChars = [...charData];
@@ -612,7 +552,7 @@
     let currentLightboxIndex = 0;
     let statIntervals = {};
 
-    // --- 6. 앰비언트 파티클 이펙트 ---
+    // --- 5. 앰비언트 파티클 이펙트 ---
     const canvasFx = document.getElementById('ambient-fx');
     const ctxFx = canvasFx.getContext('2d');
     let particlesFx = [];
@@ -641,10 +581,9 @@
             if (this.y < 0) this.reset();
         }
         draw() {
-            let color = "107, 142, 35"; // 중립 (올리브 그린)
+            // 기본은 마녀 테마의 보라색
+            let color = "138, 43, 226"; 
             if (isSyanMode) color = "255, 105, 180";
-            else if (themes[currentThemeIdx] === 'witch') color = "138, 43, 226";
-            else if (themes[currentThemeIdx] === 'human') color = "178, 34, 34";
 
             ctxFx.fillStyle = `rgba(${color}, ${this.opacity})`;
             if (isSyanMode) {
@@ -665,7 +604,7 @@
     }
     animateFx();
 
-    // --- 7. 기능 제어 함수들 ---
+    // --- 6. 기능 제어 함수들 ---
     document.getElementById('entrance-screen').addEventListener('click', function() {
         const bgm = document.getElementById('bgm');
         if(bgm.paused) { bgm.play().catch(e => console.log("BGM Error:", e)); }
@@ -683,59 +622,6 @@
         container.classList.add('glitch-active');
         setTimeout(() => container.classList.remove('glitch-active'), 300);
     }
-
-    function updateLoreTexts(themeName) {
-        const lore = loreTexts[themeName];
-        
-        const updateCard = (num, titleIcon, titleText, descText) => {
-            const titleEl = document.getElementById(`lore-title-${num}`);
-            const descEl = document.getElementById(`lore-desc-${num}`);
-            if (titleEl) titleEl.innerHTML = `<i class="fas ${titleIcon}"></i> ${titleText}`;
-            if (descEl) {
-                descEl.dataset.orig = descText;
-                descEl.innerText = isSyanMode ? "시안송짱은 뉴비에오~♡ 호에에엥... 아무것도 몰라요 호에에..." : descText;
-            }
-        };
-
-        updateCard(1, 'fa-scroll', lore.t1, lore.d1);
-        updateCard(2, 'fa-fire', lore.t2, lore.d2);
-        updateCard(3, 'fa-sparkles', lore.t3, lore.d3);
-        updateCard(4, 'fa-chess-rook', lore.t4, lore.d4);
-        updateCard(5, 'fa-moon', lore.t5, lore.d5);
-        updateCard(6, 'fa-balance-scale', lore.t6, lore.d6);
-    }
-
-    function toggleTheme() {
-        currentThemeIdx = (currentThemeIdx + 1) % themes.length;
-        const theme = themes[currentThemeIdx];
-        
-        document.body.classList.remove('theme-human', 'theme-witch', 'theme-neutral');
-        if (theme !== 'neutral') { document.body.classList.add(`theme-${theme}`); }
-        
-        const themeBtn = document.getElementById('theme-btn');
-        const themeLabel = document.getElementById('theme-label');
-        const subTitle = document.getElementById('sub-title');
-        
-        if (theme === 'witch') {
-            themeBtn.className = 'fas fa-moon ctrl-btn';
-            themeLabel.innerText = "마녀";
-            subTitle.innerText = "WITCH EDITION";
-        } else if (theme === 'human') {
-            themeBtn.className = 'fas fa-chess-rook ctrl-btn';
-            themeLabel.innerText = "인간";
-            subTitle.innerText = "HUMAN EDITION";
-        } else {
-            themeBtn.className = 'fas fa-leaf ctrl-btn';
-            themeLabel.innerText = "중립";
-            subTitle.innerText = "NEUTRAL EDITION";
-        }
-
-        // 세계관 텍스트 동적 변경
-        updateLoreTexts(theme);
-        triggerGlitch();
-    }
-    // 초기 로딩 시 세계관 텍스트 세팅
-    updateLoreTexts('neutral');
 
     function toggleBGM() {
         const bgm = document.getElementById('bgm');
@@ -848,13 +734,12 @@
 
         if (currentMapDim === 'human') {
             document.getElementById('dim-toggle-btn').style.borderColor = 'var(--human-color)';
-            document.getElementById('dim-btn-text').innerText = '기록 전환: 아이젠 (인간계) ';
+            document.getElementById('dim-btn-text').innerText = '지도 전환: 아이젠 (인간계) ';
         } else {
             document.getElementById('dim-toggle-btn').style.borderColor = 'var(--witch-color)';
-            document.getElementById('dim-btn-text').innerText = '기록 전환: 닉스 (마녀 차원) ';
+            document.getElementById('dim-btn-text').innerText = '지도 전환: 닉스 (마녀 차원) ';
         }
 
-        // 수정: 기본 라인 렌더링 후 마녀차원일 때 바다 오버레이 추가
         board.innerHTML = '<div class="horizontal-line"></div><div class="vertical-line"></div>';
         if (currentMapDim === 'witch') {
             board.innerHTML += '<div class="sea-overlay"></div>';
@@ -951,7 +836,6 @@
         const img = document.getElementById('modal-img');
         const lunaAction = document.getElementById('luna-action');
         
-        // 에러 수정: 존재하는 ID를 직접 연결
         const abilityLabel = document.getElementById('modal-ability-label');
         const abilityText = document.getElementById('modal-ability-text');
         
