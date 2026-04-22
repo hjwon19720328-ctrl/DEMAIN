@@ -213,11 +213,38 @@
 
         .dim-toggle { background: rgba(0,0,0,0.1); border: 1px solid var(--human-color); color: var(--text-main); padding: 12px 25px; border-radius: 2px; font-family: 'Noto Serif KR', serif; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: inline-block; width: 100%; max-width: 300px; }
         .dim-toggle.witch-mode { border-color: var(--witch-color); }
-        .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px rgba(0,0,0,0.5); transition: 0.5s; }
-        .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; }
-        .antique-map-board::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 1px dashed var(--fx-color); border-radius: 50%; pointer-events: none; }
-        .horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--fx-color); pointer-events: none; }
-        .vertical-line { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: var(--fx-color); pointer-events: none; }
+
+        /* ======================================= */
+        /* 지도 관련 스타일 수정 및 추가 */
+        /* ======================================= */
+        .map-directions-container { position: relative; width: 100%; height: auto; }
+        #map-world-directions { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; 
+            font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: bold; color: var(--gold-light); text-shadow: 0 0 5px rgba(0,0,0,0.5); 
+            display: flex; justify-content: center; align-items: center; 
+        }
+        #map-world-directions span { 
+            position: absolute; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; 
+            background: rgba(0,0,0,0.5); border: 1px solid var(--gold-dark); 
+        }
+        #map-world-directions .dir-n { top: 10px; }
+        #map-world-directions .dir-s { bottom: 10px; }
+        #map-world-directions .dir-e { right: 10px; }
+        #map-world-directions .dir-w { left: 10px; }
+
+        .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px rgba(0,0,0,0.5); transition: 0.5s; z-index: 1;}
+        .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; z-index: -1; }
+        .horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--fx-color); pointer-events: none; z-index: 0; }
+        .vertical-line { position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: var(--fx-color); pointer-events: none; z-index: 0; }
+
+        /* 마녀차원 북쪽 바다 오버레이 */
+        .antique-map-board.witch-theme .sea-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            /* 북쪽(상단) 깊은 바다 그라데이션 */
+            background: linear-gradient(to bottom, rgba(10, 30, 60, 0.9), rgba(0, 0, 0, 0) 30%) !important; 
+            pointer-events: none; z-index: 1;
+        }
+        .antique-map-board.witch-theme .map-pin { z-index: 10; } /* 핀이 바다 위에 오도록 */
 
         .map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 10; cursor: pointer; transition: 0.3s; }
         .map-pin:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 20; }
@@ -291,7 +318,7 @@
             </div>
             <div class="card">
                 <h2 id="lore-title-6"><i class="fas fa-balance-scale"></i> 회색 지대</h2>
-                <p id="lore-desc-6" class="desc-text" data-orig="아이젠 왕국의 감시가 닿지 않는곳, 그곳에는 버림받은 혼혈들과 돈만을 정는 용병들이 자신들만의 질서를 세웠습니다.">아이젠 왕국의 감시가 닿지 않는 곳, 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다.</p>
+                <p id="lore-desc-6" class="desc-text" data-orig="아이젠 왕국의 감시가 닿지 않고, 닉스 차원처럼 일그러지지 않은 땅. 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다.">아이젠 왕국의 감시가 닿지 않고, 닉스 차원처럼 일그러지지 않은 땅. 그곳에는 버림받은 혼혈들과 돈만을 쫓는 용병들이 자신들만의 질서를 세웠습니다.</p>
             </div>
         </main>
 
@@ -360,9 +387,17 @@
                     <i id="map-main-icon" class="fas fa-map"></i> 
                     <span id="map-main-title-text"> 아이젠 고지도</span>
                 </h2>
-                <div id="antique-map-board" class="antique-map-board human-theme">
-                    <div class="horizontal-line"></div>
-                    <div class="vertical-line"></div>
+                <div class="map-directions-container">
+                    <div id="map-world-directions">
+                        <span class="dir-n">N</span>
+                        <span class="dir-s">S</span>
+                        <span class="dir-e">E</span>
+                        <span class="dir-w">W</span>
+                    </div>
+                    <div id="antique-map-board" class="antique-map-board human-theme">
+                        <div class="horizontal-line"></div>
+                        <div class="vertical-line"></div>
+                    </div>
                 </div>
                 <div id="map-grid-container" class="map-list-container"></div>
             </div>
@@ -514,7 +549,9 @@
         { id: 'w4', name: '생명 온실', fullName: '생명의 온실', type: '휴식 구역', faction: 'witch', icon: 'fa-leaf', x: 20, y: 40, desc: '생명의 기운이 감도는 식물원. 상처 입은 마녀들에게 안식을 제공한다.' },
         { id: 'w5', name: '인형의 집', fullName: '니나의 인형의 집', type: '거주 구역', faction: 'witch', icon: 'fa-ghost', x: 30, y: 80, desc: '수백 개의 움직이는 인형들이 불침번을 서는 으스스한 저택.' },
         { id: 'w6', name: '연금 공방', fullName: '시엘의 연금 공방', type: '연구 구역', faction: 'witch', icon: 'fa-flask', x: 25, y: 15, desc: '온갖 기괴한 포션과 마도구를 제작하는 장소.' },
-        { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', x: 50, y: 85, desc: '인간계와 이어지는 유일한 통로. 에델가르드의 봉인으로 보호받는다.' }
+        { id: 'w7', name: '차원문 입구', fullName: '일그러진 입구', type: '경계 구역', faction: 'witch', icon: 'fa-door-open', x: 50, y: 85, desc: '인간계와 이어지는 유일한 통로. 에델가르드의 봉인으로 보호받는다.' },
+        // 수정: 피오나의 오두막 추가
+        { id: 'w8', name: '피오나의 오두막', fullName: '피오나의 은밀한 오두막', type: '거주 / 육체 수련 구역', faction: 'witch', icon: 'fa-house-user', x: 50, y: 5, desc: '닉스 차원의 가장 북쪽, 바다와 맞닿은 곳에 위치한 오두막. 피오나가 홀로 육체적 한계를 돌파하기 위해 수련하며 묵는 장소이다.' }
     ];
 
     // --- 3. 이미지 프리로드 (안대 딜레이 제거) ---
@@ -817,7 +854,12 @@
             document.getElementById('dim-btn-text').innerText = '기록 전환: 닉스 (마녀 차원) ';
         }
 
+        // 수정: 기본 라인 렌더링 후 마녀차원일 때 바다 오버레이 추가
         board.innerHTML = '<div class="horizontal-line"></div><div class="vertical-line"></div>';
+        if (currentMapDim === 'witch') {
+            board.innerHTML += '<div class="sea-overlay"></div>';
+        }
+
         nodes.forEach(node => {
             const pin = document.createElement('div');
             pin.className = `map-pin ${node.faction === 'neutral' ? 'neutral-pin' : ''}`;
@@ -909,7 +951,7 @@
         const img = document.getElementById('modal-img');
         const lunaAction = document.getElementById('luna-action');
         
-        // 🚨 여기에 아까 알려줬던 에러 수정 사항을 적용했어!
+        // 에러 수정: 존재하는 ID를 직접 연결
         const abilityLabel = document.getElementById('modal-ability-label');
         const abilityText = document.getElementById('modal-ability-text');
         
@@ -938,16 +980,16 @@
 
         document.getElementById('modal-mbti').innerText = isSyanMode ? 'HOEE' : char.mbti;
         document.getElementById('modal-eg').innerText = isSyanMode ? '호에' : char.enneagram;
-        document.getElementById('modal-size').innerText = isSyanMode ? '호에' : char.breast;
-        document.getElementById('modal-age').innerText = isSyanMode ? '호에' : char.age;
-        document.getElementById('modal-height').innerText = isSyanMode ? '호에' : char.height;
+        document.getElementById('modal-size').innerText = isSyanMode ? '호에컵' : char.breast;
+        document.getElementById('modal-age').innerText = isSyanMode ? '호에짤' : char.age;
+        document.getElementById('modal-height').innerText = isSyanMode ? '호에cm' : char.height;
         document.getElementById('modal-align').innerText = isSyanMode ? '호에에' : char.alignment;
         document.getElementById('modal-align').style.color = borderColor;
         
         document.getElementById('archive-title').style.color = borderColor;
         document.getElementById('modal-desc').style.borderLeftColor = borderColor;
         document.getElementById('modal-desc').dataset.orig = char.desc;
-        document.getElementById('modal-desc').innerText = isSyanMode ? '시안송짱은 뉴비에오~ 호에에엥~' : char.desc;
+        document.getElementById('modal-desc').innerText = isSyanMode ? '시안송짱은 뉴비에오~♡ 호에에엥~♡ 호에에에에에에에에에!!!' : char.desc;
 
         let activeCharCode = char.id; let bonusStats = 0; 
         if(char.id === 'k') {
@@ -989,7 +1031,7 @@
             } else {
                 bonus = 10;
                 if(!isSyanMode) {
-                    abilityText.innerText = '★ 공허의 영역(Void Domain) ★';
+                    abilityText.innerText = '★ 공허의 영역 (Void Domain) ★';
                     abilityText.style.color = '#fff'; abilityText.style.textShadow = '0 0 10px var(--witch-color)';
                 }
             }
@@ -1042,7 +1084,7 @@
         
         document.getElementById('map-modal-desc').style.borderLeftColor = themeColor;
         document.getElementById('map-modal-desc').dataset.orig = node.desc;
-        document.getElementById('map-modal-desc').innerText = isSyanMode ? "시안송짱은 뉴비에오... 호에에" : node.desc;
+        document.getElementById('map-modal-desc').innerText = isSyanMode ? "시안송짱은 뉴비에오... 호에에?♡" : node.desc;
 
         modal.classList.add('show');
     }
