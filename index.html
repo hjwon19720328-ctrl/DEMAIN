@@ -169,8 +169,9 @@
         .ability-box { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); padding: 15px; border-radius: 2px; margin-bottom: 15px; text-align: center; transition: 0.3s; }
         .ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 8px; letter-spacing: 2px; font-weight: bold; }
         .ability-text { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; margin-bottom: 0; }
-        /* 추가: 어빌리티 세부 설명 스타일 */
-        .ability-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4; font-family: 'Noto Serif KR', serif; font-weight: normal; }
+        
+        /* 추가: 어빌리티 세부 설명 스타일 (점선 추가하여 디자인 구분) */
+        .ability-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(184, 148, 80, 0.3); line-height: 1.5; font-family: 'Noto Serif KR', serif; }
         
         .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.1); border-radius: 2px; border-left: 3px solid var(--gold-dark); position: relative; font-family: 'Noto Serif KR', serif; margin-top: 15px; transition: 0.3s; }
 
@@ -664,7 +665,9 @@
             const factionTag = `<span style="color:var(--${char.faction}-color); font-size:0.8rem; margin-right:5px;">[${factionText}]</span>`;
             
             const displayImg = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${char.id}/1`;
-            const displaySub = isSyanMode ? '호에에~♡' : char.level;
+            
+            // 리스트 화면에도 능력 표기 추가!!
+            const displaySub = isSyanMode ? '호에에~♡' : `${char.level} <span style="color:var(--gold-dark); font-size:0.75rem; margin-left:5px;">| ${char.ability}</span>`;
             const fallbackImg = `https://placehold.co/150x150/1a120e/b89450?text=?`;
             
             const el = document.createElement('div');
@@ -709,7 +712,6 @@
             descTexts.forEach(el => {
                 if(el.dataset.orig) el.innerHTML = el.dataset.orig;
             });
-            // 모달 안의 어빌리티 설명은 모달 오픈 시 다시 렌더링되므로 여기서 강제 복구 안해도 무방
         }
         renderCharacters();
     }
