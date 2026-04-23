@@ -88,7 +88,6 @@
             pointer-events: none; 
         }
 
-        /* 헤더 위치 및 버튼 겹침 방지 완벽 수정 */
         .header { flex: 0 0 auto; padding: 15px 20px 15px; text-align: center; position: relative; border-bottom: 1px solid var(--fx-color); z-index: 10; transition: border-color 0.5s; display: flex; flex-direction: column; }
         .header-controls { display: flex; justify-content: flex-end; gap: 12px; align-items: center; z-index: 20; margin-bottom: 10px; width: 100%; }
         .ctrl-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; width: 40px; }
@@ -193,33 +192,29 @@
         /* ======================================= */
         /* 지도 관련 스타일 수정 및 추가 */
         /* ======================================= */
-        .map-directions-container { position: relative; width: 100%; height: auto; }
-        #map-world-directions { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; 
-            font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: bold; color: var(--gold-light); text-shadow: 0 0 5px rgba(0,0,0,0.5); 
-            display: flex; justify-content: center; align-items: center; 
-        }
-        #map-world-directions span { 
-            position: absolute; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; 
-            background: rgba(0,0,0,0.5); border: 1px solid var(--gold-dark); 
-        }
-        #map-world-directions .dir-n { top: 10px; }
-        #map-world-directions .dir-s { bottom: 10px; }
-        #map-world-directions .dir-e { right: 10px; }
-        #map-world-directions .dir-w { left: 10px; }
-
         .antique-map-board { position: relative; height: 300px; width: 100%; border-radius: 4px; background: rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 15px; border: 2px solid var(--gold-dark); box-shadow: inset 0 0 30px rgba(0,0,0,0.5); transition: 0.5s; z-index: 1;}
         .antique-map-board::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/aged-paper.png'); opacity: 0.3; pointer-events: none; z-index: -1; }
         .horizontal-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--fx-color); pointer-events: none; z-index: 0; }
         .vertical-line { position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: var(--fx-color); pointer-events: none; z-index: 0; }
 
-        /* 마녀차원 북쪽 바다 오버레이 */
+        #map-world-directions { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; 
+            font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: bold; color: var(--gold-light); 
+        }
+        #map-world-directions span { 
+            position: absolute; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; 
+            background: rgba(0,0,0,0.2); border: 1px solid rgba(184, 148, 80, 0.3); opacity: 0.7;
+        }
+        #map-world-directions .dir-n { top: 8px; left: 50%; transform: translateX(-50%); }
+        #map-world-directions .dir-s { bottom: 8px; left: 50%; transform: translateX(-50%); }
+        #map-world-directions .dir-e { right: 8px; top: 50%; transform: translateY(-50%); }
+        #map-world-directions .dir-w { left: 8px; top: 50%; transform: translateY(-50%); }
+
         .antique-map-board.witch-theme .sea-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: linear-gradient(to bottom, rgba(10, 30, 60, 0.9), rgba(0, 0, 0, 0) 30%) !important; 
-            pointer-events: none; z-index: 1;
+            pointer-events: none; z-index: 1; 
         }
-        .antique-map-board.witch-theme .map-pin { z-index: 10; } 
 
         .map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 10; cursor: pointer; transition: 0.3s; }
         .map-pin:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 20; }
@@ -494,7 +489,7 @@
         { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 검', mbti: 'ISTJ', enneagram: '1w2', breast: 'C컵', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:65}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
         { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 검', mbti: 'ISFJ', enneagram: '6w5', breast: 'B컵', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:65, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
         { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', mbti: 'ISTP', enneagram: '5w6', breast: 'A컵', age: '26세', height: '151cm', alignment: '절대 중립', stats: {str:75, mag:5, agi:100, int:75}, desc: '여왕의 그림자. 인간의 범주를 아득히 초월한 민첩성을 지녔다. 인간계의 마녀들을 암살하며 몸팔기 빼고 더러운 일을 병행한다.' },
-        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '징벌의 가시 채찍', mbti: 'ENTP', enneagram: '7w8', breast: 'D컵', age: '24세', height: '168cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:85, int:85}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 뼈가 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년. 피 냄새를 맡으면 이성을 잃고 폭주한다.' },
+        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '징벌의 가시 채찍', mbti: 'ENTP', enneagram: '7w8', breast: 'D컵', age: '24세', height: '168cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:85, int:85}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 전신이 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년. 피 냄새를 맡으면 이성을 잃고 폭주한다.' },
         { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '호신용 메이스', mbti: 'INTP', enneagram: '5w4', breast: 'H컵', age: '20세', height: '163cm', alignment: '질서 선', stats: {str:15, mag:15, agi:15, int:95}, desc: '일반인을 갓 벗어난 육체 능력을 가졌지만, 지능과 학구열만큼은 대륙 최고 수준이다. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
 
         // 중립 (Neutral)
@@ -524,7 +519,7 @@
         { id: 'w8', name: '피오나의 오두막', fullName: '피오나의 은밀한 오두막', type: '거주 / 육체 수련 구역', faction: 'witch', icon: 'fa-house-user', x: 50, y: 5, desc: '닉스 차원의 가장 북쪽, 바다와 맞닿은 곳에 위치한 오두막. 피오나가 홀로 육체적 한계를 돌파하기 위해 수련하며 묵는 장소이다.' }
     ];
 
-    // --- 3. 이미지 프리로드 (안대 딜레이 제거) ---
+    // --- 3. 이미지 프리로드 ---
     function preloadImages() {
         const urls = ['https://igx.kr/u/LJ/g/c'];
         charData.forEach(c => {
@@ -581,8 +576,7 @@
             if (this.y < 0) this.reset();
         }
         draw() {
-            // 기본은 마녀 테마의 보라색
-            let color = "138, 43, 226"; 
+            let color = "138, 43, 226"; // 고정 마녀 컬러
             if (isSyanMode) color = "255, 105, 180";
 
             ctxFx.fillStyle = `rgba(${color}, ${this.opacity})`;
@@ -612,6 +606,7 @@
         setTimeout(() => { 
             this.style.display = 'none'; 
             document.getElementById('app-main').classList.add('start'); 
+            document.body.classList.add('theme-witch'); // 시작 시 마녀 테마 고정
         }, 1000);
     });
 
@@ -641,6 +636,9 @@
         document.getElementById(tabId).classList.add('active');
         if(element) element.classList.add('active');
         else { const targetBtn = document.querySelector(`[data-tab='${tabId}']`); if(targetBtn) targetBtn.classList.add('active'); }
+        
+        // 추가: 탭 이동 시 스크롤 최상단으로 강제 이동
+        document.getElementById('main-content-area').scrollTop = 0;
     }
 
     function renderCharacters() {
@@ -740,10 +738,20 @@
             document.getElementById('dim-btn-text').innerText = '지도 전환: 닉스 (마녀 차원) ';
         }
 
-        board.innerHTML = '<div class="horizontal-line"></div><div class="vertical-line"></div>';
+        // 라인, 바다, 동서남북 표시를 내부에서 렌더링
+        let mapHTML = '<div class="horizontal-line"></div><div class="vertical-line"></div>';
         if (currentMapDim === 'witch') {
-            board.innerHTML += '<div class="sea-overlay"></div>';
+            mapHTML += '<div class="sea-overlay"></div>';
         }
+        mapHTML += `
+            <div id="map-world-directions">
+                <span class="dir-n">N</span>
+                <span class="dir-s">S</span>
+                <span class="dir-e">E</span>
+                <span class="dir-w">W</span>
+            </div>
+        `;
+        board.innerHTML = mapHTML;
 
         nodes.forEach(node => {
             const pin = document.createElement('div');
