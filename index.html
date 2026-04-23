@@ -169,6 +169,8 @@
         .ability-box { background: rgba(0,0,0,0.1); border: 1px solid var(--fx-color); padding: 15px; border-radius: 2px; margin-bottom: 15px; text-align: center; transition: 0.3s; }
         .ability-label { font-size: 0.7rem; color: var(--gold-dark); font-family: 'Cinzel', 'Noto Serif KR', serif; margin-bottom: 8px; letter-spacing: 2px; font-weight: bold; }
         .ability-text { font-size: 1.1rem; font-weight: bold; color: var(--gold-light); font-family: 'Noto Serif KR', serif; transition: 0.3s; margin-bottom: 0; }
+        /* 추가: 어빌리티 세부 설명 스타일 */
+        .ability-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4; font-family: 'Noto Serif KR', serif; font-weight: normal; }
         
         .modal-desc { font-size: 0.95rem; color: var(--text-main); line-height: 1.8; text-align: left; padding: 15px; background: rgba(0,0,0,0.1); border-radius: 2px; border-left: 3px solid var(--gold-dark); position: relative; font-family: 'Noto Serif KR', serif; margin-top: 15px; transition: 0.3s; }
 
@@ -437,6 +439,7 @@
                 <div class="ability-box">
                     <div id="modal-ability-label" class="ability-label">고유 능력</div>
                     <div id="modal-ability-text" class="ability-text" style="margin-bottom:0; border-bottom:none; padding-bottom:0;"></div>
+                    <div id="modal-ability-desc" class="ability-desc"></div>
                 </div>
                 <p id="modal-desc" class="desc-text" style="font-size:0.85rem; text-align:left; padding:15px; background:rgba(0,0,0,0.1); border-radius:4px; margin-top:15px;"></p>
             </div>
@@ -472,30 +475,30 @@
 </div>
 
 <script>
-    // --- 1. 캐릭터 전체 데이터 ---
+    // --- 1. 캐릭터 전체 데이터 (능력 설명 추가됨) ---
     const charData = [
         // 마녀 (Witch)
-        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조작', mbti: 'INTJ', enneagram: '8w9', breast: 'C컵', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:65, mag:100, agi:75, int:95}, desc: '닉스의 여왕. 마녀의 안전을 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤데레 성격.' },
-        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '공간 게이트 생성 및 반사', mbti: 'INTP', enneagram: '5w4', breast: 'A컵', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:8, mag:95, agi:30, int:100}, desc: '엄청난 권능으로 차원을 오갈 수 있는 비밀 통로 관리자. 책 읽는 걸 좋아하며 약한 귀차니즘 탓에 육체 능력은 일반인 이하다.' },
-        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종 및 급속 성장', mbti: 'ISFP', enneagram: '9w1', breast: 'G컵', age: '121세', height: '166cm', alignment: '중립 선', stats: {str:55, mag:75, agi:60, int:82}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 생활한다.' },
-        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성 및 조종', mbti: 'ENTJ', enneagram: '8w7', breast: 'H컵', age: '111세', height: '168cm', alignment: '혼돈 악', stats: {str:70, mag:92, agi:85, int:90}, desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 한다. 현재 에델가르드가 폭주를 저지하고 있다.' },
-        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', mbti: 'ESTP', enneagram: '7w8', breast: 'B컵', age: '72세', height: '170cm', alignment: '혼돈 선', stats: {str:100, mag:55, agi:80, int:25}, desc: '엄청난 운동광. 마법적 지식 대신 순수한 육체적 본능과 질량으로 써클을 강제 돌파한 돌연변이 마녀다. 머리 쓰는 일은 극도로 싫어한다.' },
-        { id: 'k', name: '루나', faction: 'witch', level: '9써클 대마법사', ability: '마나 감지 (패시브) / 공허의 영역', mbti: 'INFJ', enneagram: '4w5', breast: 'D컵', age: '321세', height: '160cm', alignment: '참 중립', stats: {str:50, mag:85, agi:65, int:90}, desc: '마나가 눈에 보여 피로를 덜기 위해 안대를 착용한다. 말이 없지만 동료들을 가장 많이 챙김. 안대를 벗으면 모든 스탯이 10 상승하며 공허의 영역이 해방된다.' },
-        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', mbti: 'ISTP', enneagram: '5w6', breast: 'D컵', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:6, mag:45, agi:15, int:90}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 천재 연금술사. 운동을 안 해서 근력은 아주 약하다.' },
-        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', mbti: 'INFP', enneagram: '4w3', breast: 'A컵', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:5, mag:55, agi:15, int:75}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 본체의 신체능력은 평범한 어린애 수준. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
+        { id: 'c', name: '에델가르드', faction: 'witch', level: '9써클 대마법사', ability: '중력 조작', abilityDesc: '주변의 중력을 자유자재로 다루어 대상을 짓누르거나 띄울 수 있다.', mbti: 'INTJ', enneagram: '8w9', breast: 'C컵', age: '839세', height: '174cm', alignment: '질서 악', stats: {str:65, mag:100, agi:75, int:95}, desc: '닉스의 여왕. 마녀의 안전을 구상하며 차원을 통치한다. 겉으로는 차갑고 엄격해 보이지만, 자기 사람에게는 한없이 챙겨주는 츤데레 성격.' },
+        { id: 'd', name: '세라', faction: 'witch', level: '9써클 대마법사', ability: '공간 게이트 생성 및 반사', abilityDesc: '원하는 위치로 이동하는 포탈을 열거나, 적의 공격을 공간째로 반사한다.', mbti: 'INTP', enneagram: '5w4', breast: 'A컵', age: '410세', height: '152cm', alignment: '참 중립', stats: {str:8, mag:95, agi:30, int:100}, desc: '엄청난 권능으로 차원을 오갈 수 있는 비밀 통로 관리자. 책 읽는 걸 좋아하며 약한 귀차니즘 탓에 육체 능력은 일반인 이하다.' },
+        { id: 'g', name: '이브', faction: 'witch', level: '6써클', ability: '식물 조종 및 급속 성장', abilityDesc: '씨앗이나 포자를 순식간에 자라나게 하여 촉수나 방패처럼 부린다.', mbti: 'ISFP', enneagram: '9w1', breast: 'G컵', age: '121세', height: '166cm', alignment: '중립 선', stats: {str:55, mag:75, agi:60, int:82}, desc: '전투나 복수에는 관심 없이 조용히 은신처에서 자신만의 꽃과 식물을 기르며 평화롭게 생활한다.' },
+        { id: 'h', name: '베로니카', faction: 'witch', level: '8써클 아크메이저', ability: '혈액 생성 및 조종', abilityDesc: '자신의 피를 매개로 무기를 만들거나 흩뿌려진 피를 폭발시킨다.', mbti: 'ENTJ', enneagram: '8w7', breast: 'H컵', age: '111세', height: '168cm', alignment: '혼돈 악', stats: {str:70, mag:92, agi:85, int:90}, desc: '과거의 끔찍한 일로 인해 인간을 척결하고 복수하고 싶어 한다. 현재 에델가르드가 폭주를 저지하고 있다.' },
+        { id: 'j', name: '피오나', faction: 'witch', level: '5써클', ability: '질량 부여', abilityDesc: '접촉한 물체나 자신의 신체에 엄청난 질량을 실어 파괴력을 극대화한다.', mbti: 'ESTP', enneagram: '7w8', breast: 'B컵', age: '72세', height: '170cm', alignment: '혼돈 선', stats: {str:100, mag:55, agi:80, int:25}, desc: '엄청난 운동광. 마법적 지식 대신 순수한 육체적 본능과 질량으로 써클을 강제 돌파한 돌연변이 마녀다. 머리 쓰는 일은 극도로 싫어한다.' },
+        { id: 'k', name: '루나', faction: 'witch', level: '9써클 대마법사', ability: '마나 감지 (패시브) / 공허의 영역', abilityDesc: '대기 중의 마나 흐름을 시각적으로 읽어낸다. (현재 안대로 시야를 제한해 마나 소모를 억제 중)', mbti: 'INFJ', enneagram: '4w5', breast: 'D컵', age: '321세', height: '160cm', alignment: '참 중립', stats: {str:50, mag:85, agi:65, int:90}, desc: '마나가 눈에 보여 피로를 덜기 위해 안대를 착용한다. 말이 없지만 동료들을 가장 많이 챙김. 안대를 벗으면 모든 스탯이 10 상승하며 공허의 영역이 해방된다.' },
+        { id: 'm', name: '시엘', faction: 'witch', level: '4써클', ability: '연금술', abilityDesc: '마나를 주입해 물질의 성질을 변형하거나 특수한 효과를 지닌 영약을 제조한다.', mbti: 'ISTP', enneagram: '5w6', breast: 'D컵', age: '20세', height: '158cm', alignment: '혼돈 중립', stats: {str:6, mag:45, agi:15, int:90}, desc: '공방에 틀어박혀 온갖 기괴하고 신기한 포션을 만들거나 약초를 가공하는 괴짜 천재 연금술사. 운동을 안 해서 근력은 아주 약하다.' },
+        { id: 'n', name: '니나', faction: 'witch', level: '5써클', ability: '인형 조종', abilityDesc: '생명력이 없는 인형에 마나 실을 연결해 자아를 가진 것처럼 정교하게 부린다.', mbti: 'INFP', enneagram: '4w3', breast: 'A컵', age: '20세', height: '150cm', alignment: '혼돈 악', stats: {str:5, mag:55, agi:15, int:75}, desc: '인형에 마나를 넣어 생명체처럼 다룬다. 본체의 신체능력은 평범한 어린애 수준. 애정결핍(멘헤라) 기질이 다분하며 망상에 자주 빠진다.' },
         
         // 인간 (Human)
-        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터', ability: '왕실검 루미나스', mbti: 'ESTJ', enneagram: '3w4', breast: 'A컵', age: '35세', height: '160cm', alignment: '질서 중립', stats: {str:90, mag:15, agi:90, int:80}, desc: '아이젠의 여왕. 오라를 통한 신체 강화로 초인적인 무력을 지녔다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
-        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 검', mbti: 'ISTJ', enneagram: '1w2', breast: 'C컵', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:65}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
-        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 검', mbti: 'ISFJ', enneagram: '6w5', breast: 'B컵', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:65, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
-        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', mbti: 'ISTP', enneagram: '5w6', breast: 'A컵', age: '26세', height: '151cm', alignment: '절대 중립', stats: {str:75, mag:5, agi:100, int:75}, desc: '여왕의 그림자. 인간의 범주를 아득히 초월한 민첩성을 지녔다. 인간계의 마녀들을 암살하며 몸팔기 빼고 더러운 일을 병행한다.' },
-        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '징벌의 가시 채찍', mbti: 'ENTP', enneagram: '7w8', breast: 'D컵', age: '24세', height: '168cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:85, int:85}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 전신이 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년. 피 냄새를 맡으면 이성을 잃고 폭주한다.' },
-        { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '호신용 메이스', mbti: 'INTP', enneagram: '5w4', breast: 'H컵', age: '20세', height: '163cm', alignment: '질서 선', stats: {str:15, mag:15, agi:15, int:95}, desc: '일반인을 갓 벗어난 육체 능력을 가졌지만, 지능과 학구열만큼은 대륙 최고 수준이다. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
+        { id: 'p', name: '카트린', faction: 'human', level: '소드마스터', ability: '왕실검 루미나스', abilityDesc: '빛나는 오라를 머금은 왕실의 보검으로, 닿는 모든 불경한 마력을 베어낸다.', mbti: 'ESTJ', enneagram: '3w4', breast: 'A컵', age: '35세', height: '160cm', alignment: '질서 중립', stats: {str:90, mag:15, agi:90, int:80}, desc: '아이젠의 여왕. 오라를 통한 신체 강화로 초인적인 무력을 지녔다. "노처녀"라는 단어를 세계에서 제일 싫어한다.' },
+        { id: 'q', name: '브룬힐데', faction: 'human', level: '소드마스터', ability: '처형인의 검', abilityDesc: '거대하고 투박한 대검에 응축된 오라를 휘둘러 적의 방어를 무식하게 부숴버린다.', mbti: 'ISTJ', enneagram: '1w2', breast: 'C컵', age: '29세', height: '172cm', alignment: '질서 선', stats: {str:95, mag:0, agi:85, int:65}, desc: '전쟁 때 마녀에게 부모를 잃고 복수심으로 단장에 올랐다. 가혹하게 훈련시키지만 부하들을 몰래 챙겨주는 츤데레.' },
+        { id: 'r', name: '헬레나', faction: 'human', level: '익스퍼트', ability: '기사단 검', abilityDesc: '정석적인 검술에 오라를 실어 공방의 밸런스가 완벽한 정규 기사단의 제식 검술을 구사한다.', mbti: 'ISFJ', enneagram: '6w5', breast: 'B컵', age: '23세', height: '165cm', alignment: '중립 선', stats: {str:65, mag:0, agi:70, int:60}, desc: '얼마 전 임무에서 처음으로 마녀를 베었다. 죽기 전 보여준 너무나도 인간적인 모습에 깊은 혼란을 느끼는 중.' },
+        { id: 't', name: '아델', faction: 'human', level: '극익스퍼트', ability: '은 단검', abilityDesc: '마력에 치명적인 은으로 벼려진 단검. 눈에 보이지 않는 속도로 암살에 특화되어 있다.', mbti: 'ISTP', enneagram: '5w6', breast: 'A컵', age: '26세', height: '151cm', alignment: '절대 중립', stats: {str:75, mag:5, agi:100, int:75}, desc: '여왕의 그림자. 인간의 범주를 아득히 초월한 민첩성을 지녔다. 인간계의 마녀들을 암살하며 몸팔기 빼고 더러운 일을 병행한다.' },
+        { id: 'B', name: '오필리아', faction: 'human', level: '익스퍼트', ability: '징벌의 가시 채찍', abilityDesc: '오라를 주입하면 날카로운 가시가 돋아나는 채찍으로, 변칙적인 궤도로 대상을 찢어발긴다.', mbti: 'ENTP', enneagram: '7w8', breast: 'D컵', age: '24세', height: '168cm', alignment: '혼돈 악', stats: {str:60, mag:0, agi:85, int:85}, desc: '이단 심문소 \'연옥\'의 수석 심문관. 타인의 비명을 듣는 것은 물론, 자신의 전신이 부러지고 살이 찢기는 고통마저 최고의 쾌락으로 느끼는 진성 사디스트 겸 마조히스트 미친년. 피 냄새를 맡으면 이성을 잃고 폭주한다.' },
+        { id: 'v', name: '소피아', faction: 'human', level: '트레이니', ability: '호신용 메이스', abilityDesc: '체력이 약한 자도 위력을 낼 수 있도록 고안된 둔기. 마녀의 두개골을 깨기 위해 끝이 뾰족하다.', mbti: 'INTP', enneagram: '5w4', breast: 'H컵', age: '20세', height: '163cm', alignment: '질서 선', stats: {str:15, mag:15, agi:15, int:95}, desc: '일반인을 갓 벗어난 육체 능력을 가졌지만, 지능과 학구열만큼은 대륙 최고 수준이다. 교단이 숨긴 진짜 "마녀 전쟁"의 역사를 파헤치며 공부하고 있다.' },
 
         // 중립 (Neutral)
-        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', mbti: 'ISFJ', enneagram: '2w1', breast: 'B컵', age: '74세', height: '180cm', alignment: '질서 선', stats: {str:100, mag:10, agi:95, int:85}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' },
-        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', mbti: 'ENTP', enneagram: '7w8', breast: 'A컵', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:5, agi:60, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 정보상 겸 용병. 허~접♡, 좆밥♡, 바~보♡ 같은 말투를 사용한다.' },
-        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '원소 마법', mbti: 'ISFP', enneagram: '9w8', breast: 'B컵', age: '20세', height: '156cm', alignment: '참 중립', stats: {str:15, mag:35, agi:25, int:65}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 인간계 동쪽 깊은 산속에 홀로 숨어 산다.' }
+        { id: 'z', name: '칼리안', faction: 'neutral', level: '그랜드마스터', ability: '거대 묘지기의 낫', abilityDesc: '성인 남성보다 거대한 낫. 오라와 마력이 기묘하게 섞여 있어 영혼의 무게를 벤다.', mbti: 'ISFJ', enneagram: '2w1', breast: 'B컵', age: '74세', height: '180cm', alignment: '질서 선', stats: {str:100, mag:10, agi:95, int:85}, desc: '과거 전설적인 기사였으나 전쟁 트라우마로 은퇴했다. 공동묘지를 관리하며 마녀든 인간이든 차별 없이 시체를 애도한다.' },
+        { id: 'w', name: '레이븐', faction: 'neutral', level: '소드유저', ability: '다양한 무기', abilityDesc: '단검, 석궁, 폭약 등 상황에 맞춰 숨겨둔 온갖 잡다한 무기들을 비열하고 교묘하게 사용한다.', mbti: 'ENTP', enneagram: '7w8', breast: 'A컵', age: '21세', height: '152cm', alignment: '혼돈 중립', stats: {str:45, mag:5, agi:60, int:80}, desc: '인간과 마녀의 전쟁은 알 바 아니다. 오직 돈이 최고인 메스가키 정보상 겸 용병. 허~접♡, 좆밥♡, 바~보♡ 같은 말투를 사용한다.' },
+        { id: 'y', name: '리아', faction: 'neutral', level: '3써클', ability: '원소 마법', abilityDesc: '불, 물, 바람 등 자연의 기본적인 원소를 다루어 일상과 전투 양면에서 유연하게 활용한다.', mbti: 'ISFP', enneagram: '9w8', breast: 'B컵', age: '20세', height: '156cm', alignment: '참 중립', stats: {str:15, mag:35, agi:25, int:65}, desc: '인간과 마녀 사이에서 태어난 비운의 혼혈. 양쪽 모두에게 배척받아 인간계 동쪽 깊은 산속에 홀로 숨어 산다.' }
     ];
 
     // --- 2. 지도 데이터 ---
@@ -637,7 +640,6 @@
         if(element) element.classList.add('active');
         else { const targetBtn = document.querySelector(`[data-tab='${tabId}']`); if(targetBtn) targetBtn.classList.add('active'); }
         
-        // 추가: 탭 이동 시 스크롤 최상단으로 강제 이동
         document.getElementById('main-content-area').scrollTop = 0;
     }
 
@@ -683,6 +685,7 @@
     function handleSearch() {
         const query = document.getElementById('char-search-input').value.trim().toLowerCase();
         const descTexts = document.querySelectorAll('.desc-text');
+        const abilityDescs = document.querySelectorAll('.ability-desc');
         
         if (query === '시안송' || query === 'syansong') {
             if(!isSyanMode) triggerGlitch();
@@ -694,6 +697,9 @@
                 if(!el.dataset.orig) el.dataset.orig = el.innerHTML;
                 el.innerHTML = "시안송짱은 뉴비에오~♡ 호에에엥... 아무것도 몰라요 호에에...";
             });
+            abilityDescs.forEach(el => {
+                el.innerText = '호에에~ 신기한 힘이에오!';
+            });
         } else {
             if(isSyanMode) triggerGlitch();
             isSyanMode = false;
@@ -703,6 +709,7 @@
             descTexts.forEach(el => {
                 if(el.dataset.orig) el.innerHTML = el.dataset.orig;
             });
+            // 모달 안의 어빌리티 설명은 모달 오픈 시 다시 렌더링되므로 여기서 강제 복구 안해도 무방
         }
         renderCharacters();
     }
@@ -846,6 +853,7 @@
         
         const abilityLabel = document.getElementById('modal-ability-label');
         const abilityText = document.getElementById('modal-ability-text');
+        const abilityDesc = document.getElementById('modal-ability-desc');
         
         currentCharIndex = currentFilteredChars.findIndex(c => c.id === char.id);
 
@@ -869,6 +877,7 @@
         
         abilityLabel.innerText = isSyanMode ? '뉴비의 능력' : labelStr; abilityLabel.style.color = borderColor;
         abilityText.innerText = isSyanMode ? '호에에파워!' : char.ability;
+        abilityDesc.innerText = isSyanMode ? '호에에~ 신기한 힘이에오!' : char.abilityDesc;
 
         document.getElementById('modal-mbti').innerText = isSyanMode ? 'HOEE' : char.mbti;
         document.getElementById('modal-eg').innerText = isSyanMode ? '호에' : char.enneagram;
@@ -887,7 +896,11 @@
         if(char.id === 'k') {
             activeCharCode = 'k'; img.src = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${activeCharCode}/1`;
             lunaAction.style.display = 'block'; document.getElementById('luna-btn-text').innerText = "안대 벗기기"; document.getElementById('luna-btn-icon').className = "fas fa-eye-slash";
-            if(!isSyanMode) abilityText.innerText = '마나 감지 (봉인 중)'; abilityText.style.textShadow = 'none'; abilityText.style.color = borderColor;
+            if(!isSyanMode) {
+                abilityText.innerText = '마나 감지 (봉인 중)'; 
+                abilityText.style.textShadow = 'none'; abilityText.style.color = borderColor;
+                abilityDesc.innerText = '대기 중의 마나 흐름을 시각적으로 읽어낸다. (현재 안대로 시야를 제한해 마나 소모를 억제 중)';
+            }
         } else {
             img.src = isSyanMode ? 'https://igx.kr/u/LJ/g/c' : `https://igx.kr/u/LY/${char.id}/1`; lunaAction.style.display = 'none';
             abilityText.style.textShadow = 'none'; abilityText.style.color = borderColor;
@@ -905,6 +918,7 @@
     function toggleEyepatch() {
         const img = document.getElementById('modal-img');
         const abilityText = document.getElementById('modal-ability-text');
+        const abilityDesc = document.getElementById('modal-ability-desc');
         
         img.style.animation = 'none'; void img.offsetWidth; img.style.animation = 'magicFlash 0.6s ease-in-out';
         
@@ -918,13 +932,17 @@
 
             const luna = charData.find(c => c.id === 'k'); let bonus = 0;
             if (isLunaEyepatchOn) {
-                if(!isSyanMode) abilityText.innerText = '마나 감지 (봉인 중)';
-                abilityText.style.color = 'var(--witch-color)'; abilityText.style.textShadow = 'none';
+                if(!isSyanMode) {
+                    abilityText.innerText = '마나 감지 (봉인 중)';
+                    abilityText.style.color = 'var(--witch-color)'; abilityText.style.textShadow = 'none';
+                    abilityDesc.innerText = '대기 중의 마나 흐름을 시각적으로 읽어낸다. (현재 안대로 시야를 제한해 마나 소모를 억제 중)';
+                }
             } else {
                 bonus = 10;
                 if(!isSyanMode) {
                     abilityText.innerText = '★ 공허의 영역 (Void Domain) ★';
                     abilityText.style.color = '#fff'; abilityText.style.textShadow = '0 0 10px var(--witch-color)';
+                    abilityDesc.innerText = '안대를 벗는 순간 해방되는 힘. 주변의 모든 마나 흐름을 차단하고 강제로 소멸시키는 절대 공간을 전개한다.';
                 }
             }
             
