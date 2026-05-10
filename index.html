@@ -689,7 +689,7 @@
         const descTexts = document.querySelectorAll('.desc-text');
         const abilityDescs = document.querySelectorAll('.ability-desc');
         
-        if (query === '시안송' || query === 'syansong') {
+        if (query === '?(:/~:~?-_/?/?~~?^:-*(/:/:' || query === '?(?/?~?~:-(*/@~!~!~!') {
             if(!isSyanMode) triggerGlitch();
             isSyanMode = true;
             document.body.classList.add('syan-mode');
@@ -753,10 +753,6 @@
         }
         mapHTML += `
             <div id="map-world-directions">
-                <span class="dir-n">N</span>
-                <span class="dir-s">S</span>
-                <span class="dir-e">E</span>
-                <span class="dir-w">W</span>
             </div>
         `;
         board.innerHTML = mapHTML;
